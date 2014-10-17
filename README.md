@@ -1,4 +1,4 @@
-z-way--ui
+ZWay Home Automation UI
 =============
 
-Minimal UI for Z-Wave.Me Z-Way server that illustrates how to write own UI using JSON API.
+UI for Z-Way Automation Server
