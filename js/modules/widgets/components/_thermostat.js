@@ -1,12 +1,17 @@
-    define([
+define([
     // libs
     'd3',
     'morearty',
+    // components
+    '../common/level_selector',
     // mixins
     'mixins/sync/sync-layer'
 ], function (
+    // libs
     d3,
     Morearty,
+    // components
+    LevelSelector,
     // mixins
     SyncLayerMixin
     ) {
@@ -26,13 +31,26 @@
                 max_level: max_level,
                 current_level: parseInt(binding.sub('metrics').val('level')),
                 step: (max_level - min_level) / 100
-            }
+            };
         },
         componentWillMount: function () {
-            var that = this;
+            var that = this,
+                default_binding = this.getMoreartyContext().getBinding().sub('default');
+
             that.getDefaultBinding().sub('metrics').addListener('level', function (level, prev_level) {
                 that.updateTemperature(level, prev_level);
             });
+
+            default_binding.set('show_popup_' + that.getDefaultBinding().val('id'), false);
+            default_binding.addListener('show_popup_' + that.getDefaultBinding().val('id'), function () {
+                that.forceUpdate();
+            });
+        },
+        componentWillUnmount: function () {
+            var that = this,
+                default_binding = this.getMoreartyContext().getBinding().sub('default');
+
+            default_binding.delete('show_popup_' + that.getDefaultBinding().val('id'));
         },
         componentDidMount: function () {
             var that = this,
@@ -98,7 +116,6 @@
             }, function () {
                 that.updateTemperature(current_level);
             });
-
         },
         updateTemperature: function (level, prev_level) {
             var that = this,
@@ -133,12 +150,23 @@
             this.state.front.attr('d', arc.endAngle(twoPi * percent));
             this.state.numberText.text(level + '°C');
         },
+        showSettings: function () {
+            this.getMoreartyContext()
+                .getBinding()
+                .sub('default')
+                .set('show_popup_' + this.getDefaultBinding().val('id'), true);
+            this.forceUpdate();
+        },
         render: function () {
             var that = this,
                 _ = React.DOM,
                 binding = this.getDefaultBinding(),
                 title = binding.sub('metrics').val('title'),
-                level = binding.sub('metrics').val('level');
+                level = binding.sub('metrics').val('level'),
+                show_binding = this.getMoreartyContext()
+                    .getBinding()
+                    .sub('default')
+                    .sub('show_popup_' + binding.val('id'));
 
             return (
                 _.div({className: 'content'},
@@ -146,12 +174,16 @@
                     _.div({
                         className: 'progress-container',
                         ref: 'progressContainer',
-                        onClick: function () {
-                            binding.sub('metrics').set('level', 38);
-                        }
-                    })
+                        onClick: this.showSettings
+                    }),
+                    show_binding.val() ? LevelSelector({
+                        binding: {
+                            default: binding
+                        },
+                        show: show_binding
+                    }) : null
                 )
-            )
+            );
         }
     });
 });

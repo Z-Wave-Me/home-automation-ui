@@ -4,190 +4,222 @@ define([
     'd3',
     // mixins
     'mixins/sync/sync-layer',
-    'mixins/ui/color-manipulation'
+    'mixins/ui/popup'
 ], function (
     // libs
     Morearty,
     d3,
     // mixins
     SyncLayerMixin,
-    ColorManipulationMixins
+    PopupMixin
 ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, SyncLayerMixin, ColorManipulationMixins],
-        options: {
-            hueOffset: 15,
-            h: 0,
-            s: 1,
-            v: 1,
-            mouse: {
-                x: 0,
-                y: 0
-            }
-        },
-        onClickSlideHandler: function (event) {
-            event && event.preventDefault();
-            var slide_element = this.refs.slide.getDOMNode(),
-                picker_element = this.refs.picker.getDOMNode(),
-                mouse_positions = this._getClickPosition(event),
-                sliderIndicator_element = this.refs.slideIndicator.getDOMNode(),
-                mouse_y = mouse_positions.y;
+        mixins: [Morearty.Mixin, SyncLayerMixin, PopupMixin],
+        getInitialState: function () {
+            var binding = this.getDefaultBinding(),
+                min_level = parseInt(binding.sub('metrics').val('min')),
+                max_level = parseInt(binding.sub('metrics').val('max'));
 
-            this.options.s = mouse_y / slide_element.offsetHeight * 360 + this.options.hueOffset;
-
-            var pickerColor = this.hsv2rgb({ h: this.options.h, s: 1, v: 1 }),
-                c = this.hsv2rgb({ h: this.options.h, s: this.options.s, v: this.options.v });
-
-            sliderIndicator_element.style.top = (mouse_y - sliderIndicator_element.offsetHeight/2) + 'px';
-            picker_element.style.backgroundColor = pickerColor.hex;
-            this.onClickPickerHandler(null, this.options.mouse);
-        },
-        onClickPickerHandler: function (event, positions) {
-            event && event.preventDefault();
-            var picker_element = this.refs.picker.getDOMNode(),
-                pickerIndicator_element = this.refs.pickerIndicator.getDOMNode(),
-                mouse_positions = positions.hasOwnProperty('x') ? positions : this._getClickPosition(event),
-                width = picker_element.offsetWidth,
-                height = picker_element.offsetHeight,
-                mouse_x = mouse_positions.x,
-                mouse_y = mouse_positions.y;
-
-            this.options.s = mouse_x / width;
-            this.options.v = (height - mouse_y) / height;
-            this.options.mouse = {
-                x: mouse_x,
-                y: mouse_y
+            return {
+                twoPi: Math.PI * 2,
+                min_level: min_level,
+                max_level: max_level,
+                current_level: parseInt(binding.sub('metrics').val('level')),
+                step: (max_level - min_level) / 100
             };
-
-            var c = this.hsv2rgb(this.options);
-            this.setColor({r: c.r, g: c.g, b: c.b});
-            pickerIndicator_element.style.top = (mouse_y - pickerIndicator_element.offsetHeight/2) + 'px';
-            pickerIndicator_element.style.left = (mouse_x - pickerIndicator_element.offsetWidth/2) + 'px';
-
-            return false;
         },
-        _getClickPosition: function (event) {
-            var parentPosition = this._getPosition(event.currentTarget);
-            var xPosition = event.clientX - parentPosition.x;
-            var yPosition = event.clientY - parentPosition.y;
-
-            return {x: xPosition, y: yPosition};
-        },
-        _getPosition: function (element) {
-            var xPosition = 0;
-            var yPosition = 0;
-
-            while (element) {
-                xPosition += (element.offsetLeft - element.scrollLeft + element.clientLeft);
-                yPosition += (element.offsetTop - element.scrollTop + element.clientTop);
-                element = element.offsetParent;
-            }
-            return { x: xPosition, y: yPosition };
-        },
-        setColor: function (rgb) {
-            this.getDefaultBinding().set(Immutable.fromJS(rgb));
-            this.props.handler(rgb);
+        hideNotificationsPopup: function () {
+            this.props.show.set(false);
         },
         componentDidMount: function () {
-//            var binding = this.getDefaultBinding(),
-//                rgb = binding.sub('metrics').sub('color').toJS(),
-//                hsv = this.rgb2hsv(rgb),
-//                hex = this.rgb2hex(rgb),
-//                picker_element = this.refs.picker.getDOMNode(),
-//                pickerIndicator_element = this.refs.pickerIndicator.getDOMNode(),
-//                slide_element = this.refs.slide.getDOMNode(),
-//                sliderIndicator_element = this.refs.slideIndicator.getDOMNode();
-//
-//            this.setState({
-//                h: hsv.h % 360,
-//                s: hsv.s,
-//                v: hsv.v
-//            });
-//
-//            sliderIndicator_element.style.top = (this.state.h * slide_element.offsetHeight) / 360;
+            var that = this,
+                color = '#40e8f0',
+                radius = 50,
+                border = 15,
+                twoPi = this.state.twoPi,
+                boxSize = '100',
+                parent = d3.select(this.refs.progressContainer.getDOMNode()),
+                current_level = this.state.current_level,
+                arc, arc2, svg, defs, g, meter, foreground, front, numberText;
+
+            arc = d3.svg.arc()
+                .startAngle(0)
+                .innerRadius(radius)
+                .outerRadius(radius - border);
+
+            arc2 = d3.svg.arc()
+                .startAngle(0)
+                .innerRadius(35)
+                .outerRadius(35 - 3);
+
+            svg = parent.append('svg')
+                .attr('width', boxSize)
+                .attr('height', boxSize);
+
+            defs = svg.append('defs');
+
+            g = svg.append('g')
+                .attr('transform', 'translate(' + boxSize / 2 + ',' + boxSize / 2 + ')');
+
+            meter = g.append('g')
+                .attr('class', 'progress-meter');
+
+            meter.append('path')
+                .attr('class', 'background')
+                .attr('fill', '#ccc')
+                .attr('fill-opacity', 0.5)
+                .attr('d', arc.endAngle(twoPi));
+
+            var meter2 = g.append('g')
+                .attr('class', 'progress-meter');
+
+            meter2.append('path')
+                .attr('class', 'background')
+                .attr('fill', '#ccc')
+                .attr('fill-opacity', 0.5)
+                .attr('d', arc2.endAngle(twoPi));
+
+            foreground = meter.append('path')
+                .attr('class', 'foreground')
+                .attr('fill', color)
+                .attr('fill-opacity', 1)
+                .attr('stroke', color)
+                .attr('stroke-width', 5)
+                .attr('stroke-opacity', 1)
+                .attr('filter', 'url(#blur)');
+
+            var foreground2 = meter2.append('path')
+                .attr('class', 'foreground')
+                .attr('fill', 'red')
+                .attr('fill-opacity', 1)
+                .attr('stroke', 'red')
+                .attr('stroke-width', 5)
+                .attr('stroke-opacity', 1)
+                .attr('filter', 'url(#blur)');
+
+            front = meter.append('path')
+                .attr('class', 'foreground')
+                .attr('fill', color)
+                .attr('fill-opacity', 1);
+
+            var front2 = meter.append('path')
+                .attr('class', 'foreground')
+                .attr('fill', 'red')
+                .attr('fill-opacity', 1);
+
+            numberText = meter.append('text')
+                .attr({
+                    fill: '#666',
+                    'text-anchor': 'middle',
+                    'font-size': '16px',
+                    dy: '.40em'
+                });
+
+            this.setState({
+                foreground: foreground,
+                front: front,
+                numberText: numberText,
+                arc: arc
+            }, function () {
+                foreground2.attr('d', arc2.endAngle(twoPi * (current_level - that.state.min_level) / that.state.step / 100));
+                front2.attr('d', arc2.endAngle(twoPi * (current_level - that.state.min_level) / that.state.step / 100));
+                numberText.text(current_level + '°C');
+                that._updateCircle(current_level);
+
+
+                // set left/top
+                var el = document.getElementsByClassName('progress-container')[0],
+                    top = el.offsetTop + el.offsetHeight / 2,
+                    left = el.offsetLeft + el.offsetWidth / 2;
+
+                this.refs.popover.getDOMNode().style.left = left + 180 + 'px';
+                this.refs.popover.getDOMNode().style.top = top - 60 + 'px';
+            });
+        },
+        _updateCircle: function (level) {
+            var twoPi = this.state.twoPi,
+                arc = this.state.arc,
+                percent = (level - this.state.min_level) / this.state.step / 100;
+
+            this.state.foreground.attr('d', arc.endAngle(twoPi * percent));
+            this.state.front.attr('d', arc.endAngle(twoPi * percent));
+            this.state.numberText.text(level + '°C');
+        },
+        updateLevel: function (type) {
+            var that = this;
+            if (type === 'increase') {
+                this.setState({current_level: this.state.current_level + 1 <= this.state.max_level ? this.state.current_level + 1 : this.state.max_level});
+            } else if (type === 'decrease') {
+                this.setState({current_level: this.state.current_level - 1 >= this.state.min_level ? this.state.current_level - 1 : this.state.min_level});
+            } else if (type === 'max') {
+                this.setState({current_level: this.state.max_level});
+            } else if (type === 'min') {
+                this.setState({current_level: this.state.min_level});
+            }
+            this.forceUpdate(function () {
+                this._updateCircle(this.state.current_level);
+                this.fetch({
+                    model: this.getDefaultBinding(),
+                    serviceId: 'devices',
+                    params: {
+                        level: this.state.current_level
+                    },
+                    success: function () {
+                        that.getDefaultBinding().sub('metrics').set('level', that.state.current_level);
+                    }
+                }, 'exact');
+            });
         },
         render: function () {
             var _ = React.DOM,
-                cx = React.addons.classSet;
+                cx = React.addons.classSet,
+                binding = this.getDefaultBinding();
 
-            return _.div({key:'picker-container', className: 'picker-container cp-default'},
-                _.div({key:'picker-wrapper', className: 'picker-wrapper'},
-                    _.div({key:'picker', ref: 'picker', className: 'picker', onClick: this.onClickPickerHandler},
-                        _.svg({width: '100%', height: '100%'},
-                            _.defs({},
-                                _.linearGradient({
-                                    id: 'gradient-black',
-                                    x1: '0%',
-                                    y1: '100%',
-                                    x2: '0%',
-                                    y2: '0%'
-                                },
-                                    _.stop({ offset: '0%', 'stopColor': '#000000', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '100%', 'stopColor': '#CC9A81', 'stopOpacity': '0' })
+            return _.div({
+                    className: 'overlay transparent show fixed',
+                    onClick: this.hideNotificationsPopup
+                },
+                _.div({onClick: this.stopPropagationAndPreventDefault, ref: 'popover', className: 'popover right popover-level-selector'},
+                    _.div({className: 'popover-content'},
+                        _.div({className: 'header-title'}, binding.sub('metrics').val('title')),
+                        _.div({className: 'center-container'},
+                            _.div({ref: 'progressContainer', className: 'pie-container'}),
+                            _.div({className: 'control-container'},
+                                _.div({className: 'line-button'},
+                                    _.span({
+                                        onClick: this.updateLevel.bind(null, 'increase'),
+                                        className: 'control-button increase'
+                                    }, '+'),
+                                    _.span({
+                                        className: 'control-button max',
+                                        onClick: this.updateLevel.bind(null, 'max')
+                                    }, 'max')
                                 ),
-                                _.linearGradient({
-                                    id: 'gradient-white',
-                                    x1: '0%',
-                                    y1: '100%',
-                                    x2: '100%',
-                                    y2: '100%'
-                                },
-                                    _.stop({ offset: '0%', 'stopColor': '#FFFFFF', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '100%', 'stopColor': '#CC9A81', 'stopOpacity': '0' })
+                                _.div({className: 'line-button'},
+                                    _.span({
+                                        className: 'control-button decrease',
+                                        onClick: this.updateLevel.bind(null, 'decrease')
+                                    }, '-'),
+                                    _.span({
+                                        className: 'control-button min',
+                                        onClick: this.updateLevel.bind(null, 'min')
+                                    }, 'min')
                                 )
+                            )
+                        ),
+                        _.div({className: 'footer-line'},
+                            _.div({className: 'line-container'},
+                                _.span({className: 'line red'}),
+                                _.span({className: 'text'}, 'current')
                             ),
-                            _.rect({
-                                x: 0,
-                                y: 0,
-                                width: '100%',
-                                height: '100%',
-                                fill: 'url(#gradient-white)'
-                            }),
-                            _.rect({
-                                x: 0,
-                                y: 0,
-                                width: '100%',
-                                height: '100%',
-                                fill: 'url(#gradient-black)'
-                            })
+                            _.div({className: 'line-container'},
+                                _.span({className: 'line blue'}),
+                                _.span({className: 'text'}, 'set')
+                            )
                         )
-                    ),
-                    _.div({key:'picker-indicator', ref: 'pickerIndicator', className: 'picker-indicator'})
-                ),
-                _.div({key: 'slide-wrapper', className: 'slide-wrapper'},
-                    _.div({key:'slide', ref: 'slide', className: 'slide', onClick: this.onClickSlideHandler},
-                        _.svg({width: '100%', height: '100%'},
-                            _.defs({},
-                                _.linearGradient({
-                                        id: 'gradient-hsv',
-                                        x1: '0%',
-                                        y1: '100%',
-                                        x2: '0%',
-                                        y2: '0%'
-                                    },
-                                    _.stop({ offset: '0%', 'stopColor': '#FF0000', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '13%', 'stopColor': '#FF00FF', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '25%', 'stopColor': '#8000FF', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '38%', 'stopColor': '#0040FF', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '50%', 'stopColor': '#00FFFF', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '63%', 'stopColor': '#00FF40', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '75%', 'stopColor': '#0BED00', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '88%', 'stopColor': '#FFFF00', 'stopOpacity': '1' }),
-                                    _.stop({ offset: '100%', 'stopColor': '#FF0000', 'stopOpacity': '1' })
-                                )
-                            ),
-                            _.rect({
-                                x: 0,
-                                y: 0,
-                                width: '100%',
-                                height: '100%',
-                                fill: 'url(#gradient-hsv)'
-                            })
-                        )
-                    ),
-                    _.div({key: 'slideIndicator', ref: 'slideIndicator', className: 'slide-indicator'})
+                    )
                 )
             );
         }
