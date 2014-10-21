@@ -66,7 +66,8 @@ define([
                             description: module.sub('defaults').val('description'),
                             moduleId: module.val('id'),
                             active: true,
-                            params: {}
+                            params: {},
+                            import_instanceId: null
                         }))
                         .commit()
                 }
@@ -83,6 +84,7 @@ define([
                 .delete('instance_temp')
                 .delete('expanded')
                 .delete('search_string_on_modules_list')
+                .delete('import_instanceId')
                 .commit();
         },
         render: function () {

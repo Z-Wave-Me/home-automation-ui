@@ -126,7 +126,7 @@ define([
                 classes_input_autocomplete = cx({
                     'text-input-autocomplete': true,
                     'focus': temp_string.length > 1
-                });;
+                });
 
 
             return _.div({ className: 'model-component' },

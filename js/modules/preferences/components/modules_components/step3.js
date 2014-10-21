@@ -51,10 +51,21 @@ define([
             var that = this,
                 preferences_binding = this.getDefaultBinding(),
                 instance = preferences_binding.sub('instance_temp'),
-                instanceJson, module, moduleJson, $el;
+                imported_instanceId = preferences_binding.val('import_instanceId'),
+                instanceJson, module, moduleJson, $el, import_params, imported_instance_index;
 
             if (!instance) {
                 return;
+            }
+
+            if (imported_instanceId !== null) {
+                imported_instance_index = this.getBinding('data')
+                    .sub('instances').val()
+                    .findIndex(function (instance) {
+                        return instance.get('id') === imported_instanceId;
+                    });
+
+                import_params = this.getBinding('data').sub('instances').sub(imported_instance_index).val('params').toJS();
             }
 
             instanceJson = instance.val().toJS();
@@ -63,7 +74,7 @@ define([
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
-                data: that.updateObjectAsNamespace(instanceJson.params),
+                data: that.updateObjectAsNamespace(import_params || instanceJson.params),
                 schema: that.updateObjectAsNamespace(moduleJson.schema),
                 options: that.updateObjectAsNamespace(moduleJson.options),
                 postRender: function (form) {
