@@ -18,7 +18,7 @@ Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home
     -   Install npm-packages
 
         $ cd /path/to/automationFolder
-        $ sudo npm install -g gulp && npm install
+        $ sudo npm install --global gulp bower && npm install && gulp
 
     -   Compile front-end to /path/to/automationFolder/dist.
 

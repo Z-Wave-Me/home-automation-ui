@@ -42,9 +42,6 @@ define([
             });
 
             default_binding.set('show_popup_' + that.getDefaultBinding().val('id'), false);
-            default_binding.addListener('show_popup_' + that.getDefaultBinding().val('id'), function () {
-                that.forceUpdate();
-            });
         },
         componentWillUnmount: function () {
             var that = this,
