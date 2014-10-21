@@ -4,19 +4,23 @@ define([
     'd3',
     // mixins
     'mixins/sync/sync-layer',
-    'mixins/ui/color-manipulation'
+    'mixins/data/manipulation',
+    'mixins/ui/color-manipulation',
+    'mixins/ui/popup'
 ], function (
     // libs
     Morearty,
     d3,
     // mixins
     SyncLayerMixin,
-    ColorManipulationMixins
+    DataManipulationMixin,
+    ColorManipulationMixin,
+    PopupMixin
 ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, SyncLayerMixin, ColorManipulationMixins],
+        mixins: [Morearty.Mixin, SyncLayerMixin, DataManipulationMixin, ColorManipulationMixin, PopupMixin],
         options: {
             hueOffset: 15,
             h: 0,
@@ -27,6 +31,28 @@ define([
                 y: 0
             }
         },
+        componentDidUpdate: function (props, state) {
+            if (this.state.dragging && !state.dragging) {
+                document.addEventListener('mousemove', this.onMouseMove);
+                document.addEventListener('mouseup', this.onMouseUp);
+            } else if (!this.state.dragging && state.dragging) {
+                document.removeEventListener('mousemove', this.onMouseMove);
+                document.removeEventListener('mouseup', this.onMouseUp);
+            }
+        },
+        getDefaultProps: function () {
+            return {
+                // allow the initial position to be passed in as a prop
+                initialPos: {x: 0, y: 0}
+            };
+        },
+        getInitialState: function () {
+            return {
+                pos: this.props.initialPos,
+                dragging: false,
+                rel: null // position relative to the cursor
+            };
+        },
         onClickSlideHandler: function (event) {
             event && event.preventDefault();
             var slide_element = this.refs.slide.getDOMNode(),
@@ -35,17 +61,15 @@ define([
                 sliderIndicator_element = this.refs.slideIndicator.getDOMNode(),
                 mouse_y = mouse_positions.y;
 
-            this.options.s = mouse_y / slide_element.offsetHeight * 360 + this.options.hueOffset;
+            this.options.h = mouse_y / slide_element.offsetHeight * 360 + this.options.hueOffset;
 
             var pickerColor = this.hsv2rgb({ h: this.options.h, s: 1, v: 1 }),
                 c = this.hsv2rgb({ h: this.options.h, s: this.options.s, v: this.options.v });
 
-            sliderIndicator_element.style.top = (mouse_y - sliderIndicator_element.offsetHeight/2) + 'px';
+            sliderIndicator_element.style.top = (mouse_y - sliderIndicator_element.offsetHeight / 2) + 'px';
             picker_element.style.backgroundColor = pickerColor.hex;
-            this.onClickPickerHandler(null, this.options.mouse);
         },
         onClickPickerHandler: function (event, positions) {
-            event && event.preventDefault();
             var picker_element = this.refs.picker.getDOMNode(),
                 pickerIndicator_element = this.refs.pickerIndicator.getDOMNode(),
                 mouse_positions = positions.hasOwnProperty('x') ? positions : this._getClickPosition(event),
@@ -66,7 +90,9 @@ define([
             pickerIndicator_element.style.top = (mouse_y - pickerIndicator_element.offsetHeight/2) + 'px';
             pickerIndicator_element.style.left = (mouse_x - pickerIndicator_element.offsetWidth/2) + 'px';
 
-            return false;
+            if (this.isMounted()) {
+                this.forceUpdate();
+            }
         },
         _getClickPosition: function (event) {
             var parentPosition = this._getPosition(event.currentTarget);
@@ -91,30 +117,101 @@ define([
             this.props.handler(rgb);
         },
         componentDidMount: function () {
-//            var binding = this.getDefaultBinding(),
-//                rgb = binding.sub('metrics').sub('color').toJS(),
-//                hsv = this.rgb2hsv(rgb),
-//                hex = this.rgb2hex(rgb),
-//                picker_element = this.refs.picker.getDOMNode(),
-//                pickerIndicator_element = this.refs.pickerIndicator.getDOMNode(),
-//                slide_element = this.refs.slide.getDOMNode(),
-//                sliderIndicator_element = this.refs.slideIndicator.getDOMNode();
-//
-//            this.setState({
-//                h: hsv.h % 360,
-//                s: hsv.s,
-//                v: hsv.v
-//            });
-//
-//            sliderIndicator_element.style.top = (this.state.h * slide_element.offsetHeight) / 360;
+            var binding = this.getDefaultBinding(),
+                rgb = binding.toJS(),
+                hsv = this.rgb2hsv(rgb),
+                hex = this.rgb2hex(rgb),
+                picker_element = this.refs.picker.getDOMNode(),
+                pickerIndicator_element = this.refs.pickerIndicator.getDOMNode(),
+                slide_element = this.refs.slide.getDOMNode(),
+                sliderIndicator_element = this.refs.slideIndicator.getDOMNode();
+
+            this.extend(this.options, {
+                h: hsv.h % 360,
+                s: hsv.s,
+                v: hsv.v
+            });
+
+            pickerIndicator_element.style.top = picker_element.offsetHeight - this.options.v * picker_element.offsetHeight + 'px';
+            pickerIndicator_element.style.left = this.options.s * picker_element.offsetWidth + 'px';
+            sliderIndicator_element.style.top = (this.options.h * slide_element.offsetHeight) / 360 + 'px';
+            picker_element.style.backgroundColor = hex;
+        },
+        // calculate relative position to the mouse and set dragging=true
+        onMouseDown: function (el, e) {
+            // only left mouse button
+            if (e.button !== 0) return;
+            var pos = $(this.refs.picker.getDOMNode()).offset();
+            this.setState({
+                dragging: true,
+                el: el,
+                rel: {
+                    x: e.pageX - pos.left,
+                    y: e.pageY - pos.top
+                }
+            });
+            this.forceUpdate();
+            e.stopPropagation();
+            e.preventDefault();
+        },
+        onMouseUp: function (e) {
+            if (this.isMounted()) {
+                this.setState({dragging: false});
+            }
+            e.stopPropagation();
+            e.preventDefault();
+        },
+        onMouseMove: function (e) {
+            if (!this.state.dragging) return;
+            if (this.state.el === 'picker') {
+                this.onDraggablePickerIndicator(e);
+            } else if (this.state.el === 'slide') {
+                this.onDraggableSlideIndicator(e);
+            } else {
+                return;
+            }
+
+            this.setState({
+                pos: {
+                    x: e.pageX - this.state.rel.x,
+                    y: e.pageY - this.state.rel.y
+                }
+            });
+            e.stopPropagation();
+            e.preventDefault();
+        },
+        onDraggablePickerIndicator: function (e) {
+            var x = e.offsetX,
+                y = e.offsetY,
+                pickerIndicator_element = this.refs.pickerIndicator.getDOMNode();
+
+            pickerIndicator_element.style.left = (x - pickerIndicator_element.offsetWidth/2) + 'px';
+            pickerIndicator_element.style.top = (y - pickerIndicator_element.offsetHeight/2) + 'px';
+            return false;
+        },
+        onDraggableSlideIndicator: function (e) {
+            var y = e.offsetY,
+                slide_element = this.refs.slide.getDOMNode(),
+                picker_element = this.refs.picker.getDOMNode(),
+                sliderIndicator_element = this.refs.slideIndicator.getDOMNode();
+
+            if (y > 100) {
+                y = 100;
+            } else if (y < 0) {
+                y = 0;
+            }
+
+            this.options.h = y / slide_element.offsetHeight * 360 + this.options.hueOffset;
+            picker_element.style.backgroundColor = this.hsv2rgb({ h: this.options.h, s: 1, v: 1 }).hex;
+            sliderIndicator_element.style.top = (y - sliderIndicator_element.offsetHeight / 2) + 'px';
         },
         render: function () {
             var _ = React.DOM,
                 cx = React.addons.classSet;
 
-            return _.div({key:'picker-container', className: 'picker-container cp-default'},
+            return _.div({onClick: this.stopPropagationAndPreventDefault, key:'picker-container', className: 'picker-container cp-small'},
                 _.div({key:'picker-wrapper', className: 'picker-wrapper'},
-                    _.div({key:'picker', ref: 'picker', className: 'picker', onClick: this.onClickPickerHandler},
+                    _.div({onMouseDown: this.onMouseDown.bind(this, 'picker'), key:'picker', ref: 'picker', className: 'picker', onClick: this.onClickPickerHandler},
                         _.svg({width: '100%', height: '100%'},
                             _.defs({},
                                 _.linearGradient({
@@ -157,7 +254,7 @@ define([
                     _.div({key:'picker-indicator', ref: 'pickerIndicator', className: 'picker-indicator'})
                 ),
                 _.div({key: 'slide-wrapper', className: 'slide-wrapper'},
-                    _.div({key:'slide', ref: 'slide', className: 'slide', onClick: this.onClickSlideHandler},
+                    _.div({onMouseDown: this.onMouseDown.bind(this, 'slide'), key:'slide', ref: 'slide', className: 'slide', onClick: this.onClickSlideHandler},
                         _.svg({width: '100%', height: '100%'},
                             _.defs({},
                                 _.linearGradient({

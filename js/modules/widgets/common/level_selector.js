@@ -131,7 +131,7 @@ define([
 
                 // set left/top
                 var el = document.getElementsByClassName('progress-container')[0],
-                    top = el.offsetTop + el.offsetHeight / 2,
+                    top = el.offsetTop + el.offsetHeight,
                     left = el.offsetLeft + el.offsetWidth / 2;
 
                 this.refs.popover.getDOMNode().style.left = left + 180 + 'px';
