@@ -26,9 +26,9 @@
     "run-sequence": "latest"
   },
   "scripts": {
-    "build": "./node_modules/.bin/gulp",
-    "server": "./node_modules/.bin/gulp develop_server",
-    "postinstall": "./node_modules/.bin/bower --quiet install"
+    "build": "gulp",
+    "server": "gulp develop_server",
+    "postinstall": "bower --quiet install"
   },
   "repository": {
     "type": "git",

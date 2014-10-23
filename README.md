@@ -1,5 +1,5 @@
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/Z-Wave-Me/home-automation?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
+[![Build Status](https://travis-ci.org/Z-Wave-Me/home-automation-ui.svg?branch=master)](https://travis-ci.org/Z-Wave-Me/home-automation-ui)
 ZWay Home Automation UI
 =============
 
@@ -20,6 +20,10 @@ API Documentation: http://docs.zwayhomeautomation.apiary.io/
 Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home-automation-ui/issues
 
 # Changelog #
+* 2.0.0rc5
+- Updated morearty to 0.4.7
+- Integrated travis-ci
+- Removed CHANGELOG.md
 * 2.0.0rc4
 - Thermostat stable
 - ColorPicker stable
