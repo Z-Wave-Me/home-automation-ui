@@ -30,9 +30,6 @@ define([
                 step: (max_level - min_level) / 100
             };
         },
-        hideNotificationsPopup: function () {
-            this.props.show.set(false);
-        },
         componentDidMount: function () {
             var that = this,
                 color = '#40e8f0',
@@ -131,11 +128,11 @@ define([
 
                 // set left/top
                 var el = document.getElementsByClassName('progress-container')[0],
-                    top = el.offsetTop + el.offsetHeight,
-                    left = el.offsetLeft + el.offsetWidth / 2;
+                    top = el.offsetTop - el.offsetHeight,
+                    left = el.offsetLeft + el.offsetWidth + 170;
 
-                this.refs.popover.getDOMNode().style.left = left + 180 + 'px';
-                this.refs.popover.getDOMNode().style.top = top - 60 + 'px';
+                this.refs.popover.getDOMNode().style.left = left + 'px';
+                this.refs.popover.getDOMNode().style.top = top + 'px';
             });
         },
         _updateCircle: function (level) {
@@ -177,47 +174,42 @@ define([
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding();
 
-            return _.div({
-                    className: 'overlay transparent show fixed',
-                    onClick: this.hideNotificationsPopup
-                },
-                _.div({onClick: this.stopPropagationAndPreventDefault, ref: 'popover', className: 'popover right popover-level-selector'},
-                    _.div({className: 'popover-content'},
-                        _.div({className: 'header-title'}, binding.sub('metrics').val('title')),
-                        _.div({className: 'center-container'},
-                            _.div({ref: 'progressContainer', className: 'pie-container'}),
-                            _.div({className: 'control-container'},
-                                _.div({className: 'line-button'},
-                                    _.span({
-                                        onClick: this.updateLevel.bind(null, 'increase'),
-                                        className: 'control-button increase'
-                                    }, '+'),
-                                    _.span({
-                                        className: 'control-button max',
-                                        onClick: this.updateLevel.bind(null, 'max')
-                                    }, 'max')
-                                ),
-                                _.div({className: 'line-button'},
-                                    _.span({
-                                        className: 'control-button decrease',
-                                        onClick: this.updateLevel.bind(null, 'decrease')
-                                    }, '-'),
-                                    _.span({
-                                        className: 'control-button min',
-                                        onClick: this.updateLevel.bind(null, 'min')
-                                    }, 'min')
-                                )
-                            )
-                        ),
-                        _.div({className: 'footer-line'},
-                            _.div({className: 'line-container'},
-                                _.span({className: 'line red'}),
-                                _.span({className: 'text'}, 'current')
+            return _.div({onClick: this.stopPropagationAndPreventDefault, ref: 'popover', className: 'popover right popover-level-selector'},
+                _.div({className: 'popover-content'},
+                    _.div({className: 'header-title'}, binding.sub('metrics').val('title')),
+                    _.div({className: 'center-container'},
+                        _.div({ref: 'progressContainer', className: 'pie-container'}),
+                        _.div({className: 'control-container'},
+                            _.div({className: 'line-button'},
+                                _.span({
+                                    onClick: this.updateLevel.bind(null, 'increase'),
+                                    className: 'control-button increase'
+                                }, '+'),
+                                _.span({
+                                    className: 'control-button max',
+                                    onClick: this.updateLevel.bind(null, 'max')
+                                }, 'max')
                             ),
-                            _.div({className: 'line-container'},
-                                _.span({className: 'line blue'}),
-                                _.span({className: 'text'}, 'set')
+                            _.div({className: 'line-button'},
+                                _.span({
+                                    className: 'control-button decrease',
+                                    onClick: this.updateLevel.bind(null, 'decrease')
+                                }, '-'),
+                                _.span({
+                                    className: 'control-button min',
+                                    onClick: this.updateLevel.bind(null, 'min')
+                                }, 'min')
                             )
+                        )
+                    ),
+                    _.div({className: 'footer-line'},
+                        _.div({className: 'line-container'},
+                            _.span({className: 'line red'}),
+                            _.span({className: 'text'}, 'current')
+                        ),
+                        _.div({className: 'line-container'},
+                            _.span({className: 'line blue'}),
+                            _.span({className: 'text'}, 'set')
                         )
                     )
                 )
