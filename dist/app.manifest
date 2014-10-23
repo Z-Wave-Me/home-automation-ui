@@ -4,6 +4,7 @@ CACHE MANIFEST
 CACHE:
 index.html
 js/main-built.js
+public/css/all.css
 public/fonts/helveticaneue-bold.eot
 public/fonts/helveticaneue-bold.svg
 public/fonts/helveticaneue-bold.ttf
@@ -23,4 +24,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: cc360d8249e3a2d29be9c208449d55cfbeb5203cc5366505ca74b86504004443
+# hash: ad2526d7f6dfe8d96a675b602002119639ee56a197e3ddcb6bb9f22e8e01ed67

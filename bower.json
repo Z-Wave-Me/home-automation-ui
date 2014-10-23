@@ -10,7 +10,7 @@
         "jquery-ui": "1.11.2",
         "react": "0.11.2",
         "less": "1.7.5",
-        "moreartyjs": "git://github.com/moreartyjs/moreartyjs#0.4.5",
+        "moreartyjs": "git://github.com/moreartyjs/moreartyjs#0.4.7",
         "immutable": "2.5.x",
         "director": "1.2.2",
         "ace": "1.1.7",

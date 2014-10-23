@@ -1,6 +1,11 @@
 language: node_js
 node_js:
   - "0.10"
+before_install:
+  - "sudo npm install -g bower gulp"
+  - "npm install"
+before_script:
+  - "gulp"
 notifications:
   email: false
   webhooks:
