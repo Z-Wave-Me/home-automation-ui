@@ -20,6 +20,10 @@ API Documentation: http://docs.zwayhomeautomation.apiary.io/
 Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home-automation-ui/issues
 
 # Changelog #
+* 2.0.0rc5
+- Updated morearty to 0.4.7
+- Integrated travis-ci
+- Removed CHANGELOG.md
 * 2.0.0rc4
 - Thermostat stable
 - ColorPicker stable
