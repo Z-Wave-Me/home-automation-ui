@@ -33,6 +33,16 @@ define([
                 step: (max_level - min_level) / 100
             };
         },
+        hidePopup: function () {
+            this.getMoreartyContext()
+                .getBinding()
+                .sub('default')
+                .sub('show_popup_' + this.getDefaultBinding().val('id')).set(false);
+            if (this.isMounted()) {
+                this.forceUpdate();
+            }
+            return false;
+        },
         componentWillMount: function () {
             var that = this,
                 default_binding = this.getMoreartyContext().getBinding().sub('default');
@@ -173,12 +183,14 @@ define([
                         ref: 'progressContainer',
                         onClick: this.showSettings
                     }),
-                    show_binding.val() ? LevelSelector({
-                        binding: {
-                            default: binding
-                        },
-                        show: show_binding
-                    }) : null
+                    show_binding.val() ? _.div({className: 'overlay transparent show fixed', onClick: this.hidePopup},
+                        LevelSelector({
+                            binding: {
+                                default: binding
+                            },
+                            show: show_binding
+                        })
+                    ) : null
                 )
             );
         }

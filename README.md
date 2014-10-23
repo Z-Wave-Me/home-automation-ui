@@ -7,8 +7,8 @@ ZWay Home Automation UI
 * [Links](#links)
 * [Changelog](#changelog)
 * [Gulp](#gulp)
-    * [Build](#build)
-    * [Other task](#other-task)
+    * [Build](##build)
+    * [Other task](##other-task)
     
 # Introduction #
 UI for Z-Way Automation Server
@@ -20,6 +20,10 @@ API Documentation: http://docs.zwayhomeautomation.apiary.io/
 Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home-automation-ui/issues
 
 # Changelog #
+* 2.0.0rc4
+- Thermostat stable
+- ColorPicker stable
+- Integration with travis-ci
 * 2.0.0rc3 - Thermostat(beta) and Color picker widget(alpha). Update morearty to 0.4.5 and Immutable 2.5
 * 2.0.0rc1-rc2 - Initial new version. Update Readme.md
 
