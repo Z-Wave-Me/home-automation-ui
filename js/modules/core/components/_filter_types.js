@@ -1,11 +1,4 @@
-define([
-    // libs
-
-    'morearty'
-], function (
-    // libs
-    Morearty
-    ) {
+define(['morearty'], function (Morearty) {
     'use strict';
 
     return React.createClass({
@@ -48,7 +41,7 @@ define([
                             key: type
                         }, type);
                     })
-            )
+            );
         }
     });
 });
