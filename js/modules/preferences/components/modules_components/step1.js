@@ -38,7 +38,7 @@ define([
                 data_binding = this.getBinding('data'),
                 modules_binding = data_binding.sub('modules'),
                 filtered_modules = modules_binding.val().filter(function (module) {
-                    return module.get('category') === category.get('id')
+                    return module.get('category') === category.get('id');
                 }),
                 filtered_modules_length = filtered_modules.toArray().length,
                 number_step = 3,
@@ -73,10 +73,10 @@ define([
                     portions.map(function (portion, index) {
                         return _.div({key: 'portion-' + portions.length + '-' + index, className: 'row'},
                             portion.map(that.getModule).toArray()
-                        )
+                        );
                     })
                 ) : null
-            )
+            );
         },
         getModule: function (module) {
             var _ = React.DOM,

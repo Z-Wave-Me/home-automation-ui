@@ -1,11 +1,4 @@
-define([
-    // libs
-
-    'morearty'
-], function (
-    // libs
-    Morearty
-    ) {
+define(['morearty'], function (Morearty) {
     'use strict';
 
     return React.createClass({
@@ -39,18 +32,16 @@ define([
                 tagsBinding = dataBinding.sub('deviceTags'),
                 tags = tagsBinding.val().toJS();
 
-            return (
-                _.div({className: 'secondary-filters'},
-                    tags
-                        .map(function (tag) {
-                            return _.div({
-                                onClick: that.setSecondaryFilter.bind(null, tag),
-                                className: secondaryFilter === tag ? 'secondary-filter selected' : 'secondary-filter',
-                                key: tag
-                            }, tag);
-                        })
-                )
-            )
+            return _.div({className: 'secondary-filters'},
+                tags
+                    .map(function (tag) {
+                        return _.div({
+                            onClick: that.setSecondaryFilter.bind(null, tag),
+                            className: secondaryFilter === tag ? 'secondary-filter selected' : 'secondary-filter',
+                            key: tag
+                        }, tag);
+                    })
+            );
         }
     });
 });

@@ -18,15 +18,16 @@ define([
     return React.createClass({
         mixins: [Morearty.Mixin, SyncLayerMixin, PopupMixin],
         getInitialState: function () {
-            var binding = this.getDefaultBinding(),
-                min_level = parseInt(binding.sub('metrics').val('min')),
-                max_level = parseInt(binding.sub('metrics').val('max'));
+            var metrics_binbind = this.getDefaultBinding().sub('metrics'),
+                min_level = parseInt(metrics_binbind.val('min')),
+                max_level = parseInt(metrics_binbind.val('max')),
+                level = parseInt(metrics_binbind.val('level'));
 
             return {
                 twoPi: Math.PI * 2,
                 min_level: min_level,
                 max_level: max_level,
-                current_level: parseInt(binding.sub('metrics').val('level')),
+                current_level: level,
                 step: (max_level - min_level) / 100
             };
         },
@@ -171,7 +172,6 @@ define([
         },
         render: function () {
             var _ = React.DOM,
-                cx = React.addons.classSet,
                 binding = this.getDefaultBinding();
 
             return _.div({onClick: this.stopPropagationAndPreventDefault, ref: 'popover', className: 'popover right popover-level-selector'},

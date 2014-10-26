@@ -33,7 +33,7 @@ define([
             preferences_binding.set('temp_string', '');
         },
         componentWillUnmount: function () {
-            this.getBinding('preferences').delete('temp_string')
+            this.getBinding('preferences').delete('temp_string');
         },
         preventDefault: function (e) {
             e.preventDefault();
@@ -62,12 +62,12 @@ define([
         showInDashboardHandler: function (event) {
             var showInDashboard = event.target.checked,
                 activeProfile = this.getActiveProfile(),
-                deviceId = this.getBinding('item').val('id')
+                deviceId = this.getBinding('item').val('id');
 
             if (activeProfile) {
                 if (showInDashboard) {
                     activeProfile.update('positions', function (positions) {
-                        return positions.push(deviceId)
+                        return positions.push(deviceId);
                     });
                 } else {
                     activeProfile.update('positions', function (positions) {
@@ -137,7 +137,7 @@ define([
                     ),
                     _.div({ key: 'form-deviceType-input', className: 'data-group'},
                         _.span({className: 'label-item'}, 'deviceType'),
-                        _.span({className: 'value-item'}, item.val('deviceType'))
+                        _.span({className: 'value-item'}, deviceType)
                     ),
                     creatorIndex !== -1 ? _.div({ key: 'form-creatorId-input', className: 'data-group'},
                         _.span({className: 'label-item'}, 'creatorId'),
@@ -308,7 +308,7 @@ define([
             item_binding.update('tags', function (tags) {
                return tags.filter(function (tag) {
                    return tag !== label;
-               })
+               });
             });
 
             return false;

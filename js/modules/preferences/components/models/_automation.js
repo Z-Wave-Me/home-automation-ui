@@ -42,8 +42,12 @@ define([
             }
         },
         renderAlpaca: function (instanceId) {
-            var that = this, instanceJson, module, moduleJson, params, $el,
-                instance = that.getModelFromCollection(instanceId, 'instances')
+            var that = this,
+                instanceJson,
+                module,
+                moduleJson,
+                $el,
+                instance = that.getModelFromCollection(instanceId, 'instances');
 
             if (!instance || !instanceId) {
                 return;
