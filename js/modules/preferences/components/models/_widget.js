@@ -73,7 +73,7 @@ define([
                     activeProfile.update('positions', function (positions) {
                         return positions.filter(function (id) {
                             return deviceId !== id;
-                        }).toVector();
+                        });
                     });
                 }
 

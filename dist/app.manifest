@@ -5,14 +5,11 @@ CACHE:
 index.html
 js/main-built.js
 public/css/all.css
-public/fonts/helveticaneue-bold.eot
-public/fonts/helveticaneue-bold.svg
-public/fonts/helveticaneue-bold.ttf
 public/fonts/helveticaneue-bold.woff
-public/fonts/helveticaneue.eot
-public/fonts/helveticaneue.svg
-public/fonts/helveticaneue.ttf
 public/fonts/helveticaneue.woff
+public/lang/language.de.json
+public/lang/language.en.json
+public/lang/language.ru.json
 
 
 NETWORK:
@@ -24,4 +21,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: ad2526d7f6dfe8d96a675b602002119639ee56a197e3ddcb6bb9f22e8e01ed67
+# hash: 2a8cc8198ae48bc781ab90e23a1a866bbe4d73d0428abe035adddc4e2f9eab78

@@ -18,7 +18,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, sync_layer_mixin, popup_mixin],
+        mixins: [Morearty.Mixin, sync_layer_mixin, popup_mixin, TranslateMixin],
         hideNotificationsPopup: function () { // rewrite method
             this.getDefaultBinding().sub('notifications').set('show_popup', false);
             return false;
@@ -66,6 +66,7 @@ define([
         },
         render: function () {
             var _ = React.DOM,
+                __ = this.gls,
                 binding = this.getDefaultBinding(),
                 notifications_binding = this.getBinding('data').sub('notifications'),
                 notifications = notifications_binding.val(),
@@ -80,15 +81,15 @@ define([
                     _.div({className: 'popover-content'},
                         _.input({
                             className: 'filter-events',
-                            placeholder: 'filter here',
+                            placeholder: __('filter_here'),
                             onChange: Morearty.Callback.set(binding.sub('notifications'), 'searchString')
                         }),
                         _.div({className: 'events-container'},
                             notifications.map(this.getEvent).toArray()
                         ),
                         _.div({className: 'button-container'},
-                            _.button({className: 'button hide-all-button'}, 'HIDE ALL'),
-                            _.button({className: 'button hide-all-visible-button'}, 'HIDE ALL VISIBLE')
+                            _.button({className: 'button hide-all-button'}, __('hide_all', 'case')),
+                            _.button({className: 'button hide-all-visible-button'}, __('hide_all_visible', 'case'))
                         )
                     )
                 )

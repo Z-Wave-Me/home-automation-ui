@@ -14,6 +14,10 @@ define([], function () {
                         (Boolean(apiPort) ? ':' + apiPort : '')
                         + '/ZAutomation/api/v1' + options.url;
 
+            if (options.local_url) {
+                url = options.url;
+            }
+
             options.params = options.params || {};
 
             if (!options.hasOwnProperty('url') || !options.hasOwnProperty('method')) {

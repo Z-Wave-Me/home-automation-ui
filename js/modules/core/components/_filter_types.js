@@ -15,7 +15,7 @@ define(['morearty'], function (Morearty) {
             var binding = this.getDefaultBinding(),
                 dataBinding = this.getBinding('data');
 
-            if (dataBinding.val('deviceTypes').length > 0) {
+            if (dataBinding.val('deviceTypes').count() > 0) {
                 binding.set('secondaryFilter', dataBinding.val('deviceTypes').first());
             }
         },

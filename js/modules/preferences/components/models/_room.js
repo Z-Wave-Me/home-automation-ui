@@ -19,7 +19,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, data_layer_mixin, sync_layer_mixin],
+        mixins: [Morearty.Mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
         isplayName: '_room',
         componentWillMount: function () {
             var that = this,
@@ -65,6 +65,7 @@ define([
                 preferencesBinding = that.getBinding('preferences'),
                 dataBinding = that.getBinding('data'),
                 _ = React.DOM,
+                __ = this.gls,
                 add_mode = preferencesBinding.val('activeNodeTreeStatus') === 'add',
                 item = that.getBinding('item'),
                 title = item.val('title'),
@@ -88,7 +89,7 @@ define([
                             id: 'room-name',
                             className: 'input-value',
                             type: 'text',
-                            placeholder: 'Name',
+                            placeholder: __('name', 'capitalize'),
                             value: title
                         })
                     ),
@@ -96,7 +97,7 @@ define([
                         _.label({ htmlFor: 'room-description', className: 'input-label'}, 'Icon:'),
                         _.div({ onDrop: this.handleFile, onDragOver: this.preventDefault, className: 'dropzone', onClick: this.handleClick},
                             _.div({className: 'pull-left text-container'},
-                                _.span({ className: 'text-zone primary'}, _.strong({}, 'Drop file'), ' to upload'),
+                                _.span({ className: 'text-zone primary'}, _.strong({}, __('drop_file', 'capitalize')), ' ', __('to_upload')),
                                 _.span({ className: 'text-zone secondary'}, '(or click)')
                             ),
                             _.div({className: classes, style: icon ? {'background-image': 'url(' + icon + ')'} : {}})
@@ -118,7 +119,7 @@ define([
                         ),
                         _.input({
                             className: classes_input_autocomplete,
-                            placeholder: 'Device name',
+                            placeholder: __('device_name', 'capitalize'),
                             onChange: Morearty.Callback.set(preferencesBinding, 'temp_string'),
                             value: temp_string
                         }),
@@ -147,6 +148,7 @@ define([
         getDevicesAvailable: function () {
             var that = this,
                 _ = React.DOM,
+                __ = this.gls,
                 devices_binding = that.getBinding('data').sub('devices'),
                 item_binding = that.getBinding('item'),
                 temp_string = that.getBinding('preferences').val('temp_string'),
@@ -179,7 +181,7 @@ define([
                 });
             } else {
                 return _.li({className: 'result-dept'},
-                    _.div({className: 'result-label no-matches'}, 'no matches')
+                    _.div({className: 'result-label no-matches'}, __('no_matches'))
                 );
             }
         },

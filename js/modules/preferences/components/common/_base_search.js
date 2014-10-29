@@ -8,15 +8,16 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin],
+        mixins: [Morearty.Mixin, TranslateMixin],
         render: function () {
-            var _ = React.DOM;
+            var _ = React.DOM,
+                __ = this.gls;
 
             return _.div({ className: 'base-search-component' },
                 _.input({
                     className: 'search-input',
                     type: 'search',
-                    placeholder: 'search',
+                    placeholder: __('search'),
                     onChange: Morearty.Callback.set(this.props.search_attr)
                 })
             );

@@ -7,8 +7,7 @@ define([], function () {
                 ctx = this.getMoreartyContext(),
                 defaultBinding = ctx.getBinding().sub('default'),
                 servicesBinding = ctx.getBinding().sub('services'),
-                dataBinding = ctx.getBinding().sub('data'),
-                collections = servicesBinding.sub('collections');
+                dataBinding = ctx.getBinding().sub('data');
 
             // add local data
             that.getBinding('preferences').addListener('defaultProfileId', function (profileId) {
@@ -19,7 +18,11 @@ define([], function () {
                         return String(profile.get('id')) === String(profileId);
                     });
 
-                dataBinding.set('devicesOnDashboard', filter.toArray().length > 0 ? filter.toArray()[0].get('positions') : []);
+                dataBinding.set('devicesOnDashboard', filter.count() > 0 ? filter.toArray()[0].get('positions') : []);
+            });
+
+            defaultBinding.sub('system.current_language').addListener(function (lang) {
+                localStorage.setItem('currentLanguage', String(lang));
             });
 
             dataBinding.addListener('profiles', function (profiles) {
@@ -32,15 +35,35 @@ define([], function () {
             });
 
             dataBinding.addListener('notifications', function () {
-                defaultBinding.sub('notifications').set('count', dataBinding.sub('notifications').val().toArray().length)
-            })
+                defaultBinding.sub('notifications').set('count', dataBinding.sub('notifications').val().count());
+            });
         },
         pull: function () {
             var that = this,
                 ctx = that.getMoreartyContext(),
                 servicesBinding = ctx.getBinding().sub('services'),
                 dataBinding = ctx.getBinding().sub('data'),
-                collections = servicesBinding.sub('collections');
+                collections = servicesBinding.sub('collections'),
+                languages_binding = ctx.getBinding().sub('default.system.languages');
+
+            languages_binding.val().forEach(function (lang) {
+                that.getLangFile(lang, function (response) {
+                    dataBinding.update('languages', function (languages) {
+                        return languages.push(Immutable.fromJS({
+                            id: lang,
+                            data: response
+                        }));
+                    });
+
+                    ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
+                        return percantage + ((1 / languages_binding.val().count()) * 50);
+                    });
+
+                    if (dataBinding.sub('languages').val().count() === languages_binding.val().count()) {
+                        ctx.getBinding().sub('default.system.loaded_lang_files').set(true);
+                    }
+                });
+            });
 
             collections.val().forEach(function (collection, index) {
                 var obj = collection.toJS(),
@@ -61,20 +84,20 @@ define([], function () {
                                     }
                                 }
 
-                                if (collections.sub(index).val('loaded')=== false) {
+                                if (collections.sub(index).val('loaded') === false) {
                                     collections.sub(index).set('loaded', true);
-                                    ctx.getBinding().sub('default').sub('system').update('loaded_percentage', function (percantage) {
-                                        return percantage + ((1 / collections.val().toArray().length) * 100);
+                                    ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
+                                        return percantage + ((1 / collections.val().count()) * 50);
                                     });
 
                                     if (collections.val().every(function (c) {
                                         return c.get('loaded') === true;
                                     })) {
-                                        ctx.getBinding().sub('default').sub('system').set('loaded', true);
+                                        ctx.getBinding().sub('default.system.loaded').set(true);
                                     }
                                 }
                             }
-                        })
+                        });
                     });
 
                 if (obj.autoSync) {
@@ -88,7 +111,6 @@ define([], function () {
                 } else {
                     setTimeout(func, obj.delay || 0);
                 }
-                //setTimeout(func, obj.delay || 0);
             });
         },
         equals: function ( x, y ) {

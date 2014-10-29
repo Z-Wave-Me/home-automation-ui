@@ -63,11 +63,11 @@ define([], function () {
                     if (devices_binding.val()) {
                         dataBinding.update('deviceTags', function () {
                             var tags = devices_binding.val().reduce(function (memo, device, index) {
-                                memo = index === 1 ? Immutable.Vector() : memo;
+                                memo = index === 1 ? Immutable.List() : memo;
 
                                 var device_tags = device.get('tags');
 
-                                if (device_tags.length > 0) {
+                                if (device_tags.count() > 0) {
                                     var filtered_tags = device_tags.filter(function (t) {
                                         return memo.indexOf(t) === -1;
                                     });
@@ -75,7 +75,7 @@ define([], function () {
                                 } else {
                                     return memo;
                                 }
-                            }, Immutable.Vector());
+                            }, Immutable.List());
 
                             return tags.sort();
                         });
@@ -91,7 +91,7 @@ define([], function () {
                                 } else {
                                     return memo;
                                 }
-                            }, Immutable.Vector());
+                            }, Immutable.List());
 
 
                             return types.sort();

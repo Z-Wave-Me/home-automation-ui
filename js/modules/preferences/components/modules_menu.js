@@ -25,24 +25,26 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin, data_layer],
+        mixins: [Morearty.Mixin, base_mixin, data_layer, TranslateMixin],
         getInitialState: function () {
+            var __ = this.gls;
+
             return {
                 steps: {
                     1: {
-                        description: 'STEP 1: CHOOSE MODULE',
+                        description: __('step', 'case') + ' 1: ' + __('choose_module', 'case'),
                         component: step1
                     },
                     2: {
-                        description: 'STEP 2: SET NAME',
+                        description: __('step', 'case') + ' 2: ' + __('set_name', 'case'),
                         component: step2
                     },
                     3: {
-                        description: 'STEP 3: CONFIGURATION',
+                        description: __('step', 'case') + ' 3: ' + __('configuration', 'case'),
                         component: step3
                     }
                 }
-            }
+            };
         },
         componentWillMount: function () {
             var that = this,
@@ -52,7 +54,7 @@ define([
                 .set('step', 1)
                 .set('moduleId', null)
                 .set('instance_temp', null)
-                .set('expanded', Immutable.Vector())
+                .set('expanded', Immutable.List())
                 .set('search_string_on_modules_list', '')
                 .commit();
 
@@ -69,7 +71,7 @@ define([
                             params: {},
                             import_instanceId: null
                         }))
-                        .commit()
+                        .commit();
                 }
             });
         },
@@ -89,6 +91,7 @@ define([
         },
         render: function () {
             var _ = React.DOM,
+                __ = this.gls,
                 cx = React.addons.classSet,
                 preferences_binding = this.getBinding('preferences'),
                 step_numeric = preferences_binding.val('step'),
@@ -112,9 +115,9 @@ define([
                 _.div({className: 'footer-component'},
                     _.div({className: 'stepbar-container'},
                         _.ul({className: 'stepbar'},
-                            _.li({className: step_numeric >= 1 ? 'active' : null}, 'Choose Module'),
-                            _.li({className: step_numeric >= 2 ? 'active' : null}, 'Set name'),
-                            _.li({className: step_numeric === 3 ? 'active' : null}, 'Configuration')
+                            _.li({className: step_numeric >= 1 ? 'active' : null}, __('choose_module', 'capitalize')),
+                            _.li({className: step_numeric >= 2 ? 'active' : null}, __('set_name', 'capitalize')),
+                            _.li({className: step_numeric === 3 ? 'active' : null}, __('configuration', 'capitalize'))
                         )
                     )
                 )

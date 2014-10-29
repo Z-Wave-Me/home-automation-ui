@@ -12,7 +12,6 @@
     "gulp-sourcemaps": "latest",
     "gulp-css-base64": "latest",
     "gulp-requirejs": "latest",
-    "gulp-concat": "latest",
     "gulp-uglify": "latest",
     "gulp-autoprefixer": "latest",
     "gulp-connect": "latest",
@@ -23,11 +22,12 @@
     "gulp-rimraf": "latest",
     "gulp-htmlmin": "latest",
     "jshint-stylish": "latest",
-    "run-sequence": "latest"
+    "run-sequence": "latest",
+    "lodash": "latest"
   },
   "scripts": {
     "build": "gulp",
-    "server": "gulp develop_server",
+    "start": "gulp develop_server",
     "postinstall": "bower --quiet install"
   },
   "repository": {

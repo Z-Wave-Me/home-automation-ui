@@ -283,7 +283,7 @@ define([
                 that.getBinding('data').update('instances', function (instances) {
                     return instances.filter(function (instance) {
                         return instance.get('id') !== item_binding.val('id');
-                    }).toVector();
+                    });
                 });
                 that.forceUpdate();
             }

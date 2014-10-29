@@ -12,7 +12,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin],
+        mixins: [Morearty.Mixin, TranslateMixin],
         onShowPreferences: function () {
             this.getDefaultBinding().set('overlayShow', true);
             return false;
@@ -33,6 +33,7 @@ define([
         },
         render: function () {
             var _ = React.DOM,
+                __ = this.gls,
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
                 nowShowing = binding.val('nowShowing'),
@@ -68,8 +69,8 @@ define([
                     ),
                     _.nav({className: 'main-navigation'},
                         _.ul({ className: 'navigation-menu' },
-                            _.li(null, _.a({ className: nowShowing === 'dashboard' || nowShowing === '' ? 'selected' : '', href: '#/dashboard' }, 'DASHBOARD')),
-                            _.li(null, _.a({ className: nowShowing === 'widgets' ? 'selected' : '', href: '#/widgets' }, 'WIDGETS'))
+                            _.li(null, _.a({ className: nowShowing === 'dashboard' || nowShowing === '' ? 'selected' : '', href: '#/dashboard' }, __('dashboard', 'upper'))),
+                            _.li(null, _.a({ className: nowShowing === 'widgets' ? 'selected' : '', href: '#/widgets' }, __('widgets', 'upper')))
                         )
                     ),
                     _.section({className: 'user-panel-section'},
@@ -79,7 +80,7 @@ define([
                         ),
                         _.div({className: 'preferences-button', onClick: this.onShowPreferences},
                             _.span({className: 'icon-button small-gear tools-sprite'}),
-                            _.span({className: 'label-button'}, 'PREFERENCES')
+                            _.span({className: 'label-button'}, __('preferences', 'upper'))
                         )
                     )
                 ),

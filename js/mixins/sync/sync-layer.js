@@ -36,10 +36,20 @@ define([
 
                 this._read(url, options);
             } else {
-                console.debug('incorrect _serviceId')
+                console.debug('incorrect _serviceId');
             }
 
             return false;
+        },
+        getLangFile: function (lang, callback) {
+            var binding = this.getMoreartyContext().getBinding(),
+                path_lang_file = binding.sub('default.system.path_lang_file').val();
+
+            this._read(path_lang_file + '/language.' + lang + '.json', {
+                success: callback,
+                local_url: true
+            });
+
         },
         save: function (options) {
             options = options || {};
@@ -117,9 +127,10 @@ define([
                 success: _options.success,
                 params: _options.params,
                 cache: _options.cache || true,
+                local_url: _options.local_url || null,
                 method: 'GET',
                 data: null
-            })
+            });
         },
         _destroy: function (url, callback, _options) {
             this.xhr.request({

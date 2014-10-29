@@ -48,7 +48,7 @@ define([
                         key: item.get('id')
                     }, item.get('title'));
                 }).toArray()
-            )
+            );
         }
     });
 });

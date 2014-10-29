@@ -11,7 +11,8 @@ define([], function () {
         notifications: [],
         deviceTypes: [],
         deviceTags: [],
-        devicesOnDashboard: []
+        devicesOnDashboard: [],
+        languages: []
     };
 });
 
