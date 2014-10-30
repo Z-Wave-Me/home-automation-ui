@@ -21,6 +21,12 @@ API Documentation: http://docs.zwayhomeautomation.apiary.io/
 Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home-automation-ui/issues
 
 # Changelog #
+* 2.0.0rc7
+    - Localization
+    - Upgrade lib:
+        Morearty 0.5
+        Immutable 3.0.0
+    - Gulp. Replace rimraf. Update manifest.
 * 2.0.0rc6 (Maintenance release)
     - Add Code Climat
     - Minor fixes
