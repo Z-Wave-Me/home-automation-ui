@@ -1,14 +1,10 @@
 define([
-    // libs
-    'morearty',
     // components
     // mixins
     '../../mixins/base_mixin',
     'mixins/data/data-layer',
     'mixins/sync/sync-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     _base_search,
     // mixins
@@ -19,7 +15,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin],
+        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
         componentWllMount: function () {
             if (this.isMounted()) {
                 if (this.getDefaultBinding().val('import_instanceId') !== null) {
@@ -29,12 +25,10 @@ define([
         },
         render: function () {
             var _ = React.DOM,
-                that = this,
-                cx = React.addons.classSet,
+                __ = this.gls,
                 preferences_binding = this.getDefaultBinding(),
                 instance_binding = preferences_binding.sub('instance_temp'),
-                moduleId = preferences_binding.val('moduleId'),
-                module_binding = this.getModelFromCollection(moduleId, 'modules');
+                moduleId = preferences_binding.val('moduleId');
 
             return _.div({className: 'step-container'},
                 _.div({ className: 'model-component' },
@@ -45,7 +39,7 @@ define([
                                 key: 'title-input',
                                 className: 'input-value',
                                 type: 'text',
-                                placeholder: 'Title',
+                                placeholder: __('title', 'capitalize'),
                                 value: instance_binding.val('title'),
                                 onChange: Morearty.Callback.set(instance_binding, 'title')
                             })
@@ -55,7 +49,7 @@ define([
                             _.textarea({
                                 key: 'description-input',
                                 className: 'input-value textarea-type',
-                                placeholder: 'Description',
+                                placeholder: __('description', 'capitalize'),
                                 value: instance_binding.val('description'),
                                 onChange: Morearty.Callback.set(instance_binding, 'description')
                             })
@@ -65,7 +59,7 @@ define([
                             _.span({key: 'moduleId-info', className: 'span-value link'}, moduleId)
                         ),
                         _.div({ key: 'form-device-input', className: 'form-group inline' },
-                            _.span({className: 'label-span'}, 'Import settings from:'),
+                            _.span({className: 'label-span'}, __('import_settings_from'), ':'),
                             _.select({
                                 ref: 'selectInstance',
                                 className: 'select-input',
@@ -74,7 +68,7 @@ define([
                                 _.option({
                                     defaultValue: true,
                                     value: null
-                                }, 'choose instance'),
+                                }, __('choose_instance')),
                                 this.getInstanceAvailable()
                             )
                         ),
@@ -82,7 +76,7 @@ define([
                                 key: 'next-button',
                                 className: 'modern-button green-mode center',
                                 onClick: this.onNextHandler
-                            }, 'NEXT'
+                            }, __('next', 'upper')
                         )
                     )
                 )

@@ -1,6 +1,4 @@
 define([
-    // libs
-'morearty',
     // components
     '../common/_buttons_group',
     '../common/_inline_input',
@@ -8,8 +6,6 @@ define([
     'mixins/data/data-layer',
     'mixins/sync/sync-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     _buttons_group,
     _inline_input,
@@ -19,7 +15,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, data_layer_mixin],
+        mixins: [Morearty.Mixin, data_layer_mixin, TranslateMixin],
         isplayName: '_profile',
         setAsDefaultProfile: function (event) {
             this.getBinding('preferences').set('defaultProfileId', event.target.checked ? this.getBinding('item').val('id') : null);
@@ -37,11 +33,12 @@ define([
             preferences_binding.set('temp_string', '');
         },
         componentWillUnmount: function () {
-            this.getBinding('preferences').delete('temp_string')
+            this.getBinding('preferences').delete('temp_string');
         },
         render: function () {
             var that = this,
                 _ = React.DOM,
+                __ = this.gls,
                 cx = React.addons.classSet,
                 preferencesBinding = that.getBinding('preferences'),
                 data_binding = that.getBinding('data'),
@@ -66,7 +63,7 @@ define([
                             id: 'profile-name',
                             className: 'input-value',
                             type: 'text',
-                            placeholder: 'Name',
+                            placeholder: __('name', 'capitalize'),
                             autoFocus: true,
                             value: title
                         })
@@ -79,7 +76,7 @@ define([
                             className: 'input-value textarea-type',
                             col: 3,
                             row: 3,
-                            placeholder: 'Description',
+                            placeholder: __('description', 'capitalize'),
                             value: description
                         })
                     ),
@@ -96,7 +93,7 @@ define([
                         ),
                         _.input({
                             className: classes_input_autocomplete,
-                            placeholder: 'Device name',
+                            placeholder: __('device_name', 'capitalize'),
                             onChange: Morearty.Callback.set(preferencesBinding, 'temp_string'),
                             value: temp_string
                         }),
@@ -122,7 +119,7 @@ define([
                                     _.div({className: 'bubble-switch'})
                                 )
                             ),
-                            'Make as default profile'
+                            __('make as default', 'capitalize'), ' ', __('profile')
                         )
                     ) : null,
                     _buttons_group({
@@ -139,6 +136,7 @@ define([
         getDevicesAvailable: function () {
             var that = this,
                 _ = React.DOM,
+                __ = this.gls,
                 devices_binding = that.getBinding('data').sub('devices'),
                 item_binding = that.getBinding('item'),
                 temp_string = that.getBinding('preferences').val('temp_string'),
@@ -167,11 +165,11 @@ define([
                                 );
                             }).toArray()
                         )
-                    )
+                    );
                 });
             } else {
                 return _.li({className: 'result-dept'},
-                    _.div({className: 'result-label no-matches'}, 'no matches')
+                    _.div({className: 'result-label no-matches'}, __('no_matches'))
                 );
             }
         },
@@ -192,7 +190,7 @@ define([
             item_binding.update('positions', function (positions) {
                 return positions.filter(function (deviceId) {
                     return deviceId !== label;
-                }).toVector();
+                });
             });
 
             that.forceUpdate();

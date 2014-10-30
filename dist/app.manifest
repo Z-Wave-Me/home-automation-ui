@@ -2,17 +2,13 @@ CACHE MANIFEST
 
 
 CACHE:
-index.html
 js/main-built.js
 public/css/all.css
-public/fonts/helveticaneue-bold.eot
-public/fonts/helveticaneue-bold.svg
-public/fonts/helveticaneue-bold.ttf
 public/fonts/helveticaneue-bold.woff
-public/fonts/helveticaneue.eot
-public/fonts/helveticaneue.svg
-public/fonts/helveticaneue.ttf
 public/fonts/helveticaneue.woff
+public/lang/language.de.json
+public/lang/language.en.json
+public/lang/language.ru.json
 
 
 NETWORK:
@@ -24,4 +20,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: ad2526d7f6dfe8d96a675b602002119639ee56a197e3ddcb6bb9f22e8e01ed67
+# hash: da6b11a2296b9fc93d7edd86f0ea31b1fe1487c49f11ca2281fa4ec25a3affac

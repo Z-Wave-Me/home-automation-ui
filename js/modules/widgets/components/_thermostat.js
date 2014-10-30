@@ -1,7 +1,6 @@
 define([
     // libs
     'd3',
-    'morearty',
     // components
     '../common/level_selector',
     // mixins
@@ -9,7 +8,6 @@ define([
 ], function (
     // libs
     d3,
-    Morearty,
     // components
     LevelSelector,
     // mixins

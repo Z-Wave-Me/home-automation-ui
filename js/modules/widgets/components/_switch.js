@@ -1,14 +1,10 @@
 define([
-    // libs
-    'morearty',
     // components
     '../common/color_picker',
     // mixins
     'mixins/sync/sync-layer',
     'mixins/ui/dom'
 ], function (
-    // libx
-    Morearty,
     // components
     ColorPicker,
     // mixins

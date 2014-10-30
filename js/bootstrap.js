@@ -1,4 +1,5 @@
-define(['morearty', 'App'], function (Morearty, App) {
+define(['App'], function (App) {
+    'use strict';
 
     return React.createClass({
         mixins: [Morearty.Mixin],

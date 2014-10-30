@@ -11,7 +11,7 @@ requirejs.config({
         // react
         react: '../bower_components/react/react-with-addons',
         morearty: '../bower_components/moreartyjs/dist/morearty',
-        immutable: '../bower_components/immutable/dist/Immutable',
+        immutable: '../bower_components/immutable/dist/immutable',
         director: '../bower_components/director/build/director',
         // ace
         ace: '../bower_components/ace-builds/src/ace',
@@ -95,6 +95,8 @@ require([
     'immutable',
     'director',
     'sticky',
+    // mixins
+    'mixins/data/translate',
     // helpers
     'helpers/js',
     // contexts
@@ -108,6 +110,8 @@ require([
     Immutable,
     Director,
     Sticky,
+    // mixins
+    TranslateMixin,
     // helpers
     HelpersJS,
     // bindings
@@ -120,6 +124,7 @@ require([
 
     window.React = React;
     window.Immutable = Immutable;
+    window.TranslateMixin = TranslateMixin;
 
     require(['morearty'], function (Morearty) {
         var Ctx = Morearty.createContext({
@@ -130,6 +135,9 @@ require([
         }, {
             requestAnimationFrameEnabled: true
         });
+
+        // export mixin to global
+        window.Morearty = Morearty;
 
         // reg module in global namespace
         Sticky.set('App.Helpers.JS', HelpersJS, Ctx, {});

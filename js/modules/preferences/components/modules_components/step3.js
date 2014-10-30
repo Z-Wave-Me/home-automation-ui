@@ -1,6 +1,4 @@
 define([
-    // libs
-    'morearty',
     // components
     // mixins
     '../../mixins/base_mixin',
@@ -8,8 +6,6 @@ define([
     'mixins/sync/sync-layer',
     'alpaca'
 ], function (
-    // libs
-    Morearty,
     // components
     // mixins
     base_mixin,
@@ -19,11 +15,11 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin],
+        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
         getInitialState: function () {
             return {
                 form: null
-            }
+            };
         },
         componentDidMount: function () {
             if (this.isMounted()) {
@@ -32,10 +28,9 @@ define([
         },
         render: function () {
             var _ = React.DOM,
+                __ = this.gls,
                 preferences_binding = this.getDefaultBinding(),
-                instance_binding = preferences_binding.val('instance_temp'),
-                moduleId = preferences_binding.val('moduleId'),
-                module_binding = this.getModelFromCollection(moduleId, 'modules');
+                moduleId = preferences_binding.val('moduleId');
 
             return _.div({ className: 'step-container' },
                 _.div({className: 'alpaca-main', ref: 'alpacaNodeRef'}),
@@ -43,7 +38,7 @@ define([
                         key: 'finish-button',
                         className: 'modern-button green-mode center',
                         onClick: this.onFinishHandler
-                    }, 'FINISH'
+                    }, __('finish', 'case')
                 )
             );
         },
@@ -71,7 +66,7 @@ define([
             instanceJson = instance.val().toJS();
             module = that.getModelFromCollection(instanceJson.moduleId, 'modules');
             moduleJson = module.val().toJS();
-            $el = $(that.refs.alpacaNodeRef.getDOMNode());
+            $el = $(that.refs.alpacaNodeRef.getDOMNode())
 
             $el.empty().alpaca({
                 data: that.updateObjectAsNamespace(import_params || instanceJson.params),

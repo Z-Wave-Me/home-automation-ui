@@ -1,13 +1,9 @@
 define([
-    //libs
-'morearty',
     // components
     './components/base',
     // mixins
     'mixins/data/data-layer'
 ], function (
-    //libs
-    Morearty,
     // components
     BaseWidget,
     // mixins

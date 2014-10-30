@@ -1,6 +1,4 @@
 define([
-    // libs
-'morearty',
     'alpaca',
     // components
     '../common/_buttons_group',
@@ -9,8 +7,6 @@ define([
     '../../mixins/base_mixin',
     'mixins/data/data-layer'
 ], function (
-    // libs
-    Morearty,
     Alpaca,
     // components
     _buttons_group,
@@ -22,7 +18,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin],
+        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, TranslateMixin],
         componentDidMount: function () {
             this.renderAlpaca(this.getBinding('preferences').val('leftPanelItemSelectedId'));
         },
@@ -63,7 +59,7 @@ define([
                 schema: that.updateObjectAsNamespace(moduleJson.schema),
                 options: that.updateObjectAsNamespace(moduleJson.options),
                 postRender: function (form) {
-                    form.on("validated", function(e) {
+                    form.on("validated", function (e) {
                         var json = form.getValue();
                         instance.set('params', json);
                     });
@@ -82,6 +78,7 @@ define([
         render: function () {
             var that = this,
                 _ = React.DOM,
+                __ = this.gls,
                 instanceId = this.getBinding('preferences').val('leftPanelItemSelectedId'),
                 data_binding = that.getBinding('data'),
                 preferencesBinding = that.getBinding('preferences'),
@@ -105,7 +102,7 @@ define([
                                     _.div({className: 'bubble-switch'})
                                 )
                             ),
-                            'On/Off'
+                            __('on', 'capitalize'), '/', __('off', 'capitalize')
                         )
                     ) : null,
                     _buttons_group({

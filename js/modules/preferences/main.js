@@ -1,13 +1,9 @@
 define([
-    // libs
-'morearty',
     // components
     './components/base',
     // mixins
     './mixins/base_mixin'
 ], function (
-    // libs
-    Morearty,
     // components
     Base,
     // mixins
@@ -16,7 +12,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin],
+        mixins: [Morearty.Mixin, base_mixin, TranslateMixin],
         componentDidMount: function () {
             var binding = this.getDefaultBinding();
 
@@ -39,6 +35,7 @@ define([
         },
         render: function () {
             var _ = React.DOM,
+                __ = this.gls,
                 binding = this.getDefaultBinding(),
                 preferencesBinding = this.getBinding('preferences'),
                 overlay_show = binding.val('overlayShow'),
@@ -61,7 +58,7 @@ define([
                             _.div({className: 'overlay-center-top-panel overlay-top-panel'},
                                 _.span({
                                     className: 'overlay-top-panel overlay-panel-title'
-                                }, this.getActiveNodeTree()[0].options.name)
+                                }, __(this.getActiveNodeTree()[0].options.name, 'capitalize'))
                             ),
                             _.div({className: 'overlay-right-top-panel overlay-top-panel'},
                                 _.span({

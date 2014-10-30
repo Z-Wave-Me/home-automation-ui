@@ -1,14 +1,10 @@
 define([
-    // libs
-    'morearty',
     // components
     // mixins
     '../../mixins/base_mixin',
     'mixins/data/data-layer',
     'mixins/sync/sync-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     _base_search,
     // mixins
@@ -19,7 +15,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin],
+        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
         render: function () {
             var _ = React.DOM,
                 data_binding = this.getBinding('data'),
@@ -80,6 +76,7 @@ define([
         },
         getModule: function (module) {
             var _ = React.DOM,
+                __ = this.gls,
                 defaults = module.get('defaults'),
                 id = module.get('id'),
                 title = defaults.get('title'),
@@ -96,19 +93,19 @@ define([
 
             return is_match ? _.div({key: 'module-' + id, className: 'col-1-3 module-container'},
                 _.span({key: 'data-group-id', className: 'data-group'},
-                    _.span({key: 'label-item-id', className: 'label-item'}, 'id: '),
+                    _.span({key: 'label-item-id', className: 'label-item'}, __('id') + ': '),
                     _.span({key: 'value-item-id', className: 'value-item'}, id)
                 ),
                 _.span({key: 'data-group-title', className: 'data-group'},
-                    _.span({key: 'label-item-title', className: 'label-item'}, 'title: '),
+                    _.span({key: 'label-item-title', className: 'label-item'}, __('title'), ': '),
                     _.span({key: 'value-item-title', className: 'value-item'}, title)
                 ),
                 _.span({key: 'data-group-author', className: 'data-group'},
-                    _.span({key: 'label-item-author', className: 'label-item'}, 'author: '),
+                    _.span({key: 'label-item-author', className: 'label-item'}, __('author'), ': '),
                     _.span({key: 'value-item-author', className: 'value-item'}, author)
                 ),
                 _.span({key: 'data-group-homepage', className: 'data-group'},
-                    _.span({key: 'label-item-homepage', className: 'label-item'}, 'homepage: '),
+                    _.span({key: 'label-item-homepage', className: 'label-item'}, __('homepage'), ': '),
                     _.span({key: 'value-item-homepage', className: 'value-item'},
                         _.a({
                             className: 'link',
@@ -118,24 +115,24 @@ define([
                     )
                 ),
                 _.span({key: 'data-group-version', className: 'data-group'},
-                    _.span({key: 'label-item-version', className: 'label-item'}, 'version: '),
+                    _.span({key: 'label-item-version', className: 'label-item'}, __('version'), ': '),
                     _.span({key: 'value-item-version', className: 'value-item'}, version)
                 ),
                 _.span({key: 'data-group-maturity', className: 'data-group'},
-                    _.span({key: 'label-item-maturity', className: 'label-item'}, 'maturity: '),
+                    _.span({key: 'label-item-maturity', className: 'label-item'}, __('maturity'), ': '),
                     _.span({key: 'value-item-maturity', className: 'value-item'}, maturity)
                 ),
                 _.span({key: 'data-group-description', className: 'data-group no-inline'},
-                    _.span({key: 'label-item-description', className: 'label-item'}, 'description: '),
+                    _.span({key: 'label-item-description', className: 'label-item'}, __('description'), ': '),
                     _.span({key: 'value-item-description', className: 'value-item'}, description)
                 ),
                 _.div({className: 'buttons-container'},
                     is_used ?
-                        _.span({className: 'is-used'}, 'USED') :
+                        _.span({className: 'is-used'}, __('used', 'case')) :
                         _.button({
                             className: 'green-mode modern-button',
                             onClick: this.onSelectModuleHandler.bind(null, id)
-                        }, 'SELECT')
+                        }, __('select', 'case'))
                 )
             ) : null;
         },
@@ -157,7 +154,7 @@ define([
                 expanded.update(function (categories) {
                     return categories.filter(function (id) {
                         return id !== categoryId;
-                    }).toVector();
+                    });
                 });
             }
 

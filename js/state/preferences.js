@@ -18,7 +18,7 @@ define([], function () {
         tree: {
             id: 1,
             options: {
-                name: 'Preferences',
+                name: 'preferences',
                 leftPanel: false,
                 searchPanel: false,
                 componentName: 'main_menu',
@@ -28,7 +28,7 @@ define([], function () {
                 {
                     id: 2,
                     options: {
-                        name: 'Profiles',
+                        name: 'profiles',
                         leftPanel: true,
                         searchPanel: true,
                         buttons: ['add', 'remove'],
@@ -40,7 +40,7 @@ define([], function () {
                 {
                     id: 3,
                     options: {
-                        name: 'Rooms',
+                        name: 'rooms',
                         leftPanel: true,
                         searchPanel: true,
                         buttons: ['add', 'remove'],
@@ -52,7 +52,7 @@ define([], function () {
                 {
                     id: 4,
                     options: {
-                        name: 'Widgets',
+                        name: 'widgets',
                         leftPanel: true,
                         searchPanel: true,
                         componentName: '_widget',
@@ -63,7 +63,7 @@ define([], function () {
                 {
                     id: 5,
                     options: {
-                        name: 'Automation',
+                        name: 'automation',
                         leftPanel: false,
                         searchPanel: false,
                         componentName: 'instances_menu',
@@ -75,11 +75,24 @@ define([], function () {
                 {
                     id: 6,
                     options: {
-                        name: 'Modules',
+                        name: 'modules',
                         leftPanel: false,
                         searchPanel: false,
                         componentName: 'modules_menu',
                         serviceId: 'modules',
+                        noRequiredModel: true
+                    },
+                    children: []
+                },
+
+                {
+                    id: 7,
+                    options: {
+                        name: 'ui_setting',
+                        leftPanel: false,
+                        searchPanel: false,
+                        componentName: 'interface_menu',
+                        serviceId: null,
                         noRequiredModel: true
                     },
                     children: []

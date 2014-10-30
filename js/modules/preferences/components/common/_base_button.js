@@ -1,11 +1,7 @@
 define([
-    // libs
-'morearty',
     // components
     '../../mixins/base_mixin'
 ], function (
-    // libs
-    Morearty,
     // components
     base_mixin
     ) {

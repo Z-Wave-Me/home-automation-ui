@@ -1,11 +1,7 @@
 define([
-    // libs
-'morearty',
     // components
     'Widgets'
 ], function (
-    // libs
-    Morearty,
     // components
     Widgets
     ) {

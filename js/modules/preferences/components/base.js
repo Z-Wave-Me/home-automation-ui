@@ -1,9 +1,8 @@
 define([
-    // libs
-'morearty',
     // components
     './main_menu',
     './instances_menu',
+    './interface_menu',
     './modules_menu',
     './models/_profile',
     './models/_room',
@@ -15,11 +14,10 @@ define([
     '../mixins/base_mixin',
     'mixins/data/data-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     main_menu,
     instances_menu,
+    interface_menu,
     modules_menu,
     _profile,
     _room,
@@ -40,6 +38,7 @@ define([
             'main_menu': main_menu,
             'instances_menu': instances_menu,
             'modules_menu': modules_menu,
+            'interface_menu': interface_menu,
             '_profile': _profile,
             '_room': _room,
             '_widget': _widget,
@@ -48,7 +47,7 @@ define([
         getInitialState: function () {
             return {
                 model: this.getItem(this.getActiveNodeTree()[0].options.serviceId)
-            }
+            };
         },
         updateComponentAfterExecutionListener: function () {
             var that = this;
@@ -63,8 +62,7 @@ define([
             that.getBinding('preferences').addListener('activeNodeTreeStatus', that.updateComponentAfterExecutionListener);
         },
         getComponent:function (node) {
-            var that = this,
-                components = this.components,
+            var components = this.components,
                 data_binding = this.getBinding('data'),
                 preferences_binding = this.getBinding('preferences'),
                 component,

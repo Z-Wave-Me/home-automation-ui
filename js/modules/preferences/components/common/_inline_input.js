@@ -1,11 +1,7 @@
 define([
-    // libs
-'morearty',
     // components
     'mixins/data/data-layer'
 ], function (
-    // libs
-    Morearty,
     // mixins
     data_layer_mixin
     ) {

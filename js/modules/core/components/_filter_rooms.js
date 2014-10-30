@@ -1,11 +1,4 @@
-define([
-    // libs
-
-    'morearty'
-], function (
-    // libs
-    Morearty
-    ) {
+define([], function () {
     'use strict';
 
     return React.createClass({
@@ -48,7 +41,7 @@ define([
                         key: item.get('id')
                     }, item.get('title'));
                 }).toArray()
-            )
+            );
         }
     });
 });

@@ -1,20 +1,14 @@
 define([
-    //libs
-    'morearty',
-    // components
     // mixins
     'mixins/sync/sync-layer'
 ], function (
-    // libs
-    Morearty,
-    // components
     // mixins
     sync_layer_mixin
     ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, sync_layer_mixin],
+        mixins: [Morearty.Mixin, sync_layer_mixin, TranslateMixin],
         setFullViewItem: function (id) {
             if (this.isMounted()) {
                 this.getBinding('notifications_options').set('full_view_notice_id', id);
@@ -46,10 +40,11 @@ define([
                 if (that.isMounted()) {
                     that.forceUpdate();
                 }
-            })
+            });
         },
         render: function () {
             var _ = React.DOM,
+                __ = this.gls,
                 notification = this.getBinding('notification'),
                 index = this.props.index,
                 time_date = new Date(notification.val('timestamp'));
@@ -60,20 +55,20 @@ define([
                 return (
                     _.div({className: 'event-item full-view', id: notification.val('id'), key: 'notice-' + index },
                         _.span({className: 'content-container'},
-                            _.div({key: 'type-value', className: 'type-value'}, 'Type: ' + notification.val('type')),
-                            _.div({key: 'time-value', className: 'time-value'}, 'Timestamp: ' + time_date),
-                            _.label({key: 'message-label', className: 'label'}, 'Message:'),
+                            _.div({key: 'type-value', className: 'type-value'}, __('type', 'capitalize'), ': ' + notification.val('type')),
+                            _.div({key: 'time-value', className: 'time-value'}, __('timestamp', 'capitalize'), ': ' + time_date),
+                            _.label({key: 'message-label', className: 'label'}, __('message', 'capitalize'), ': '),
                             _.div({key: 'message-value', className: 'message-value'}, notification.val('message'))
                         ),
                         _.span({className: 'actions-container'},
                             _.span({
                                 className: 'action-button',
                                 onClick: this.setRedeemedNotification
-                            }, 'HIDE'),
+                            }, __('hide', 'case')),
                             _.span({
                                 onClick: this.setFullViewItem.bind(null, null),
                                 className: 'action-button'
-                            }, 'MINIMIZE')
+                            }, __('minimize', 'case'))
                         )
                     )
                 );

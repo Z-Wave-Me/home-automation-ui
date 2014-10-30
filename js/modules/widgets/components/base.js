@@ -1,6 +1,4 @@
 define([
-    // libs
-'morearty',
     // components
     './_probe',
     './_switch',
@@ -10,8 +8,6 @@ define([
     './_toggle',
     './_thermostat'
 ], function (
-    // libs
-    Morearty,
     // components
     Probe,
     Switch,

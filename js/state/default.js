@@ -7,7 +7,11 @@ define([], function () {
         system: {
             network_connected: false,
             loaded: false,
-            loaded_percentage: 0
+            loaded_lang_files: false,
+            loaded_percentage: 0,
+            languages: ['en', 'ru', 'de'],
+            path_lang_file: '/public/lang',
+            current_language: localStorage.getItem('currentLanguage') || 'en'
         },
         // notifications
         notifications: {
