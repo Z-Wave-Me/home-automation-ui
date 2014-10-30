@@ -1,14 +1,10 @@
 define([
-    // libs
-    'morearty',
     // components
     // mixins
     '../../mixins/base_mixin',
     'mixins/data/data-layer',
     'mixins/sync/sync-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     _base_search,
     // mixins

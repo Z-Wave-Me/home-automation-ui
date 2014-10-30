@@ -1,14 +1,10 @@
 define([
-    // libs
-'morearty',
     // components
     '../common/_buttons_group',
     '../common/_inline_input',
     'mixins/data/data-layer',
     'mixins/sync/sync-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     _buttons_group,
     _inline_input,

@@ -1,14 +1,10 @@
 define([
-    //libs
-'morearty',
     // components
     './_filter_rooms',
     './_filter_tags',
     './_filter_types',
     'Preferences/components/common/_base_search'
 ], function (
-    // libs
-    Morearty,
     // components
     FilterRooms,
     FilterTags,

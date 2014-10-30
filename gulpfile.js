@@ -14,10 +14,10 @@ var SUPPORT_LANGUAGES = ['en', 'ru', 'de'],
     manifest = require('gulp-manifest'),
     rename = require("gulp-rename"),
     runSequence = require('run-sequence'),
-    rimraf = require('gulp-rimraf'),
     htmlmin = require('gulp-htmlmin'),
     fs = require('fs'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    del = require('del');
 
 gulp.task('less', function () {
     gulp.src('./public/less/all.less')
@@ -44,6 +44,7 @@ gulp.task("build", function () {
         mainConfigFile: 'js/main.js',
         include: [
             'requireLib',
+            'morearty',
             './bootstrap'
         ],
         out: 'main-built.js'
@@ -101,9 +102,11 @@ gulp.task('copy_other', function () {
         .pipe(gulp.dest('./dist'));
 });
 
-gulp.task('clean', function () {
-    return gulp.src(BUILD_DIRECTORY, {read: false})
-        .pipe(rimraf());
+gulp.task('clean', function (cb) {
+    del([
+        BUILD_DIRECTORY + '/**',
+        BUILD_DIRECTORY + '/'
+    ], cb);
 });
 
 // validate
@@ -167,9 +170,13 @@ gulp.task('watch', function () {
 
 // build
 gulp.task('default', function (callback) {
-    runSequence('clean',
-        ['less', 'build', 'create_index'],
-        'check_lang_file', 'copy_language_file', 'manifest', 'copy_other', callback);
+    runSequence(
+        'clean',
+        ['less', 'build', 'check_lang_file'],
+        ['copy_language_file', 'create_index'],
+        'manifest',
+        'copy_other',
+        callback);
 });
 
 gulp.task('develop_server', ['connect', 'watch']);

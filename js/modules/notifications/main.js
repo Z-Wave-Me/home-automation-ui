@@ -1,14 +1,10 @@
 define([
-    //libs
-    'morearty',
     // components
     './components/event',
     // mixins
     'mixins/sync/sync-layer',
     'mixins/ui/popup'
 ], function (
-    // libs
-    Morearty,
     // components
     Event,
     // mixins

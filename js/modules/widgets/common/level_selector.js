@@ -1,13 +1,11 @@
 define([
     // libs
-    'morearty',
     'd3',
     // mixins
     'mixins/sync/sync-layer',
     'mixins/ui/popup'
 ], function (
     // libs
-    Morearty,
     d3,
     // mixins
     SyncLayerMixin,

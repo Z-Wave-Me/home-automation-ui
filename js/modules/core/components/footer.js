@@ -1,11 +1,4 @@
-define([
-    // libs
-
-    'morearty'
-], function (
-    // libs
-    Morearty
-    ) {
+define([], function () {
     'use strict';
 
     return React.createClass({

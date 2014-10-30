@@ -1,6 +1,4 @@
 define([
-    // libs
-    'morearty',
     // components
     // mixins
     '../../mixins/base_mixin',
@@ -8,8 +6,6 @@ define([
     'mixins/sync/sync-layer',
     'alpaca'
 ], function (
-    // libs
-    Morearty,
     // components
     // mixins
     base_mixin,

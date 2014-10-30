@@ -1,10 +1,7 @@
 define([
-    // libs
-'morearty',
     // mixins
     'mixins/sync/sync-layer'
 ], function (
-    Morearty,
     sync_layer_mixin
     ) {
     'use strict';

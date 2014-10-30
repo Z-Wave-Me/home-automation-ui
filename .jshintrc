@@ -5,6 +5,8 @@
   "globals": {
       "React": true,
       "Immutable": true,
+      "TranslateMixin": true,
+      "Morearty": true,
       "_": true,
       "define": true,
       "require": true

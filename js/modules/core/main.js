@@ -1,6 +1,4 @@
 define([
-    //libs
-    'morearty',
     // components
     './components/header',
     './components/main',
@@ -11,8 +9,6 @@ define([
     // mixins
     'mixins/sync/sync-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     Header,
     Main,

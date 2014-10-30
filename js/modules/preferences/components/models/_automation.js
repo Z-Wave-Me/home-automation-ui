@@ -1,6 +1,4 @@
 define([
-    // libs
-'morearty',
     'alpaca',
     // components
     '../common/_buttons_group',
@@ -9,8 +7,6 @@ define([
     '../../mixins/base_mixin',
     'mixins/data/data-layer'
 ], function (
-    // libs
-    Morearty,
     Alpaca,
     // components
     _buttons_group,

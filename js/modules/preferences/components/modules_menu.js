@@ -1,6 +1,4 @@
 define([
-    // libs
-    'morearty',
     // components
     './common/_base_search',
     './modules_components/step1',
@@ -11,8 +9,6 @@ define([
     'mixins/data/data-layer',
     'mixins/sync/sync-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     _base_search,
     step1,

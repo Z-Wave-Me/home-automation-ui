@@ -1,6 +1,4 @@
 define([
-    // libs
-    'morearty',
     // components
     './common/_base_search',
     './common/_buttons_group',
@@ -10,8 +8,6 @@ define([
     'mixins/sync/sync-layer',
     'alpaca'
 ], function (
-    // libs
-    Morearty,
     // components
     _base_search,
     _buttons_group,

@@ -1,11 +1,7 @@
 define([
-    // libs
-    'morearty',
     // mixins
     '../mixins/base_mixin'
 ], function (
-    // libs
-    Morearty,
     // mixins
     base_mixin
     ) {

@@ -1,6 +1,4 @@
 define([
-    // libs
-'morearty',
     // components
     './main_menu',
     './instances_menu',
@@ -16,8 +14,6 @@ define([
     '../mixins/base_mixin',
     'mixins/data/data-layer'
 ], function (
-    // libs
-    Morearty,
     // components
     main_menu,
     instances_menu,

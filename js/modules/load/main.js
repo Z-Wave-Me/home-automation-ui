@@ -1,14 +1,4 @@
-define([
-    // libs
-    'morearty'
-    // components
-    // mixins
-], function (
-    // libs
-    Morearty
-    // components
-    // mixins
-    ) {
+define([], function () {
     'use strict';
 
     return React.createClass({
