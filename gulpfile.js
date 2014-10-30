@@ -71,7 +71,8 @@ gulp.task('manifest', function () {
                 'public/fonts/helveticaneue-bold.ttf',
                 'public/fonts/helveticaneue.eot',
                 'public/fonts/helveticaneue.svg',
-                'public/fonts/helveticaneue.ttf'
+                'public/fonts/helveticaneue.ttf',
+                'index.html'
             ]
         }))
         .pipe(gulp.dest(BUILD_DIRECTORY));
