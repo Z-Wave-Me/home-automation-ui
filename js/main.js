@@ -11,7 +11,7 @@ requirejs.config({
         // react
         react: '../bower_components/react/react-with-addons',
         morearty: '../bower_components/moreartyjs/dist/morearty',
-        immutable: '../bower_components/immutable/dist/Immutable',
+        immutable: '../bower_components/immutable/dist/immutable',
         director: '../bower_components/director/build/director',
         // ace
         ace: '../bower_components/ace-builds/src/ace',
