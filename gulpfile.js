@@ -14,10 +14,10 @@ var SUPPORT_LANGUAGES = ['en', 'ru', 'de'],
     manifest = require('gulp-manifest'),
     rename = require("gulp-rename"),
     runSequence = require('run-sequence'),
-    rimraf = require('gulp-rimraf'),
     htmlmin = require('gulp-htmlmin'),
     fs = require('fs'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    del = require('del');
 
 gulp.task('less', function () {
     gulp.src('./public/less/all.less')
@@ -102,8 +102,9 @@ gulp.task('copy_other', function () {
 });
 
 gulp.task('clean', function () {
-    return gulp.src(BUILD_DIRECTORY, {read: false})
-        .pipe(rimraf());
+    del([
+        BUILD_DIRECTORY
+    ]);
 });
 
 // validate
