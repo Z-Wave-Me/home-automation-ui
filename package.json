@@ -19,11 +19,11 @@
     "gulp-jshint": "latest",
     "gulp-manifest": "latest",
     "gulp-rename": "latest",
-    "gulp-rimraf": "latest",
     "gulp-htmlmin": "latest",
     "jshint-stylish": "latest",
     "run-sequence": "latest",
-    "lodash": "latest"
+    "lodash": "latest",
+    "del": "latest"
   },
   "scripts": {
     "build": "gulp",
