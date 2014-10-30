@@ -2,11 +2,7 @@ CACHE MANIFEST
 
 
 CACHE:
-apple-touch-icon-precomposed.png
-favicon.ico
-humans.txt
 index.html
-robots.txt
 js/main-built.js
 public/css/all.css
 public/fonts/helveticaneue-bold.woff
@@ -25,4 +21,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: 0f21e1e066ff68baa0b5ca79c2e7d5ef30d9d4a20027b7a82e1472b289833f24
+# hash: 27388f3f0f1e4c7d1ca8a40148a2dad3201dbf5239fd4004266d04624ac9ce1f
