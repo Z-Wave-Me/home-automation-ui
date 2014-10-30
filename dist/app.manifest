@@ -2,7 +2,6 @@ CACHE MANIFEST
 
 
 CACHE:
-index.html
 js/main-built.js
 public/css/all.css
 public/fonts/helveticaneue-bold.woff
@@ -21,4 +20,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: 45872a07fb758a20e42a12a4a74324f31a832df679044aa85f93341367d82dbb
+# hash: da6b11a2296b9fc93d7edd86f0ea31b1fe1487c49f11ca2281fa4ec25a3affac
