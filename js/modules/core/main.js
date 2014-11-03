@@ -70,7 +70,7 @@ define([
                     data: that.getBinding('data'),
                     preferences: that.getBinding('preferences')
                 }}),
-                binding.sub('notifications').val('show_popup') ? Notifications({
+                binding.sub('notifications').get('show_popup') ? Notifications({
                     binding: {
                         default: binding,
                         data: that.getBinding('data'),

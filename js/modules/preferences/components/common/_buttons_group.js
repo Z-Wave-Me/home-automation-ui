@@ -21,7 +21,7 @@ define([
             var that = this,
                 item = this.getBinding('item'),
                 items = this.getBinding('items'),
-                isNew = !Boolean(item.val('id'));
+                isNew = !Boolean(item.get('id'));
 
             if (this.isMounted()) {
                 this.setState({ loading: true });
@@ -36,7 +36,7 @@ define([
 
                     if (index === -1) {
                         that._addModel(response, that.props.serviceId);
-                        that.setLeftPanelItemSelectedId(model.val('id'));
+                        that.setLeftPanelItemSelectedId(model.get('id'));
                     } else {
                         that._updateModel(response, that.props.serviceId);
                     }
@@ -55,12 +55,12 @@ define([
             var that = this,
                 item = that.getBinding('item'),
                 items = that.getBinding('items'),
-                index = items.val().indexOf(item.val()),
+                index = items.get().indexOf(item.get()),
                 selected_index;
 
             if (index > 0) {
                 selected_index = index - 1;
-            } else if (items.val().length === 1) {
+            } else if (items.get().length === 1) {
                 selected_index = null;
             } else {
                 selected_index = index + 1;
@@ -74,7 +74,7 @@ define([
                     that.getBinding('item').delete();
                     if (that.isMounted()) {
                         if (selected_index !== null) {
-                            that.setLeftPanelItemSelectedId(items.sub(selected_index).val('id'));
+                            that.setLeftPanelItemSelectedId(items.sub(selected_index).get('id'));
                             that.setActiveNodeTreeStatus('normal');
                         } else {
                             that.setActiveNodeTreeStatus('empty');
@@ -90,7 +90,7 @@ define([
             var _ = React.DOM,
                 binding = this.getDefaultBinding();
 
-            if (binding.val('activeNodeTreeStatus') === 'add') {
+            if (binding.get('activeNodeTreeStatus') === 'add') {
                 return [
                     _.div({
                         key: 'save-button',
@@ -104,7 +104,7 @@ define([
                         onClick: this.setActiveNodeTreeStatus.bind(null, 'normal')
                     }, 'Cancel')
                 ];
-            } else if (binding.val('activeNodeTreeStatus') === 'pending') {
+            } else if (binding.get('activeNodeTreeStatus') === 'pending') {
                 return [
                     _.div({
                         key: 'yes-button',

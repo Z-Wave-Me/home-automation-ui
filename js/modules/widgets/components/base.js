@@ -25,8 +25,8 @@ define([
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
                 metrics_binding = binding.sub('metrics'),
-                device_type = binding.val('deviceType'),
-                icon = metrics_binding.val('icon') || null,
+                device_type = binding.get('deviceType'),
+                icon = metrics_binding.get('icon') || null,
                 custom_icon = icon !== null ? icon.indexOf('http:') !== -1 : false,
                 cx = React.addons.classSet,
                 widget_classes = cx({
@@ -42,7 +42,7 @@ define([
                 }),
                 styles = custom_icon ?
                     {
-                        'background-image': 'url(' + icon + ')'
+                        backgroundImage: 'url(' + icon + ')'
                     } : null,
                 Widget;
 
@@ -71,7 +71,7 @@ define([
             //sensorMultilevel widget-small widget-object show clear
 
             return (
-                _.div({id: binding.val('id'), className: widget_classes},
+                _.div({id: binding.get('id'), className: widget_classes},
                     _.div({className: 'border-widget border-widget-sprite small-border'},
                         _.span({className: 'selection-button border-widget-sprite button-select-border'})
                     ),

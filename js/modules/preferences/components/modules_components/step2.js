@@ -18,7 +18,7 @@ define([
         mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
         componentWllMount: function () {
             if (this.isMounted()) {
-                if (this.getDefaultBinding().val('import_instanceId') !== null) {
+                if (this.getDefaultBinding().get('import_instanceId') !== null) {
                     this.getDefaultBinding().set('import_instanceId', null)
                 }
             }
@@ -28,7 +28,7 @@ define([
                 __ = this.gls,
                 preferences_binding = this.getDefaultBinding(),
                 instance_binding = preferences_binding.sub('instance_temp'),
-                moduleId = preferences_binding.val('moduleId');
+                moduleId = preferences_binding.get('moduleId');
 
             return _.div({className: 'step-container'},
                 _.div({ className: 'model-component' },
@@ -40,7 +40,7 @@ define([
                                 className: 'input-value',
                                 type: 'text',
                                 placeholder: __('title', 'capitalize'),
-                                value: instance_binding.val('title'),
+                                value: instance_binding.get('title'),
                                 onChange: Morearty.Callback.set(instance_binding, 'title')
                             })
                         ),
@@ -50,7 +50,7 @@ define([
                                 key: 'description-input',
                                 className: 'input-value textarea-type',
                                 placeholder: __('description', 'capitalize'),
-                                value: instance_binding.val('description'),
+                                value: instance_binding.get('description'),
                                 onChange: Morearty.Callback.set(instance_binding, 'description')
                             })
                         ),
@@ -86,9 +86,9 @@ define([
             var that = this,
                 _ = React.DOM,
                 preferences_binding = this.getDefaultBinding(),
-                moduleId = preferences_binding.val('moduleId'),
+                moduleId = preferences_binding.get('moduleId'),
                 instances_binding = that.getBinding('data').sub('instances'),
-                filter_instances = instances_binding.val().filter(function (instance) {
+                filter_instances = instances_binding.get().filter(function (instance) {
                     return instance.get('moduleId') === moduleId;
                 });
 

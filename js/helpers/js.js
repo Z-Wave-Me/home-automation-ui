@@ -93,7 +93,7 @@ define([], function () {
                             } else if (typeof obj[key] === 'string') {
                                 if (obj[key].indexOf('namespaces') !== -1 && obj[key].split(':').length > 1) {
                                     obj[key].split(',').forEach(function (val) {
-                                        var filtered = namespaces.val().filter(function (n) {
+                                        var filtered = namespaces.get().filter(function (n) {
                                             return n.get('id') ===  val.split(':')[1];
                                         });
 

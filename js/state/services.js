@@ -46,7 +46,7 @@ define([], function () {
 
                     // remove old device
                     if (response.data.structureChanged) {
-                        remove_devices_ids = devices_binding.val().filter(function (device) {
+                        remove_devices_ids = devices_binding.get().filter(function (device) {
                             return response.data.devices.every(function (d) {
                                 return device.get('id') !== d.id;
                             });
@@ -60,9 +60,9 @@ define([], function () {
                     }
 
                     // update tags
-                    if (devices_binding.val()) {
+                    if (devices_binding.get()) {
                         dataBinding.update('deviceTags', function () {
-                            var tags = devices_binding.val().reduce(function (memo, device, index) {
+                            var tags = devices_binding.get().reduce(function (memo, device, index) {
                                 memo = index === 1 ? Immutable.List() : memo;
 
                                 var device_tags = device.get('tags');
@@ -82,9 +82,9 @@ define([], function () {
                     }
 
                     // update types
-                    if (devices_binding.val()) {
+                    if (devices_binding.get()) {
                         dataBinding.update('deviceTypes', function () {
-                            var types = devices_binding.val().reduce(function (memo, device, index) {
+                            var types = devices_binding.get().reduce(function (memo, device, index) {
 
                                 if (memo.indexOf(device.get('deviceType')) === -1) {
                                     return memo.push(device.get('deviceType'));

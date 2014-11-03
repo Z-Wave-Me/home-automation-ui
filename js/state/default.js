@@ -1,6 +1,10 @@
 define([], function () {
     'use strict';
 
+    var languages = ['en', 'ru', 'de'],
+        localstorage_lang = localStorage.getItem('currentLanguage'),
+        current_language = languages.indexOf(localstorage_lang) !== -1 ? localstorage_lang : 'en';
+
     return {
         nowShowing: 'dashboard', // start route
         // system
@@ -9,9 +13,9 @@ define([], function () {
             loaded: false,
             loaded_lang_files: false,
             loaded_percentage: 0,
-            languages: ['en', 'ru', 'de'],
+            languages: languages,
             path_lang_file: '/public/lang',
-            current_language: localStorage.getItem('currentLanguage') || 'en'
+            current_language: current_language
         },
         // notifications
         notifications: {

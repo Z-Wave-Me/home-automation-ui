@@ -30,7 +30,7 @@ define([
             var _ = React.DOM,
                 __ = this.gls,
                 preferences_binding = this.getDefaultBinding(),
-                moduleId = preferences_binding.val('moduleId');
+                moduleId = preferences_binding.get('moduleId');
 
             return _.div({ className: 'step-container' },
                 _.div({className: 'alpaca-main', ref: 'alpacaNodeRef'}),
@@ -46,7 +46,7 @@ define([
             var that = this,
                 preferences_binding = this.getDefaultBinding(),
                 instance = preferences_binding.sub('instance_temp'),
-                imported_instanceId = preferences_binding.val('import_instanceId'),
+                imported_instanceId = preferences_binding.get('import_instanceId'),
                 instanceJson, module, moduleJson, $el, import_params, imported_instance_index;
 
             if (!instance) {
@@ -55,17 +55,17 @@ define([
 
             if (imported_instanceId !== null) {
                 imported_instance_index = this.getBinding('data')
-                    .sub('instances').val()
+                    .sub('instances').get()
                     .findIndex(function (instance) {
                         return instance.get('id') === imported_instanceId;
                     });
 
-                import_params = this.getBinding('data').sub('instances').sub(imported_instance_index).val('params').toJS();
+                import_params = this.getBinding('data').sub('instances').sub(imported_instance_index).get('params').toJS();
             }
 
-            instanceJson = instance.val().toJS();
+            instanceJson = instance.toJS();
             module = that.getModelFromCollection(instanceJson.moduleId, 'modules');
-            moduleJson = module.val().toJS();
+            moduleJson = module.toJS();
             $el = $(that.refs.alpacaNodeRef.getDOMNode())
 
             $el.empty().alpaca({

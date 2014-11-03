@@ -10,7 +10,7 @@ define([
     return React.createClass({
         mixins: [Morearty.Mixin, base_mixin],
         componentDidMount: function () {
-            var selectedId = this.getBinding('preferences').val('leftPanelItemSelectedId');
+            var selectedId = this.getBinding('preferences').get('leftPanelItemSelectedId');
 
             if (selectedId && this.refs['listSelected_' + selectedId] !== undefined) {
                 this.refs['listSelected_' + selectedId].getDOMNode().click();
@@ -41,9 +41,9 @@ define([
 
 
             renderModel = function (item, index) {
-                var searchString = preferencesBinding.val('searchStringLeftPanel').toLowerCase(),
-                    leftPanelItemSelectedId = preferencesBinding.val('leftPanelItemSelectedId'),
-                    statusNode = preferencesBinding.val('activeNodeTreeStatus'),
+                var searchString = preferencesBinding.get('searchStringLeftPanel').toLowerCase(),
+                    leftPanelItemSelectedId = preferencesBinding.get('leftPanelItemSelectedId'),
+                    statusNode = preferencesBinding.get('activeNodeTreeStatus'),
                     title,
                     obj = item.toJS();
 
@@ -76,7 +76,7 @@ define([
 
             return _.div({className: 'left-panel-list-container'},
                 _.ul({ ref: 'leftPanelList', className: 'left-panel-list' },
-                    itemsBinding.val().map(renderModel).toArray()
+                    itemsBinding.get().map(renderModel).toArray()
                 )
             )
         },

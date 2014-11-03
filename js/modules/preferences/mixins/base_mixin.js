@@ -28,8 +28,8 @@ define([], function () {
         },
         getActiveNodeTree: function () {
             var binding = this.getMoreartyContext().getBinding().sub('preferences'),
-                activeNodeTreeId = binding.val('activeNodeTreeId'),
-                activeNode = this.searchTree(binding.sub('tree').val().toJS(), activeNodeTreeId);
+                activeNodeTreeId = binding.get('activeNodeTreeId'),
+                activeNode = this.searchTree(binding.sub('tree').toJS(), activeNodeTreeId);
 
             return activeNode;
         },

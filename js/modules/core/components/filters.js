@@ -25,15 +25,15 @@ define([
                 _ = React.DOM,
                 __ = this.gls,
                 SecondaryFilters,
-                primaryFilter = binding.val('primaryFilter');
+                primaryFilter = binding.get('primaryFilter');
 
             SecondaryFilters = function () {
                 if (primaryFilter === 'rooms') {
-                    return dataBinding.val('locations').count() > 0 ? FilterRooms({binding: { default: binding, data: dataBinding }}) : null;
+                    return dataBinding.get('locations').count() > 0 ? FilterRooms({binding: { default: binding, data: dataBinding }}) : null;
                 } else if (primaryFilter === 'types') {
-                    return dataBinding.val('deviceTypes').count() > 0 ? FilterTypes({binding: { default: binding, data: dataBinding }}) : null;
+                    return dataBinding.get('deviceTypes').count() > 0 ? FilterTypes({binding: { default: binding, data: dataBinding }}) : null;
                 } else if (primaryFilter === 'tags') {
-                    return dataBinding.val('deviceTags').count() > 0 ? FilterTags({binding: { default: binding, data: dataBinding }}) : null;
+                    return dataBinding.get('deviceTags').count() > 0 ? FilterTags({binding: { default: binding, data: dataBinding }}) : null;
                 } else {
                     return null;
                 }

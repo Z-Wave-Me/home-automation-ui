@@ -37,15 +37,17 @@ gulp.task('less', function () {
 });
 
 gulp.task("build", function () {
-
     rjs({
         baseUrl: './js',
         name: 'main',
         mainConfigFile: 'js/main.js',
+        onBuildWrite: function (moduleName, path, singleContents) {
+            return singleContents.replace(/jsx!/g, '');
+        },
         include: [
             'requireLib',
             'morearty',
-            './bootstrap'
+            'jsx!./bootstrap'
         ],
         out: 'main-built.js'
     })

@@ -7,13 +7,13 @@ define([], function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
                 metrics_binding = binding.sub('metrics'),
-                title = metrics_binding.val('title'),
-                level = Sticky.get('App.Helpers.JS').isFloat(metrics_binding.val('level')) ?
-                    binding.sub('metrics').val('level').toFixed(1) : metrics_binding.val('level'),
+                title = metrics_binding.get('title'),
+                level = Sticky.get('App.Helpers.JS').isFloat(metrics_binding.get('level')) ?
+                    binding.sub('metrics').get('level').toFixed(1) : metrics_binding.get('level'),
                 scaleTitle =
                         binding.sub('metrics').hasOwnProperty('scaleTitle') &&
-                    String(metrics_binding.val('scaleTitle')).length > 0 ?
-                            ' ' + String(metrics_binding.val('scaleTitle')) : '';
+                    String(metrics_binding.get('scaleTitle')).length > 0 ?
+                            ' ' + String(metrics_binding.get('scaleTitle')) : '';
 
             return (
                 _.div({className: 'content'},

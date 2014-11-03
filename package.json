@@ -23,6 +23,7 @@
     "jshint-stylish": "latest",
     "run-sequence": "latest",
     "lodash": "latest",
+    "react-tools": "0.12.x",
     "del": "latest"
   },
   "scripts": {

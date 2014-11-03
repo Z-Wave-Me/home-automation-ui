@@ -35,11 +35,11 @@ define([
         getEvent: function (notification, index) {
             var notifications_options = this.getDefaultBinding().sub('notifications'),
                 notifications = this.getBinding('data').sub('notifications'),
-                search_string = notifications_options.val('searchString') || '',
+                search_string = notifications_options.get('searchString') || '',
                 EventComponent = null,
                 notice = notifications.sub(index);
 
-            if ((notice.val('message').toLowerCase().indexOf(search_string.toLowerCase()) !== -1 && search_string.length > 2) || search_string.length <=2) {
+            if ((notice.get('message').toLowerCase().indexOf(search_string.toLowerCase()) !== -1 && search_string.length > 2) || search_string.length <=2) {
                 EventComponent = Event({
                     binding: {
                         notification: notice,
@@ -65,7 +65,7 @@ define([
                 __ = this.gls,
                 binding = this.getDefaultBinding(),
                 notifications_binding = this.getBinding('data').sub('notifications'),
-                notifications = notifications_binding.val(),
+                notifications = notifications_binding.get(),
                 show = this.getDefaultBinding().sub('notifications').sub('show_popup');
 
             return _.div({

@@ -12,15 +12,15 @@ define([], function () {
             var ctx = this.getMoreartyContext(),
                 dataBinding;
 
-            id = id || ctx.getBinding().sub('preferences').val().get('leftPanelItemSelectedId');
+            id = id || ctx.getBinding().sub('preferences').get().get('leftPanelItemSelectedId');
 
             dataBinding = this.getCollection(collectionName);
 
             if (id) {
-                var item = dataBinding.val().find(function (data) {
+                var item = dataBinding.get().find(function (data) {
                         return data.get('id') === id;
                     }),
-                    index = dataBinding.val().indexOf(item);
+                    index = dataBinding.get().indexOf(item);
 
                 return dataBinding.sub(index);
             } else {
@@ -29,19 +29,19 @@ define([], function () {
         },
         addModelToCollection: function (collection, model) {
             collection.update(function (collection) {
-                collection.push(Immutable.Map(model.val().toJS()));
+                collection.push(Immutable.Map(model.toJS()));
             });
         },
         getItem: function (serviceId, itemId) {
             var ctx = this.getMoreartyContext(),
                 preferences = ctx.getBinding().sub('preferences'),
-                filterObject = ctx.getBinding().sub('services').sub('collections').val().toArray().filter(function (service) {
+                filterObject = ctx.getBinding().sub('services').sub('collections').get().toArray().filter(function (service) {
                     return serviceId === service.get('id');
                 }),
                 service = Array.isArray(filterObject) && filterObject.length > 0 ? filterObject[0].toJS() : null,
                 default_model_options = service ? service.model.defaults : null;
 
-            if (preferences.val('activeNodeTreeStatus') === 'add') {
+            if (preferences.get('activeNodeTreeStatus') === 'add') {
                 preferences.set('temp', Immutable.Map(default_model_options));
                 return preferences.sub('temp');
             } else {
@@ -51,13 +51,13 @@ define([], function () {
         getActiveProfile: function () {
             var ctx = this.getMoreartyContext(),
                 activeId = localStorage.getItem('defaultProfileId'),
-                filter = ctx.getBinding().sub('data').sub('profiles').val().toArray().filter(function (profile) {
+                filter = ctx.getBinding().sub('data').sub('profiles').get().toArray().filter(function (profile) {
                     return String(profile.get('id')) === String(activeId);
                 }),
                 index;
 
             if (filter.length > 0) {
-                index = ctx.getBinding().sub('data').sub('profiles').val().toArray().indexOf(filter[0]);
+                index = ctx.getBinding().sub('data').sub('profiles').get().toArray().indexOf(filter[0]);
                 return ctx.getBinding().sub('data').sub('profiles').sub(index);
             } else {
                 return null;
@@ -66,7 +66,7 @@ define([], function () {
         showInDashBoard: function (deviceId) {
             var profile = this.getActiveProfile();
             if (profile) {
-                return profile.val('positions').indexOf(deviceId) !== -1;
+                return profile.get('positions').indexOf(deviceId) !== -1;
             } else {
                 return false;
             }
@@ -75,10 +75,10 @@ define([], function () {
             var ctx = this.getMoreartyContext(),
                 instances_binding = ctx.getBinding().sub('data').sub('instances'),
                 module = this.getModelFromCollection(moduleId, 'modules'),
-                is_singleton = module.val('singleton');
+                is_singleton = module.get('singleton');
 
             if (is_singleton) {
-                return instances_binding.val().some(function (instance) {
+                return instances_binding.get().some(function (instance) {
                     return instance.get('moduleId') === moduleId;
                 });
             } else {
@@ -109,7 +109,7 @@ define([], function () {
         _getNamespace: function (path) {
             var ctx = this.getMoreartyContext(),
                 namespaces = ctx.getBinding().sub('data').sub('namespaces'),
-                filter = namespaces.val().toArray().filter(function (namespace) {
+                filter = namespaces.get().toArray().filter(function (namespace) {
                     return namespace.get('id') === path[1];
                 }),
                 index,
@@ -120,7 +120,7 @@ define([], function () {
                 index = filter.indexOf(filter[0]);
                 namespace = namespaces.sub(index);
 
-                return namespace.val('params').map(function (param) {
+                return namespace.get('params').map(function (param) {
                     return param[path[2]];
                 });
             } else {

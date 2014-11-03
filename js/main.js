@@ -4,6 +4,7 @@ requirejs.config({
         // Major libraries
         jquery: '../bower_components/jquery/dist/jquery',
         requireLib: '../bower_components/requirejs/require',
+        text: '../bower_components/requirejs-text/text',
         // advanced libs
         'jquery-ui': '../bower_components/jquery-ui/jquery-ui',
         alpaca: 'libs/alpaca/alpaca-full',
@@ -13,6 +14,8 @@ requirejs.config({
         morearty: '../bower_components/moreartyjs/dist/morearty',
         immutable: '../bower_components/immutable/dist/immutable',
         director: '../bower_components/director/build/director',
+        JSXTransformer: "../bower_components/react/JSXTransformer",
+        jsx: "../bower_components/requirejs-react-jsx/jsx",
         // ace
         ace: '../bower_components/ace-builds/src/ace',
         'theme-chrome': '../bower_components/ace-builds/src/theme-chrome',
@@ -62,6 +65,10 @@ requirejs.config({
         morearty: {
             exports: 'Morearty',
             deps: ['immutable', 'react']
+        },
+        JSXTransformer: {
+            exports: 'JSXTransformer',
+            deps: ['jsx', 'text']
         }
     },
     // modules
@@ -86,7 +93,10 @@ requirejs.config({
             name: 'Load',
             location: 'modules/load'
         }
-    ]
+    ],
+    jsx: {
+        fileExtension: ".jsx"
+    }
 });
 
 require([
@@ -142,9 +152,9 @@ require([
         // reg module in global namespace
         Sticky.set('App.Helpers.JS', HelpersJS, Ctx, {});
 
-        require(['./bootstrap'], function (Bootstrap) {
+        require(['jsx!./bootstrap'], function (Bootstrap) {
             // render bootstrap
-            React.renderComponent(
+            React.render(
                 Bootstrap({ctx: Ctx}),
                 document.getElementById('app-container')
             );

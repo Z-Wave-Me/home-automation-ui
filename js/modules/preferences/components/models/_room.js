@@ -62,11 +62,11 @@ define([
                 dataBinding = that.getBinding('data'),
                 _ = React.DOM,
                 __ = this.gls,
-                add_mode = preferencesBinding.val('activeNodeTreeStatus') === 'add',
+                add_mode = preferencesBinding.get('activeNodeTreeStatus') === 'add',
                 item = that.getBinding('item'),
-                title = item.val('title'),
-                icon = item.val('icon'),
-                temp_string = that.getBinding('preferences').val('temp_string'),
+                title = item.get('title'),
+                icon = item.get('icon'),
+                temp_string = that.getBinding('preferences').get('temp_string'),
                 classes = cx({
                     'preview': true,
                     'placehold': !icon
@@ -96,14 +96,14 @@ define([
                                 _.span({ className: 'text-zone primary'}, _.strong({}, __('drop_file', 'capitalize')), ' ', __('to_upload')),
                                 _.span({ className: 'text-zone secondary'}, '(or click)')
                             ),
-                            _.div({className: classes, style: icon ? {'background-image': 'url(' + icon + ')'} : {}})
+                            _.div({className: classes, style: icon ? {backgroundImage: 'url(' + icon + ')'} : {}})
                         ),
                         _.input({ref: 'fileInput', className: 'hidden', type: 'file', onChange: this.handleFile})
                     ),
                     !add_mode ? _.div({ key: 'form-device-input', className: 'form-group' },
                         _.div({ className: 'tagsinput'},
-                            dataBinding.sub('devices').val().filter(function (device) {
-                                return device.get('location') === item.val('id');
+                            dataBinding.sub('devices').get().filter(function (device) {
+                                return device.get('location') === item.get('id');
                             }).map(function (device) {
                                 return _.span({ key: device.get('id'), className: 'tag label label-info'}, device.get('id'),
                                     _.span({
@@ -147,9 +147,9 @@ define([
                 __ = this.gls,
                 devices_binding = that.getBinding('data').sub('devices'),
                 item_binding = that.getBinding('item'),
-                temp_string = that.getBinding('preferences').val('temp_string'),
-                filtered_devices = devices_binding.val().filter(function (device) {
-                    return item_binding.val('id') !== device.get('location') &&
+                temp_string = that.getBinding('preferences').get('temp_string'),
+                filtered_devices = devices_binding.get().filter(function (device) {
+                    return item_binding.get('id') !== device.get('location') &&
                         device.get('metrics').title.toLowerCase().indexOf(temp_string.toLowerCase()) !== -1;
                 }),
                 deviceTypes = Sticky.get('App.Helpers.JS').arrayUnique(filtered_devices.map(function (device) {
@@ -186,7 +186,7 @@ define([
                 device_binding = that.getModelFromCollection(deviceId, 'devices'),
                 item_binding = that.getBinding('item');
 
-            device_binding.set('location', item_binding.val('id'));
+            device_binding.set('location', item_binding.get('id'));
 
             that.save({
                 model: device_binding,

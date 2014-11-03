@@ -14,7 +14,7 @@ define([], function () {
                 localStorage.setItem('defaultProfileId', String(profileId));
 
                 var profiles = dataBinding.sub('profiles'),
-                    filter = profiles.val().filter(function (profile) {
+                    filter = profiles.get().filter(function (profile) {
                         return String(profile.get('id')) === String(profileId);
                     });
 
@@ -25,9 +25,9 @@ define([], function () {
                 localStorage.setItem('currentLanguage', String(lang));
             });
 
-            dataBinding.addListener('profiles', function (profiles) {
+            dataBinding.sub('profiles').addListener(function () {
                 var activeId = localStorage.getItem('defaultProfileId'),
-                    filter = profiles.filter(function (profile) {
+                    filter = dataBinding.sub('profiles').get().filter(function (profile) {
                         return String(profile.get('id')) === String(activeId);
                     });
 
@@ -35,7 +35,7 @@ define([], function () {
             });
 
             dataBinding.addListener('notifications', function () {
-                defaultBinding.sub('notifications').set('count', dataBinding.sub('notifications').val().count());
+                defaultBinding.sub('notifications').set('count', dataBinding.sub('notifications').get().count());
             });
         },
         pull: function () {
@@ -46,7 +46,7 @@ define([], function () {
                 collections = servicesBinding.sub('collections'),
                 languages_binding = ctx.getBinding().sub('default.system.languages');
 
-            languages_binding.val().forEach(function (lang) {
+            languages_binding.get().forEach(function (lang) {
                 that.getLangFile(lang, function (response) {
                     dataBinding.update('languages', function (languages) {
                         return languages.push(Immutable.fromJS({
@@ -56,21 +56,21 @@ define([], function () {
                     });
 
                     ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
-                        return percantage + ((1 / languages_binding.val().count()) * 50);
+                        return percantage + ((1 / languages_binding.get().count()) * 50);
                     });
 
-                    if (dataBinding.sub('languages').val().count() === languages_binding.val().count()) {
+                    if (dataBinding.sub('languages').get().count() === languages_binding.get().count()) {
                         ctx.getBinding().sub('default.system.loaded_lang_files').set(true);
                     }
                 });
             });
 
-            collections.val().forEach(function (collection, index) {
+            collections.get().forEach(function (collection, index) {
                 var obj = collection.toJS(),
                     func = (function (callback) {
                         that.fetch({
                             serviceId: obj.id,
-                            params: obj.sinceField ? { since: dataBinding.val().get(obj.sinceField) || 0 } : null,
+                            params: obj.sinceField ? { since: dataBinding.get().get(obj.sinceField) || 0 } : null,
                             success: function (response) {
                                 if (callback && typeof callback === 'function') {
                                     callback(response);
@@ -84,13 +84,13 @@ define([], function () {
                                     }
                                 }
 
-                                if (collections.sub(index).val('loaded') === false) {
+                                if (collections.sub(index).get('loaded') === false) {
                                     collections.sub(index).set('loaded', true);
                                     ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
-                                        return percantage + ((1 / collections.val().count()) * 50);
+                                        return percantage + ((1 / collections.get().count()) * 50);
                                     });
 
-                                    if (collections.val().every(function (c) {
+                                    if (collections.get().every(function (c) {
                                         return c.get('loaded') === true;
                                     })) {
                                         ctx.getBinding().sub('default.system.loaded').set(true);
@@ -103,7 +103,7 @@ define([], function () {
                 if (obj.autoSync) {
                     setTimeout(func.bind(this, function () {
                         setInterval(function () {
-                            if (collections.sub(index).val('loaded')) {
+                            if (collections.sub(index).get('loaded')) {
                                 func();
                             }
                         }, obj.delay || 1000);
