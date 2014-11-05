@@ -14,7 +14,7 @@ define([], function () {
             loaded_lang_files: false,
             loaded_percentage: 0,
             languages: languages,
-            path_lang_file: '/public/lang',
+            path_lang_file: 'public/lang',
             current_language: current_language
         },
         // notifications
