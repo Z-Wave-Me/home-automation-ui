@@ -68,11 +68,10 @@ define([
             var that = this,
                 _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                item = binding,
                 options = that.state.options;
 
             return Object.keys(options).map(function (option) {
-                if (item.sub('metrics').val(option)) {
+                if (binding.sub('metrics').get(option)) {
                     return _.span({
                         key: option.command,
                         ref: option.command,
