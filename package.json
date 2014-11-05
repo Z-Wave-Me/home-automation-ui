@@ -1,6 +1,6 @@
 {
-  "name": "Z-WaveHomeAutomationUI",
-  "version": "2.0.0rc1",
+  "name": "Z-WayHomeAutomationUI",
+  "version": "2.0.0rc8",
   "description": "ZWay Home Automation UI",
   "dependencies": {
     "bower": "~1.3.x"
