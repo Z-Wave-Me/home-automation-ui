@@ -12,7 +12,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin, sync_layer_mixin, data_layer_mixin],
+        mixins: [Morearty.Mixin, base_mixin, sync_layer_mixin, data_layer_mixin, TranslateMixin],
         displayName: '_buttons_group',
         getInitialState: function () {
             return { loading: false };
@@ -84,10 +84,11 @@ define([
                         that.forceUpdate();
                     }
                 }
-            })
+            });
         },
         getButtons: function () {
             var _ = React.DOM,
+                __ = this.gls,
                 binding = this.getDefaultBinding();
 
             if (binding.val('activeNodeTreeStatus') === 'add') {
@@ -95,14 +96,14 @@ define([
                     _.div({
                         key: 'save-button',
                         className: 'modern-button green-mode center',
-                        onClick: this.saveHandler }, 'Create',
+                        onClick: this.saveHandler }, __('create', 'upper'),
                         this.state.loading ? _.div({ className: 'spinner' }) : null
                     ),
                     _.div({
                         key: 'cancel-button',
                         className: 'modern-button light-mode center',
                         onClick: this.setActiveNodeTreeStatus.bind(null, 'normal')
-                    }, 'Cancel')
+                    }, __('cancel', 'upper'))
                 ];
             } else if (binding.val('activeNodeTreeStatus') === 'pending') {
                 return [
@@ -110,12 +111,12 @@ define([
                         key: 'yes-button',
                         className: 'modern-button red-mode center',
                         onClick: this.removeHandler
-                    }, 'Yes'),
+                    }, __('yes', 'upper')),
                     _.div({
                         key: 'cancel-button',
                         className: 'modern-button light-mode center',
                         onClick: this.setActiveNodeTreeStatus.bind(null, 'normal')
-                    }, 'No')
+                    }, __('no', 'upper'))
                 ];
             } else {
                 return [
@@ -123,14 +124,14 @@ define([
                         key: 'save-button',
                         className: 'modern-button green-mode center',
                         onClick: this.saveHandler
-                    }, 'Save',
+                    }, __('save', 'upper'),
                         this.state.loading ? _.div({ className: 'spinner' }) : null
                     ),
                     _.div({
                         key: 'delete-button',
                         className: 'modern-button red-mode center',
                         onClick: this.setActiveNodeTreeStatus.bind(null, 'pending')
-                    }, 'Delete')
+                    }, __('delete', 'upper'))
                 ];
             }
         },

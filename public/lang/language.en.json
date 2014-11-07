@@ -58,5 +58,9 @@
   "no_matches": "no matches",
   "ui_setting": "interface",
   "choose_lang": "choose lang",
-  "interface_lang": "ui language"
+  "interface_lang": "ui language",
+  "yes": "yes",
+  "no": "no",
+  "create": "create",
+  "cancel": "cancel"
 }
