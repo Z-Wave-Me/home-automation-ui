@@ -93,7 +93,7 @@ define([
 
             return is_match ? _.div({key: 'module-' + id, className: 'col-1-3 module-container'},
                 _.span({key: 'data-group-id', className: 'data-group'},
-                    _.span({key: 'label-item-id', className: 'label-item'}, __('id') + ': '),
+                    _.span({key: 'label-item-id', className: 'label-item'}, 'id: '),
                     _.span({key: 'value-item-id', className: 'value-item'}, id)
                 ),
                 _.span({key: 'data-group-title', className: 'data-group'},

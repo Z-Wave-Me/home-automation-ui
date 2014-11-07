@@ -59,7 +59,7 @@ define([
                     _.div({ key: 'form-name-input', className: 'form-group' },
                         _.label({ htmlFor: 'profile-name', className: 'input-label'}, 'Name'),
                         _.input({
-                            onChange: Morearty.Callback.set(item_binding, 'name'),
+                            onChange: Morearty.Callback.set(item_binding, __('name', 'capitalize')),
                             id: 'profile-name',
                             className: 'input-value',
                             type: 'text',
@@ -69,7 +69,7 @@ define([
                         })
                     ),
                     _.div({ key: 'form-description-input', className: 'form-group' },
-                        _.label({ htmlFor: 'profile-description', className: 'input-label'}, 'Description'),
+                        _.label({ htmlFor: 'profile-description', className: 'input-label'}, __('description', 'capitalize')),
                         _.textarea({
                             onChange: Morearty.Callback.set(item_binding, 'description'),
                             id: 'profile-description',

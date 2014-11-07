@@ -44,7 +44,7 @@
     "message": "сообщение",
     "hide": "скрыть",
     "minimize": "минимизировать",
-    "id": "ид",
+    "id": "id",
     "version": "версия",
     "maturity": "готовность",
     "used": "использован",
@@ -55,6 +55,10 @@
     "off": "выкл",
     "no_matches": "нет совпадений",
     "ui_setting": "интерфейс",
-    "choose_lang": "choose lang",
-    "interface_lang": "ui language"
+    "choose_lang": "выбрать язык",
+    "interface_lang": "язык интерфейса",
+    "yes": "да",
+    "no": "нет",
+    "create": "создать",
+    "cancel": "отмена"
 }
