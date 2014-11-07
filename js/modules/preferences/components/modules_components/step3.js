@@ -11,7 +11,7 @@ define([
     base_mixin,
     data_layer_mixin,
     sync_layer_mixin
-    ) {
+) {
     'use strict';
 
     return React.createClass({
@@ -47,7 +47,7 @@ define([
                 preferences_binding = this.getDefaultBinding(),
                 instance = preferences_binding.sub('instance_temp'),
                 imported_instanceId = preferences_binding.val('import_instanceId'),
-                instanceJson, module, moduleJson, $el, import_params, imported_instance_index;
+                instanceJson, module_binding, moduleJson, $el, import_params, imported_instance_index;
 
             if (!instance) {
                 return;
@@ -64,9 +64,9 @@ define([
             }
 
             instanceJson = instance.val().toJS();
-            module = that.getModelFromCollection(instanceJson.moduleId, 'modules');
-            moduleJson = module.val().toJS();
-            $el = $(that.refs.alpacaNodeRef.getDOMNode())
+            module_binding = that.getModelFromCollection(instanceJson.moduleId, 'modules');
+            moduleJson = module_binding.val().toJS();
+            $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
                 data: that.updateObjectAsNamespace(import_params || instanceJson.params),
