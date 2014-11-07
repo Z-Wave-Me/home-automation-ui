@@ -45,6 +45,7 @@ define([
         renderAlpaca: function () {
             var that = this,
                 preferences_binding = this.getDefaultBinding(),
+                data_binding = this.getBinding('data'),
                 instance = preferences_binding.sub('instance_temp'),
                 imported_instanceId = preferences_binding.val('import_instanceId'),
                 instanceJson, module_binding, moduleJson, $el, import_params, imported_instance_index;
@@ -53,14 +54,14 @@ define([
                 return;
             }
 
-            if (imported_instanceId !== null) {
-                imported_instance_index = this.getBinding('data')
+            if (!!imported_instanceId) {
+                imported_instance_index = data_binding
                     .sub('instances').val()
                     .findIndex(function (instance) {
                         return instance.get('id') === imported_instanceId;
                     });
 
-                import_params = this.getBinding('data').sub('instances').sub(imported_instance_index).val('params').toJS();
+                import_params = data_binding.sub('instances').sub(imported_instance_index).val('params').toJS();
             }
 
             instanceJson = instance.val().toJS();

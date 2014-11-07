@@ -16,10 +16,10 @@ define([
 
     return React.createClass({
         mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
-        componentWllMount: function () {
+        componentWillMount: function () {
             if (this.isMounted()) {
                 if (this.getDefaultBinding().val('import_instanceId') !== null) {
-                    this.getDefaultBinding().set('import_instanceId', null)
+                    this.getDefaultBinding().set('import_instanceId', null);
                 }
             }
         },
