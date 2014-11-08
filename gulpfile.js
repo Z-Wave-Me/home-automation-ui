@@ -49,7 +49,7 @@ gulp.task("build", function () {
         ],
         out: 'main-built.js'
     })
-        .pipe(uglify())
+        //.pipe(uglify())
         .pipe(gulp.dest(BUILD_DIRECTORY + '/js')); // pipe it to the output DIR
 
 });
