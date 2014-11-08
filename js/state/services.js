@@ -67,7 +67,7 @@ define([], function () {
 
                                 var device_tags = device.get('tags');
 
-                                if (device_tags.count() > 0) {
+                                if (device_tags.count() > 0 && !device.get('permanently_hidden')) {
                                     var filtered_tags = device_tags.filter(function (t) {
                                         return memo.indexOf(t) === -1;
                                     });
@@ -86,7 +86,7 @@ define([], function () {
                         dataBinding.update('deviceTypes', function () {
                             var types = devices_binding.val().reduce(function (memo, device, index) {
 
-                                if (memo.indexOf(device.get('deviceType')) === -1) {
+                                if (memo.indexOf(device.get('deviceType')) === -1 && !device.get('permanently_hidden')) {
                                     return memo.push(device.get('deviceType'));
                                 } else {
                                     return memo;

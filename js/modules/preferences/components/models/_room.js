@@ -150,7 +150,7 @@ define([
                 temp_string = that.getBinding('preferences').val('temp_string'),
                 filtered_devices = devices_binding.val().filter(function (device) {
                     return item_binding.val('id') !== device.get('location') &&
-                        device.get('metrics').title.toLowerCase().indexOf(temp_string.toLowerCase()) !== -1;
+                        device.get('metrics').get('title').toLowerCase().indexOf(temp_string.toLowerCase()) !== -1;
                 }),
                 deviceTypes = Sticky.get('App.Helpers.JS').arrayUnique(filtered_devices.map(function (device) {
                     return device.get('deviceType');
