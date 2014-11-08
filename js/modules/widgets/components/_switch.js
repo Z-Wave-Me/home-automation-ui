@@ -65,9 +65,9 @@ define([
                 _ = React.DOM,
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                title = binding.sub('metrics').val('title'),
-                level = binding.sub('metrics').val('level'),
-                color = binding.sub('metrics').sub('color').toJS(),
+                title = binding.sub('metrics.title').val(),
+                level = binding.sub('metrics.level').val(),
+                color = binding.sub('metrics.color').toJS(),
                 classes = cx({
                     switch: true,
                     active: level === 'on' || level === 'open'
