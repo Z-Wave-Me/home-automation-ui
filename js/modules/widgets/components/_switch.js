@@ -24,10 +24,11 @@ define([
         toggleSwitch: function () {
             var that = this,
                 binding = this.getDefaultBinding(),
-                level = binding.sub('metrics').val('level'),
+                isDoorLock = binding.val('deviceType') === 'doorlock',
+                level = isDoorLock ? binding.val('metrics.mode') : binding.val('metrics.level'),
                 command;
 
-            if (binding.val('deviceType') !== 'doorlock') {
+            if (isDoorLock) {
                 command = level === 'on' ? 'off' : 'on';
             } else {
                 command = level === 'open' ? 'close' : 'open';
@@ -65,14 +66,14 @@ define([
                 _ = React.DOM,
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                title = binding.sub('metrics').val('title'),
-                level = binding.sub('metrics').val('level'),
-                color = binding.sub('metrics').sub('color').toJS(),
+                title = binding.val('metrics.title'),
+                level = binding.val('metrics.level') || binding.val('metrics.mode'),
                 classes = cx({
                     switch: true,
                     active: level === 'on' || level === 'open'
                 }),
-                _isRGB = binding.val('deviceType') === 'switchRGBW';
+                _isRGB = binding.val('deviceType') === 'switchRGBW',
+                color = _isRGB ? binding.sub('metrics.color').toJS() : {};
 
             return _.div({className: 'content'},
                 _.span({className: 'title-container'}, title),
