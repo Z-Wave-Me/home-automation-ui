@@ -20,9 +20,10 @@ define([
         mixins: [Morearty.Mixin, SyncLayerMixin],
         getInitialState: function () {
             var binding = this.getDefaultBinding(),
-                min_level = parseInt(binding.get('metrics.min')),
-                max_level = parseInt(binding.get('metrics.max')),
-                level = parseInt(binding.get('metrics.level'));
+                mode = parseInt(binding.get('metrics.mode')),
+                min_level = parseInt(binding.get('metrics.modes['+ mode +'].min')),
+                max_level = parseInt(binding.get('metrics.modes['+ mode +'].max')),
+                level = parseInt(binding.get('metrics.modes['+ mode +'].level'));
 
             return {
                 twoPi: Math.PI * 2,
@@ -48,7 +49,7 @@ define([
             var that = this,
                 default_binding = this.getMoreartyContext().getBinding().sub('default');
 
-            that.getDefaultBinding().sub('metrics').addListener('level', function (level, prev_level) {
+            that.getDefaultBinding().sub('metrics.modes['+ mode +']').addListener('level', function (level, prev_level) {
                 that.updateTemperature(level, prev_level);
             });
 
@@ -170,7 +171,7 @@ define([
                 _ = React.DOM,
                 binding = this.getDefaultBinding(),
                 title = binding.sub('metrics').get('title'),
-                level = binding.sub('metrics').get('level'),
+                level = binding.sub('metrics.modes['+ mode +']').get('level'),
                 show_binding = this.getMoreartyContext()
                     .getBinding()
                     .sub('default')
