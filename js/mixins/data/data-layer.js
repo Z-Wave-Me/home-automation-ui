@@ -51,14 +51,16 @@ define([], function () {
         getActiveProfile: function () {
             var ctx = this.getMoreartyContext(),
                 activeId = localStorage.getItem('defaultProfileId'),
-                filter = ctx.getBinding().sub('data').sub('profiles').val().toArray().filter(function (profile) {
+                profiles = ctx.getBinding().sub('data.profiles').val(),
+                size = profiles.size,
+                index = profiles.findIndex(function (profile) {
                     return String(profile.get('id')) === String(activeId);
-                }),
-                index;
+                });
 
-            if (filter.length > 0) {
-                index = ctx.getBinding().sub('data').sub('profiles').val().toArray().indexOf(filter[0]);
-                return ctx.getBinding().sub('data').sub('profiles').sub(index);
+            if (size > 0 && index) {
+                return ctx.getBinding().sub('data.profiles.' + index);
+            } else if (size > 0 && index === -1) {
+                return ctx.getBinding().sub('data.profiles.' + 0);
             } else {
                 return null;
             }
