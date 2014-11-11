@@ -59,7 +59,8 @@ define([
                 primary_filter = binding.val('primaryFilter'),
                 secondary_filter = binding.val('secondaryFilter'),
                 items_binding = data_binding.sub('devices'),
-                positions = data_binding.val('devicesOnDashboard'),
+                active_profile = this.getActiveProfile(),
+                positions = active_profile !== null ? active_profile.val('positions') : [],
                 isShown, isSearchMatch;
 
             isSearchMatch = function (index) {
