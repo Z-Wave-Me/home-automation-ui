@@ -25,7 +25,7 @@ define([
             var that = this,
                 binding = this.getDefaultBinding(),
                 isDoorLock = binding.val('deviceType') === 'doorlock',
-                level = isDoorLock ? binding.val('metrics.mode') : binding.val('metrics.level'),
+                level = binding.val('metrics.level'),
                 command;
 
             if (!isDoorLock) {
