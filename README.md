@@ -21,6 +21,10 @@ API Documentation: http://docs.zwayhomeautomation.apiary.io/
 Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home-automation-ui/issues
 
 # Changelog #
+* 2.0.0rc8-rc10
+    - Fixes doorlock, switch
+    - Fix TranslationMixin
+    - Minor fixes
 * 2.0.0rc7
     - Localization
     - Upgrade lib:
