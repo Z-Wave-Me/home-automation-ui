@@ -12,10 +12,14 @@ define([
         componentDidMount: function () {
             var selectedId = this.getBinding('preferences').val('leftPanelItemSelectedId');
 
-            if (selectedId && this.refs['listSelected_' + selectedId] !== undefined) {
-                this.refs['listSelected_' + selectedId].getDOMNode().click();
-            } else {
-                this.refs.leftPanelList.getDOMNode().firstChild.click(); // focus on show
+            if (this.isMounted()) {
+                if (selectedId && this.refs['listSelected_' + selectedId] !== undefined) {
+                    this.refs['listSelected_' + selectedId].getDOMNode().click();
+                } else {
+                    if (this.refs.leftPanelList.getDOMNode().firstChild) {
+                        this.refs.leftPanelList.getDOMNode().firstChild.click();
+                    }
+                }
             }
         },
         componentWillMount: function () {
@@ -78,7 +82,7 @@ define([
                 _.ul({ ref: 'leftPanelList', className: 'left-panel-list' },
                     itemsBinding.val().map(renderModel).toArray()
                 )
-            )
+            );
         },
         render: function () {
             return this.getModels();

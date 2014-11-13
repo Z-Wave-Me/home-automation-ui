@@ -33,8 +33,8 @@ define([
                 cx = React.addons.classSet,
                 data_binding = this.getBinding('data'),
                 modules_binding = data_binding.sub('modules'),
-                filtered_modules = modules_binding.val().filter(function (module) {
-                    return module.get('category') === category.get('id');
+                filtered_modules = modules_binding.val().filter(function (_module) {
+                    return _module.get('category') === category.get('id');
                 }),
                 filtered_modules_length = filtered_modules.toArray().length,
                 number_step = 3,
@@ -74,17 +74,17 @@ define([
                 ) : null
             );
         },
-        getModule: function (module) {
+        getModule: function (_module) {
             var _ = React.DOM,
                 __ = this.gls,
-                defaults = module.get('defaults'),
-                id = module.get('id'),
+                defaults = _module.get('defaults'),
+                id = _module.get('id'),
                 title = defaults.get('title'),
                 description = defaults.get('description'),
-                author = module.get('author'),
-                homepage_url = module.get('homepage'),
-                version = module.get('version'),
-                maturity = module.get('maturity'),
+                author = _module.get('author'),
+                homepage_url = _module.get('homepage'),
+                version = _module.get('version'),
+                maturity = _module.get('maturity'),
                 is_used = this.isUsedSingletonModule(id),
                 search_string = this.getDefaultBinding().val('search_string_on_modules_list'),
                 is_match = search_string.length < 3 ? true :
