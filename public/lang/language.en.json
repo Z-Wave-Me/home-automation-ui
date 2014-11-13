@@ -18,7 +18,7 @@
   "device_id": "device id",
   "device_type": "device type",
   "creator_id": "creator id",
-  "show_in_dashboard": "Show in dashboard",
+  "show_on_dashboard": "Show on dashboard",
   "permanently_hidden": "Permanently hidden",
   "drop_file": "Drop file",
   "to_upload": "to upload",
@@ -62,5 +62,9 @@
   "yes": "yes",
   "no": "no",
   "create": "create",
-  "cancel": "cancel"
+  "cancel": "cancel",
+  "automation": "automation",
+  "room_name": "room name",
+  "profile_name": "profile name",
+  "widget_name": "widget name"
 }

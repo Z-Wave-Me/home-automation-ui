@@ -774,6 +774,7 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .overlay .overlay-top .overlay-top-panel.overlay-right-top-panel{text-align:right}
 .overlay .overlay-top .overlay-top-panel.overlay-panel-title{font-weight:700;width:100%}
 .overlay .overlay-top .overlay-back-button,.overlay .overlay-top .overlay-close-button{display:inline-block;vertical-align:middle;text-align:center;border-radius:50%;height:22px;line-height:22px;width:22px;border:2px solid #222;color:#222;font-size:14px;cursor:pointer;margin-left:5px;opacity:.6}
+.overlay .overlay-top .overlay-back-button{width:auto;padding:0 5px;border-radius:12px;font-size:10px;height:22px;line-height:22px}
 .overlay .left-panel-container{display:block;float:left;min-width:190px;width:17%;height:85%;border-right:1px solid #ccc;overflow:hidden}
 .overlay .left-panel-container .left-panel-list-container{overflow:hidden;overflow-y:auto;height:89%;margin-top:5px}
 .overlay .left-panel-container .left-panel-list{list-style-type:none;text-decoration:none;cursor:pointer;padding:0}

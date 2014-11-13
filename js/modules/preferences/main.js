@@ -55,7 +55,7 @@ define([
                                 _.span({
                                     className: overlay_back_button_enabled ? 'overlay-back-button' : 'overlay-back-button hidden',
                                     onClick: this.back
-                                }, '←')
+                                }, '← ' + __('preferences', 'upper'))
                             ),
                             _.div({className: 'overlay-center-top-panel overlay-top-panel'},
                                 _.span({
