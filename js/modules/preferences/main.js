@@ -14,13 +14,15 @@ define([
     return React.createClass({
         mixins: [Morearty.Mixin, base_mixin, TranslateMixin],
         componentDidMount: function () {
-            var binding = this.getDefaultBinding();
+            var that = this,
+                binding = this.getDefaultBinding();
 
-            binding.addListener('overlayShow', function (newValue) {
-                if (newValue) {
+            binding.addListener('overlayShow', function (showing) {
+                if (showing) {
                     document.getElementById('body').style.overflow = 'hidden';
                 } else {
                     document.getElementById('body').style.overflow = 'auto';
+                    that.setActiveNode(1);
                 }
             });
         },
