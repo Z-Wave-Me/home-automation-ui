@@ -60,7 +60,7 @@ define([
                     _.div({ key: 'form-name-input', className: 'form-group' },
                         _.label({ htmlFor: 'profile-name', className: 'input-label'}, 'Name'),
                         _.input({
-                            onChange: Morearty.Callback.set(item_binding, __('name', 'capitalize')),
+                            onChange: Morearty.Callback.set(item_binding, name),
                             id: 'profile-name',
                             className: 'input-value',
                             type: 'text',
