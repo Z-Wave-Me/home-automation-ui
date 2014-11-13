@@ -15,7 +15,7 @@ define([
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, sync_layer_mixin, data_layer_mixin],
+        mixins: [Morearty.Mixin, sync_layer_mixin, data_layer_mixin, TranslateMixin],
         displayName: '_widget',
         componentWillMount: function () {
             var that = this,
@@ -106,6 +106,7 @@ define([
                 preferencesBinding = that.getBinding('preferences'),
                 dataBinding = that.getBinding('data'),
                 _ = React.DOM,
+                __ = this.gls,
                 item = that.getBinding('item'),
                 id = item.val('id'),
                 title = id ? item.sub('metrics').val('title') : null,
@@ -140,13 +141,13 @@ define([
                         _.span({className: 'value-item'}, (dataBinding.sub('instances').sub(creatorIndex).val('title') || '') + ' [' + creatorId + ']')
                     ) : null,
                     _.div({ key: 'form-name-input', className: 'form-group' },
-                        _.label({ htmlFor: 'room-name', className: 'input-label'}, 'Name:'),
+                        _.label({ htmlFor: 'room-name', className: 'input-label'}, __('widget_name', 'capitalize') + ':'),
                         _.input({
                             onChange: Morearty.Callback.set(item.sub('metrics'), 'title'),
                             id: 'room-name',
                             className: 'input-value',
                             type: 'text',
-                            placeholder: 'Name',
+                            placeholder: __('name', 'capitalize'),
                             value: title
                         })
                     ),
@@ -163,7 +164,7 @@ define([
                         ),
                         _.input({
                             className: classes_input_autocomplete,
-                            placeholder: 'Device name',
+                            placeholder: __('device_name', 'capitalize'),
                             onChange: Morearty.Callback.set(preferencesBinding, 'temp_string'),
                             onKeyPress: Morearty.Callback.onEnter(this.onAddNewTagHandler),
                             value: temp_string
@@ -179,7 +180,7 @@ define([
                         ) : null
                     ),
                     _.div({ key: 'form-icon-input', className: 'form-group' },
-                        _.label({ htmlFor: 'room-description', className: 'input-label'}, 'Icon:'),
+                        _.label({ htmlFor: 'room-description', className: 'input-label'}, __('icon', 'capitalize') + ':'),
                         _.div({ onDrop: this.handleFile, onDragOver: this.preventDefault, className: 'dropzone', onClick: this.handleClick},
                             _.div({className: 'pull-left text-container'},
                                 _.span({ className: 'text-zone primary'}, _.strong({}, 'Drop file'), ' to upload'),
@@ -200,7 +201,7 @@ define([
                                 _.div({className: 'bubble-switch'})
                             )
                         ),
-                        'Show in dashboard'
+                        __('show_on_dashboard', 'capitalize')
                     ),
                     _.label({className: 'switch-container'},
                         _.input({
@@ -213,7 +214,7 @@ define([
                                 _.div({className: 'bubble-switch'})
                             )
                         ),
-                        'Permanently hidden'
+                        __('permanently_hidden', 'capitalize')
                     ),
                     /*
                      _inline_input({
@@ -241,6 +242,7 @@ define([
         getTagsAvailable: function () {
             var that = this,
                 _ = React.DOM,
+                __ = this.gls,
                 item_binding = that.getBinding('item'),
                 current_tags = item_binding.val('tags'),
                 available_tags = that.getBinding('data').sub('deviceTags').val().filter(function (t) {
@@ -267,7 +269,7 @@ define([
                 );
             } else {
                 return _.li({className: 'result-dept'},
-                    _.div({className: 'result-label no-matches'}, 'no matches')
+                    _.div({className: 'result-label no-matches'}, __('no_matches'))
                 );
             }
         },

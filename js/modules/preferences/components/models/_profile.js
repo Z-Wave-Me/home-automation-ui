@@ -58,7 +58,7 @@ define([
             return _.div({ className: 'model-component'},
                 _.div({ className: 'form-data profile clearfix' },
                     _.div({ key: 'form-name-input', className: 'form-group' },
-                        _.label({ htmlFor: 'profile-name', className: 'input-label'}, 'Name'),
+                        _.label({ htmlFor: 'profile-name', className: 'input-label'}, __('profile_name', 'capitalize')),
                         _.input({
                             onChange: Morearty.Callback.set(item_binding, 'name'),
                             id: 'profile-name',
@@ -120,7 +120,7 @@ define([
                                     _.div({className: 'bubble-switch'})
                                 )
                             ),
-                            __('make as default', 'capitalize'), ' ', __('profile')
+                            __('make_as_default', 'capitalize'), ' ', __('profile')
                         )
                     ) : null,
                     _buttons_group({

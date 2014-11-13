@@ -17,7 +17,7 @@
     "device_id": "device id",
     "device_type": "device type",
     "creator_id": "creator id",
-    "show_in_dashboard": "показать в панели",
+    "show_on_dashboard": "показать на панели",
     "permanently_hidden": "всегда скрывать",
     "drop_file": "Drop file",
     "to_upload": "to upload",
@@ -60,5 +60,8 @@
     "yes": "да",
     "no": "нет",
     "create": "создать",
-    "cancel": "отмена"
+    "cancel": "отмена",
+    "room_name": "room name",
+    "profile_name": "profile name",
+    "widget_name": "widget name"
 }

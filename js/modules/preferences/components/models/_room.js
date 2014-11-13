@@ -79,7 +79,7 @@ define([
             return _.div({ className: 'model-component' },
                 _.div({ className: 'form-data room clearfix' },
                     _.div({ key: 'form-name-input', className: 'form-group' },
-                        _.label({ htmlFor: 'room-name', className: 'input-label'}, 'Name:'),
+                        _.label({ htmlFor: 'room-name', className: 'input-label'}, __('room_name', 'capitalize') + ':'),
                         _.input({
                             onChange: Morearty.Callback.set(item, 'title'),
                             id: 'room-name',
@@ -90,7 +90,7 @@ define([
                         })
                     ),
                     _.div({ key: 'form-icon-input', className: 'form-group' },
-                        _.label({ htmlFor: 'room-description', className: 'input-label'}, 'Icon:'),
+                        _.label({ htmlFor: 'room-description', className: 'input-label'}, __('icon', 'capitalize') + ':'),
                         _.div({ onDrop: this.handleFile, onDragOver: this.preventDefault, className: 'dropzone', onClick: this.handleClick},
                             _.div({className: 'pull-left text-container'},
                                 _.span({ className: 'text-zone primary'}, _.strong({}, __('drop_file', 'capitalize')), ' ', __('to_upload')),
@@ -173,7 +173,7 @@ define([
                                 );
                             }).toArray()
                         )
-                    )
+                    );
                 });
             } else {
                 return _.li({className: 'result-dept'},
@@ -202,7 +202,6 @@ define([
                 device_binding = that.getModelFromCollection(deviceId, 'devices');
 
             device_binding.set('location', null);
-
 
             that.save({
                 model: device_binding,
