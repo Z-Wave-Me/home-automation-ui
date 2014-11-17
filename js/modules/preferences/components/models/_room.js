@@ -89,17 +89,17 @@ define([
                             value: title
                         })
                     ),
-                    _.div({ key: 'form-icon-input', className: 'form-group' },
-                        _.label({ htmlFor: 'room-description', className: 'input-label'}, __('icon', 'capitalize') + ':'),
-                        _.div({ onDrop: this.handleFile, onDragOver: this.preventDefault, className: 'dropzone', onClick: this.handleClick},
-                            _.div({className: 'pull-left text-container'},
-                                _.span({ className: 'text-zone primary'}, _.strong({}, __('drop_file', 'capitalize')), ' ', __('to_upload')),
-                                _.span({ className: 'text-zone secondary'}, '(or click)')
-                            ),
-                            _.div({className: classes, style: icon ? {'background-image': 'url(' + icon + ')'} : {}})
-                        ),
-                        _.input({ref: 'fileInput', className: 'hidden', type: 'file', onChange: this.handleFile})
-                    ),
+                    //_.div({ key: 'form-icon-input', className: 'form-group' },
+                    //    _.label({ htmlFor: 'room-description', className: 'input-label'}, __('icon', 'capitalize') + ':'),
+                    //    _.div({ onDrop: this.handleFile, onDragOver: this.preventDefault, className: 'dropzone', onClick: this.handleClick},
+                    //        _.div({className: 'pull-left text-container'},
+                    //            _.span({ className: 'text-zone primary'}, _.strong({}, __('drop_file', 'capitalize')), ' ', __('to_upload')),
+                    //            _.span({ className: 'text-zone secondary'}, '(or click)')
+                    //        ),
+                    //        _.div({className: classes, style: icon ? {'background-image': 'url(' + icon + ')'} : {}})
+                    //    ),
+                    //    _.input({ref: 'fileInput', className: 'hidden', type: 'file', onChange: this.handleFile})
+                    //),
                     !add_mode ? _.div({ key: 'form-device-input', className: 'form-group' },
                         _.div({ className: 'tagsinput'},
                             dataBinding.sub('devices').val().filter(function (device) {

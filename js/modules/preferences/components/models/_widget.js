@@ -164,7 +164,7 @@ define([
                         ),
                         _.input({
                             className: classes_input_autocomplete,
-                            placeholder: __('device_name', 'capitalize'),
+                            placeholder: __('tags', 'capitalize'),
                             onChange: Morearty.Callback.set(preferencesBinding, 'temp_string'),
                             onKeyPress: Morearty.Callback.onEnter(this.onAddNewTagHandler),
                             value: temp_string
@@ -179,17 +179,17 @@ define([
                             )
                         ) : null
                     ),
-                    _.div({ key: 'form-icon-input', className: 'form-group' },
-                        _.label({ htmlFor: 'room-description', className: 'input-label'}, __('icon', 'capitalize') + ':'),
-                        _.div({ onDrop: this.handleFile, onDragOver: this.preventDefault, className: 'dropzone', onClick: this.handleClick},
-                            _.div({className: 'pull-left text-container'},
-                                _.span({ className: 'text-zone primary'}, _.strong({}, 'Drop file'), ' to upload'),
-                                _.span({ className: 'text-zone secondary'}, '(or click)')
-                            ),
-                            _.div({className: classes, style: icon ? {'background-image': 'url(' + icon + ')'} : {}})
-                        ),
-                        _.input({ref: 'fileInput', className: 'hidden', type: 'file', onChange: this.handleFile})
-                    ),
+                    //_.div({ key: 'form-icon-input', className: 'form-group' },
+                    //    _.label({ htmlFor: 'room-description', className: 'input-label'}, __('icon', 'capitalize') + ':'),
+                    //    _.div({ onDrop: this.handleFile, onDragOver: this.preventDefault, className: 'dropzone', onClick: this.handleClick},
+                    //        _.div({className: 'pull-left text-container'},
+                    //            _.span({ className: 'text-zone primary'}, _.strong({}, 'Drop file'), ' to upload'),
+                    //            _.span({ className: 'text-zone secondary'}, '(or click)')
+                    //        ),
+                    //        _.div({className: classes, style: icon ? {'background-image': 'url(' + icon + ')'} : {}})
+                    //    ),
+                    //    _.input({ref: 'fileInput', className: 'hidden', type: 'file', onChange: this.handleFile})
+                    //),
                     _.label({className: 'switch-container'},
                         _.input({
                                 className: 'ios-switch green',
