@@ -49,9 +49,13 @@ define([
                 index = this.props.index,
                 time_date = new Date(notification.val('timestamp'));
 
+            function LZ(n) {
+                return (n < 10 ? '0' : '') + n;
+            }
+
             time_date = time_date.getDate() + "/" + LZ(time_date.getMonth() + 1) + "/" + (time_date.getYear() - 100) + "-" + LZ(time_date.getHours()) + ":" + LZ(time_date.getMinutes());
 
-            if (this.getBinding('notifications_options').val('full_view_notice_id') === notification.val('id')) {
+            if (this.getBinding('notifications_options').val('full_view_notice_id') === notification.val('id') + '-' + index) {
                 return (
                     _.div({className: 'event-item full-view', id: notification.val('id'), key: 'notice-' + index },
                         _.span({className: 'content-container'},
@@ -61,10 +65,10 @@ define([
                             _.div({key: 'message-value', className: 'message-value'}, notification.val('message'))
                         ),
                         _.span({className: 'actions-container'},
-                            _.span({
-                                className: 'action-button',
-                                onClick: this.setRedeemedNotification
-                            }, __('hide', 'case')),
+                            //_.span({
+                            //    className: 'action-button',
+                            //    onClick: this.setRedeemedNotification
+                            //}, __('hide', 'case')),
                             _.span({
                                 onClick: this.setFullViewItem.bind(null, null),
                                 className: 'action-button'
@@ -74,7 +78,7 @@ define([
                 );
             } else {
                 return (
-                    _.div({onClick: this.setFullViewItem.bind(null, notification.val('id')), className: 'event-item', id: notification.val('id'), key: 'notice-' + index },
+                    _.div({onClick: this.setFullViewItem.bind(null, notification.val('id') + '-' + index), className: 'event-item', id: notification.val('id'), key: 'notice-' + index },
                         _.span({className: 'content-container'},
                             _.span({className: 'type-filed'}, '[' + notification.val('type').toUpperCase() + '] '),
                             _.span({className: 'message-field'}, notification.val('message'))

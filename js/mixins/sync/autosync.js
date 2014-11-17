@@ -75,13 +75,14 @@ define([], function () {
                                 if (callback && typeof callback === 'function') {
                                     callback(response);
                                 }
+
                                 if (obj.hasOwnProperty('postSyncHandler')) {
                                     obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id));
-                                } else {
-                                    if (response.data) {
-                                        var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
-                                        dataBinding.merge(obj.id, Immutable.fromJS(models));
-                                    }
+                                }
+
+                                if (response.data) {
+                                    var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
+                                    dataBinding.merge(obj.id, Immutable.fromJS(models));
                                 }
 
                                 if (collections.sub(index).val('loaded') === false) {

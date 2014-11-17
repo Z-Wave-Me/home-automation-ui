@@ -63,5 +63,6 @@
     "cancel": "cancel",
     "room_name": "room name",
     "profile_name": "profile name",
-    "widget_name": "widget name"
+    "widget_name": "widget name",
+    "type": "type"
 }
