@@ -111,6 +111,16 @@ define([], function () {
                     }), 0);
                 } else {
                     setTimeout(func, obj.delay || 0);
+                    // add autoupdate namespaces after changed devices/instances
+                    if (obj.id === 'namespaces') {
+                        that.getBinding('data').addListener('instances', function () {
+                            setTimeout(func, 500);
+                        });
+
+                        that.getBinding('data').addListener('devices', function () {
+                            setTimeout(func, 500);
+                        });
+                    }
                 }
             });
         },
