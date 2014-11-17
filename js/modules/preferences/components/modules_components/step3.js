@@ -29,8 +29,7 @@ define([
         render: function () {
             var _ = React.DOM,
                 __ = this.gls,
-                preferences_binding = this.getDefaultBinding(),
-                moduleId = preferences_binding.val('moduleId');
+                preferences_binding = this.getDefaultBinding();
 
             return _.div({ className: 'step-container' },
                 _.div({className: 'alpaca-main', ref: 'alpacaNodeRef'}),
@@ -61,7 +60,7 @@ define([
                         return instance.get('id') === imported_instanceId;
                     });
 
-                import_params = data_binding.sub('instances').sub(imported_instance_index).val('params').toJS();
+                import_params = data_binding.sub('instances.' + imported_instance_index).val('params').toJS();
             }
 
             instanceJson = instance.val().toJS();

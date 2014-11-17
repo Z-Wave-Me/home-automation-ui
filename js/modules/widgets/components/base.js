@@ -77,7 +77,7 @@ define([
                     ),
                         _.div({className: 'content-widget'},
                         device_type !== 'camera' ?  _.div({className: 'container-icon'},
-                            _.div({className: icon_classes, style: styles})
+                            _.div({className: icon_classes + ' ' + device_type + '-i', style: styles})
                         ) : null,
                         Widget({
                             binding: {
