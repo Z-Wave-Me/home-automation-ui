@@ -2,7 +2,6 @@ define([
     // components
     './components/header',
     './components/main',
-    './components/footer',
     'Preferences',
     'Notifications',
     'Load',
@@ -12,7 +11,6 @@ define([
     // components
     Header,
     Main,
-    Footer,
     Preferences,
     Notifications,
     Load,
@@ -58,25 +56,24 @@ define([
                         data: that.getBinding('data'),
                         preferences: that.getBinding('preferences')
                     }
-                }),
-                Footer({binding: binding}),
-                Preferences({binding: {
-                    default: binding,
-                    data: that.getBinding('data'),
-                    preferences: that.getBinding('preferences')
-                }}),
-                Load({binding: {
-                    default: binding,
-                    data: that.getBinding('data'),
-                    preferences: that.getBinding('preferences')
-                }}),
-                binding.sub('notifications').val('show_popup') ? Notifications({
-                    binding: {
-                        default: binding,
-                        data: that.getBinding('data'),
-                        preferences: that.getBinding('preferences')
-                    }
-                }) : null
+                })
+                //Preferences({binding: {
+                //    default: binding,
+                //    data: that.getBinding('data'),
+                //    preferences: that.getBinding('preferences')
+                //}}),
+                //Load({binding: {
+                //    default: binding,
+                //    data: that.getBinding('data'),
+                //    preferences: that.getBinding('preferences')
+                //}}),
+                //binding.sub('notifications').val('show_popup') ? Notifications({
+                //    binding: {
+                //        default: binding,
+                //        data: that.getBinding('data'),
+                //        preferences: that.getBinding('preferences')
+                //    }
+                //}) : null
             );
         }
     });

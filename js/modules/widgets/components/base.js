@@ -22,28 +22,9 @@ define([
     return React.createClass({
         mixins: [Morearty.Mixin],
         render: function () {
-            var _ = React.DOM,
-                binding = this.getDefaultBinding(),
-                metrics_binding = binding.sub('metrics'),
+            var binding = this.getDefaultBinding(),
+                _ = React.DOM,
                 device_type = binding.val('deviceType'),
-                icon = metrics_binding.val('icon') || null,
-                custom_icon = icon !== null ? icon.indexOf('http:') !== -1 : false,
-                cx = React.addons.classSet,
-                widget_classes = cx({
-                    'widget-object': true,
-                    show: true,
-                    clear: true,
-                    'widget-small': device_type !== 'camera',
-                    widget: device_type === 'camera'
-                }) + ' ' + device_type,
-                icon_classes = cx({
-                    customIcon: custom_icon,
-                    'icon-base': !custom_icon
-                }),
-                styles = custom_icon ?
-                    {
-                        'background-image': 'url(' + icon + ')'
-                    } : null,
                 Widget;
 
             if (device_type === "sensorBinary" ||
@@ -68,25 +49,12 @@ define([
                 //Widget = new Probe(Ctx);
             }
 
-            //sensorMultilevel widget-small widget-object show clear
-
-            return (
-                _.div({id: binding.val('id'), className: widget_classes},
-                    _.div({className: 'border-widget border-widget-sprite small-border'},
-                        _.span({className: 'selection-button border-widget-sprite button-select-border'})
-                    ),
-                        _.div({className: 'content-widget'},
-                        device_type !== 'camera' ?  _.div({className: 'container-icon'},
-                            _.div({className: icon_classes, style: styles})
-                        ) : null,
-                        Widget({
-                            binding: {
-                                default: binding
-                            }
-                        })
-                    )
-                )
-            );
+            return Widget({
+                binding: {
+                    default: binding,
+                    footer: this.getBinding('footer')
+                }
+            });
         }
     });
 });

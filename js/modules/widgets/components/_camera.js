@@ -89,13 +89,16 @@ define([
         render: function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                title = binding.sub('metrics').val('title'),
-                url = binding.sub('metrics').val('url');
+                rearrange_showing = this.getBinding('footer').val('rearrange_showing'),
+                url = binding.val('metrics.url'),
+                icon = binding.val('metrics.icon');
 
-            return (
-                _.div({key: 'container-camera-' + binding.val('id')},
+            return _.div({className: 'widget x2'},
+                rearrange_showing ? _.div({className: 'select-button'}) : null,
+                _.span({className: 'icon', style: {backgroundImage: 'url(' + icon + ')'}}),
+                _.span({className: 'title'}, binding.val('metrics.title')),
+                _.div({className: 'metrics-container'},
                     _.div({key: 'control', className: 'control-block camera-block'},
-                        _.span({ className: 'title-container'}, title),
                         _.div({className: 'control-buttons'},
                             this.getCommandsButton()
                         )

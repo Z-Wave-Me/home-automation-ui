@@ -164,19 +164,20 @@ define([
             this.forceUpdate();
         },
         render: function () {
-            var that = this,
-                _ = React.DOM,
+            var _ = React.DOM,
                 binding = this.getDefaultBinding(),
+                rearrange_showing = this.getBinding('footer').val('rearrange_showing'),
                 title = binding.sub('metrics').val('title'),
-                level = binding.sub('metrics').val('level'),
                 show_binding = this.getMoreartyContext()
                     .getBinding()
                     .sub('default')
                     .sub('show_popup_' + binding.val('id'));
 
-            return (
-                _.div({className: 'content'},
-                    _.span({className: 'title-container'}, title),
+            return _.div({className: 'widget'},
+                rearrange_showing ? _.div({className: 'select-button'}) : null,
+                _.span({className: 'icon', style: {backgroundImage: 'url(' + binding.val('metrics.icon') + ')'}}),
+                _.span({className: 'title'}, title),
+                _.div({className: 'metrics-container'},
                     _.div({
                         className: 'progress-container',
                         ref: 'progressContainer',

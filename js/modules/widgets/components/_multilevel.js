@@ -32,29 +32,25 @@ define([
         render: function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
+                rearrange_showing = this.getBinding('footer').val('rearrange_showing'),
                 cx = React.addons.classSet,
                 item_binding = binding,
-                title = item_binding.sub('metrics').val('title'),
-                level = item_binding.sub('metrics').val('level'),
+                title = item_binding.val('metrics.title'),
+                level = item_binding.val('metrics.level'),
+                icon = item_binding.val('metrics.icon'),
                 styles = {
                     'background-image': '-webkit-gradient(linear,left top,  right top, color-stop(' + level / 100 + ', rgb( 64, 232, 240 )), color-stop(' + level / 100 + ', rgb( 190, 190, 190 )))'
-                },
-                progressClasses = cx({
-                    'progress-bar': true,
-                    hidden: this._hover
-                }),
-                rangeClasses = cx({
-                    'input-range': true,
-                    hidden: !this._hover
-                });
+                };
 
-            return (
-                _.div({className: 'content', onMouseEnter: this.onToggleHovering.bind(null, true), onMouseLeave: this.onToggleHovering.bind(null, false)},
-                    _.span({className: 'text title-container'}, this._hover ? '' : title),
-                    _.progress({className: progressClasses, value: level, min: 0, max: 100}),
-                    _.input({className: rangeClasses, onChange: this.onChangeLevel, type: 'range', min: 0, max: 100, value: level, step: 1, style: styles})
+            return _.div({className: 'widget multilevel'},
+                rearrange_showing ? _.div({className: 'select-button'}) : null,
+                _.span({className: 'icon', style: {backgroundImage: 'url(' + icon + ')'}}),
+                _.span({className: 'title'}, title),
+                _.div({className: 'metrics-container', onMouseEnter: this.onToggleHovering.bind(null, true), onMouseLeave: this.onToggleHovering.bind(null, false)},
+                    !this._hover ? _.progress({className: 'progress', value: level, min: 0, max: 100}) :
+                    _.input({className: 'range', onChange: this.onChangeLevel, type: 'range', min: 0, max: 100, value: level, step: 1, style: styles})
                 )
-            )
+            );
         }
     });
 });

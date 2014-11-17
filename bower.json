@@ -7,12 +7,13 @@
         "jquery": "2.1.1",
         "jquery-ui": "1.11.2",
         "react": "0.11.2",
-        "less": "1.7.5",
+        "less": "2.0.x",
         "moreartyjs": "git://github.com/moreartyjs/moreartyjs#0.5.0",
         "immutable": "3.0.x",
         "director": "1.2.2",
         "ace": "1.1.7",
         "ace-builds":  "1.1.7",
-        "d3": "3.4.12"
+        "d3": "3.4.12",
+        "font-awesome": "4.2.x"
     }
 }

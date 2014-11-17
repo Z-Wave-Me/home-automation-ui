@@ -32,12 +32,12 @@ define([], function () {
                 tagsBinding = dataBinding.sub('deviceTags'),
                 tags = tagsBinding.val().toJS();
 
-            return _.div({className: 'secondary-filters'},
+            return _.div({className: 'filter-items'},
                 tags
                     .map(function (tag) {
-                        return _.div({
+                        return _.span({
                             onClick: that.setSecondaryFilter.bind(null, tag),
-                            className: secondaryFilter === tag ? 'secondary-filter selected' : 'secondary-filter',
+                            className: secondaryFilter === tag ? 'filter selected' : 'filter',
                             key: tag
                         }, tag);
                     })

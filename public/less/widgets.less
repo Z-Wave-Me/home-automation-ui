@@ -1,18 +1,296 @@
-// variables
-@circle-radius: 40px;
+/*
+ * .base-search-component
+ */
 
-.thermostat {
-  .progress-container {
-    width: @circle-radius;
-    height: @circle-radius;
-    display: block;
-    float: right;
-    margin-top: 4px;
-    margin-right: 7px;
-    cursor: pointer;
-    svg {
-      margin: 0;
-      padding: 0;
-    }
+@widget-height: 52px;
+@widget-margin: 6px;
+@enable-color: #40e8f0;
+@disable-color: #bebebe;
+
+.widget {
+  display: flex;
+  width: 300px;
+  height: @widget-height;
+  box-shadow: 0 1px 0 0 rgba(170,170,170,.702);
+  background: url(../img/widget-bg.png);
+  margin: @widget-margin;
+  border-radius: 5px;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.widget.x2 {
+  height: @widget-height * 2 + @widget-margin * 2;
+}
+
+.widget .icon {
+  width: 30px;
+  height: auto;
+  max-height: 30px;
+  align-self: center;
+  margin: 0 5px;
+}
+
+.widget .title {
+  position: absolute;
+  margin-top: 15px;
+  width: 210px;
+  height: 18px;
+  overflow: hidden;
+  word-wrap: normal;
+  mask-image: linear-gradient(left, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0) 100%);
+  -moz-mask-image: -moz-linear-gradient(left, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0) 100%);
+  -webkit-mask-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0) 100%);
+}
+
+.metrics-container {
+  display: flex;
+  justify-content: flex-end;
+  align-self: center;
+  width: 250px;
+  position: relative;
+  z-index: 1;
+}
+
+/*
+ * probe
+ */
+
+.probe .value-field {
+  color: #444;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/*
+ * switch/doorlock/rgbw
+ */
+
+.switch {
+  width: 75px;
+  height: 25px;
+  line-height: 25px;
+  vertical-align: middle;
+  border-radius: 12px;
+  background-color: @disable-color;
+  flex-wrap: nowrap;
+  display: flex;
+  cursor: pointer;
+  .bubble {
+    display: inline-block;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: 0 2px 0 0 rgba(0,0,0,.2);
+    width: 19px;
+    height: 19px;
+    align-self: center;
+    margin-left: 3px;
+  }
+  .text {
+    font-size: .8em;
+    font-weight: 700;
+    align-self: center;
+    width: 30px;
+    padding: 0 10px;
+    text-align: right;
+  }
+}
+
+.switch.active {
+  background-color: @enable-color;
+  .bubble {
+    order: 1;
+  }
+  .text {
+    order: 0;
+    text-align: left;
+  }
+}
+
+.picker-rect {
+  height: 13px;
+  width: 13px;
+  display: inline-block;
+  align-self: center;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+/*
+ * multilevel
+ */
+
+.multilevel .progress {
+  border-radius: 6px;
+  background-color: #bebebe;
+  height: 12px;
+  width: 76px;
+  border: none;
+  outline: 0;
+}
+
+.multilevel .progress::-webkit-progress-bar {
+  border-radius: 6px;
+  background-color: rgb( 190, 190, 190 );
+  height: 12px;
+  width: 76px;
+}
+
+.multilevel .progress::-moz-progress-bar {
+  background-color: rgb( 63, 232, 240 );
+  color: #fff;
+  border-radius: 6px;
+}
+
+.multilevel .progress::-webkit-progress-value {
+  background-color: rgb( 63, 232, 240 );
+  color: #fff;
+  border-radius: 6px;
+  width: 100%;
+}
+
+.multilevel .range {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 6px;
+    background-color: rgb( 190, 190, 190 );
+    height: 6px;
+    width: 120px;
+    outline:none;
+    border: none;
+}
+
+.multilevel .range::-webkit-slider-thumb,
+.multilevel .range::-moz-range-thumb,
+.multilevel .range::-ms-thumb {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: block;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.2);
+  width: 20px;
+  height: 20px;
+  outline:none;
+  border: none;
+}
+
+.multilevel .range::-moz-range-track {
+  border-radius: 6px;
+  background-color: rgb( 190, 190, 190 );
+  height: 6px;
+  outline:none;
+  border: none;
+}
+
+.multilevel .range::-webkit-slider-runnable-track {
+  outline:none;
+  border: none;
+}
+
+
+//// input range
+//.input-range {
+//  -webkit-appearance: none;
+//  -moz-appearance: none;
+//  border-radius: 6px;
+//  background-color: rgb( 190, 190, 190 );
+//  height: 6px;
+//  width: 60%;
+//  float: right;
+//  margin: 8% 3% 0 0;
+//  outline:none;
+//  border: none;
+//  /*
+//    background-image: linear-gradient(left top,  right top, color-stop(0.2, rgb( 64, 232, 240 )), color-stop(0.2, rgb( 190, 190, 190 )));
+//    background-image: -moz-linear-gradient(left top,  right top, color-stop(0.2, rgb( 64, 232, 240 )), color-stop(0.2, rgb( 190, 190, 190 )));
+//    background-image: -webkit-gradient(linear,left top,  right top, color-stop(0.2, rgb( 64, 232, 240 )), color-stop(0.2, rgb( 190, 190, 190 )));
+//    background-image: -ms-linear-gradient(left top,  right top, color-stop(0.2, rgb( 64, 232, 240 )), color-stop(0.2, rgb( 190, 190, 190 )));
+//  */
+//}
+//
+//.input-range::-webkit-slider-thumb {
+//  -webkit-appearance: none;
+//  -moz-appearance: none;
+//  display: block;
+//  border-radius: 50%;
+//  background-color: #fff;
+//  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.2);
+//  width: 20px;
+//  height: 20px;
+//  margin: 3.8% 0;
+//  outline:none;
+//  border: none;
+//}
+//
+//.input-range::-moz-range-thumb  {
+//  -webkit-appearance: none;
+//  -moz-appearance: none;
+//  display: block;
+//  border-radius: 50%;
+//  background-color: #fff;
+//  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.2);
+//  width: 20px;
+//  height: 20px;
+//  margin: 3.8% 0;
+//  outline: none;
+//  border: none;
+//}
+//
+//.input-range::-ms-thumb {
+//  -webkit-appearance: none;
+//  -moz-appearance: none;
+//  display: block;
+//  border-radius: 50%;
+//  background-color: #fff;
+//  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.2);
+//  width: 20px;
+//  height: 20px;
+//  margin: 3.8% 0;
+//  outline:none;
+//  border: none;
+//}
+//
+//.input-range::-moz-range-track {
+//  border-radius: 6px;
+//  background-color: rgb( 190, 190, 190 );
+//  height: 6px;
+//  outline:none;
+//  border: none;
+//}
+//
+//.input-range::-webkit-slider-runnable-track {
+//  outline:none;
+//  border: none;
+//}
+//.status-field {
+//  display: block;
+//  float: right;
+//  width: auto;
+//  font-size: 12px;
+//  font-family: "HelveticaNeue";
+//  color: rgb( 68, 68, 68 );
+//  font-weight: bold;
+//  margin-right: 3%;
+//}
+
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+  .widget {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #000;
+  }
+}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {
+  .widget {
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #000;
   }
 }

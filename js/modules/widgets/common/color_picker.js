@@ -171,6 +171,7 @@ define([
                     y: e.pageY - this.state.rel.y
                 }
             });
+            this.forceUpdate
             e.stopPropagation();
             e.preventDefault();
         },

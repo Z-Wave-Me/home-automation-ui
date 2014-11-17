@@ -52,6 +52,15 @@ define([], function () {
             },
             full_view_notice_id: null
         },
+        overlays: {
+          preferences: {
+              showing: false
+          }
+        },
+        footer: {
+            rearrange_showing: false,
+            search_string: null
+        },
         // menu settings
         primaryFilter: 'all',
         secondaryFilter: '',

@@ -32,12 +32,12 @@ define([], function () {
                 locationsBinding = dataBinding.sub('locations'),
                 locations = locationsBinding.val();
 
-            return _.div({className: 'secondary-filters'},
+            return _.div({className: 'filter-items'},
                 locations.map(function (item) {
-                    return _.div({
+                    return _.span({
                         ref: 'secondaryFilter',
                         onClick: that.setSecondaryFilter.bind(null, item.get('id')),
-                        className: secondaryFilter === item.get('id') ? 'secondary-filter selected' : 'secondary-filter',
+                        className: secondaryFilter === item.get('id') ? 'filter selected' : 'filter',
                         key: item.get('id')
                     }, item.get('title'));
                 }).toArray()

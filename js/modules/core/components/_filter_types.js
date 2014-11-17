@@ -32,12 +32,12 @@ define([], function () {
                 typesBinding = dataBinding.sub('deviceTypes'),
                 types = typesBinding.val().toJS();
 
-            return _.div({className: 'secondary-filters'},
+            return _.div({className: 'filter-items'},
                 types
                     .map(function (type) {
-                        return _.div({
+                        return _.span({
                             onClick: that.setSecondaryFilter.bind(null, type),
-                            className: secondaryFilter === type ? 'secondary-filter selected' : 'secondary-filter',
+                            className: secondaryFilter === type ? 'filter selected' : 'filter',
                             key: type
                         }, type);
                     })

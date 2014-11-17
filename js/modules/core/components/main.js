@@ -1,10 +1,14 @@
 define([
     // components
-    'Widgets'
+    'Widgets',
+    './filters',
+    './footer'
 ], function (
     // components
-    Widgets
-    ) {
+    Widgets,
+    Filters,
+    Footer
+) {
     'use strict';
 
     return React.createClass({
@@ -12,12 +16,13 @@ define([
         render: function () {
             var binding = this.getDefaultBinding(),
                 dataBinding = this.getBinding('data'),
-                _ = React.DOM;
+                _ = React.DOM,
+                _binding = {binding: { default: binding, data: dataBinding, preferences: this.getBinding('preferences')}};
 
-            return _.div({ className: 'main-container clearfix' },
-                _.div({id: 'main-region', className: 'main wrapper clearfix'},
-                    Widgets({binding: { default: binding, data: dataBinding, preferences: this.getBinding('preferences')}})
-                )
+            return _.div({ className: 'main clearfix' },
+                Filters(_binding),
+                Widgets(_binding),
+                Footer(_binding)
             );
         }
     });
