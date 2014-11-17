@@ -82,9 +82,15 @@ define([
                         })
                     ),
                     !add_mode ? _.div({ key: 'form-device-input', className: 'form-group' },
-                        _.div({ className: 'tagsinput'},
+                        _.label({ htmlFor: 'profile-tagsinput', className: 'input-label block'}, __('show_on_dashboard', 'capitalize')),
+                        _.div({ id: 'profile-tagsinput', className: 'tagsinput'},
                             item_binding.val('positions').map(function (label) {
-                                return _.span({ key: label, className: 'tag label label-info'}, label,
+                                var device_index = data_binding.sub('devices').val().findIndex(function (device) {
+                                        return device.get('id') === label;
+                                    }),
+                                    device = data_binding.sub('devices.' + device_index);
+
+                                    return _.span({ key: label, className: 'tag label label-info'}, device.val('metrics.title'),
                                     _.span({
                                         className: 'tag-remove',
                                         onClick: that.removeTagHandler.bind(null, label)

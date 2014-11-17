@@ -152,7 +152,8 @@ define([
                         })
                     ),
                     _.div({ key: 'form-device-input', className: 'form-group' },
-                        _.div({ className: 'tagsinput'},
+                        _.label({ htmlFor: 'profile-tagsinput', className: 'input-label block'}, __('tags', 'capitalize')),
+                        _.div({ id: 'profile-tagsinput', className: 'tagsinput'},
                             current_tags.map(function (label) {
                                 return _.span({ key: label, className: 'tag label label-info'}, label,
                                     _.span({
