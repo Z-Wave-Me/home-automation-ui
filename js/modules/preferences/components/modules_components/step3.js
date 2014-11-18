@@ -3,6 +3,7 @@ define([
     // mixins
     '../../mixins/base_mixin',
     'mixins/data/data-layer',
+    'mixins/data/manipulation',
     'mixins/sync/sync-layer',
     'alpaca'
 ], function (
@@ -10,12 +11,13 @@ define([
     // mixins
     base_mixin,
     data_layer_mixin,
+    javascript_mixin,
     sync_layer_mixin
 ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
+        mixins: [Morearty.Mixin, base_mixin, javascript_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
         getInitialState: function () {
             return {
                 form: null
@@ -69,7 +71,7 @@ define([
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
-                data: that.updateObjectAsNamespace(import_params || instanceJson.params),
+                data: that.updateObjectAsNamespace(this.extend(import_params || instanceJson.params, moduleJson.defaults)),
                 schema: that.updateObjectAsNamespace(moduleJson.schema),
                 options: that.updateObjectAsNamespace(moduleJson.options),
                 postRender: function (form) {
