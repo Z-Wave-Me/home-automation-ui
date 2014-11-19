@@ -101,7 +101,7 @@ define([], function () {
                                             namespace = filtered.toArray()[0].toJS();
                                             if (namespace) { // check that it existsd in namespaces
                                                 arr = arr.concat(namespace.params.map(function (para) {
-                                                    return para[val.split(':')[2]]
+                                                    return para[val.split(':')[2]];
                                                 }));
                                             }
                                         }
