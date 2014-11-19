@@ -27,13 +27,22 @@ define([
             };
         },
         componentWillMount: function () {
-            var preferences_binding = this.getBinding('preferences');
+            var that = this,
+                preferences_binding = this.getBinding('preferences');
             preferences_binding.atomically()
                 .set('show_turned_off', true)
                 .set('search_string_on_instance_page', '')
                 .set('hover_instance_id', null)
                 .set('select_instance_id', null)
                 .commit();
+
+            this.getBinding('data').addListener('namespaces', function () {
+                if (that.isMounted()) {
+                    that.forceUpdate(function () {
+                        that.renderAlpaca();
+                    });
+                }
+            });
         },
         preventDefault: function (e) {
             e.preventDefault();
@@ -262,6 +271,9 @@ define([
                     serviceId: 'instances',
                     success: function () {
                         //that.setState({'loading': false});
+                        if (that.isMounted()) {
+                            that.forceUpdate();
+                        }
                     }
                 });
             }

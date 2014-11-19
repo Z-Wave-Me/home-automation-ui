@@ -40,6 +40,7 @@ define([], function () {
         },
         pull: function () {
             var that = this,
+                functions = {},
                 ctx = that.getMoreartyContext(),
                 servicesBinding = ctx.getBinding().sub('services'),
                 dataBinding = ctx.getBinding().sub('data'),
@@ -66,8 +67,9 @@ define([], function () {
             });
 
             collections.val().forEach(function (collection, index) {
-                var obj = collection.toJS(),
-                    func = (function (callback) {
+                var obj = collection.toJS();
+
+                    functions[obj.id] = (function (callback) {
                         that.fetch({
                             serviceId: obj.id,
                             params: obj.sinceField ? { since: dataBinding.val().get(obj.sinceField) || 0 } : null,
@@ -82,7 +84,11 @@ define([], function () {
 
                                 if (response.data) {
                                     var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
-                                    dataBinding.merge(obj.id, Immutable.fromJS(models));
+                                    if (obj.id === 'namespaces' || obj.id === 'modules') {
+                                        dataBinding.set(obj.id, Immutable.fromJS(models));
+                                    } else {
+                                        dataBinding.merge(obj.id, Immutable.fromJS(models));
+                                    }
                                 }
 
                                 if (collections.sub(index).val('loaded') === false) {
@@ -102,25 +108,22 @@ define([], function () {
                     });
 
                 if (obj.autoSync) {
-                    setTimeout(func.bind(this, function () {
+                    setTimeout(functions[obj.id].bind(this, function () {
                         setInterval(function () {
                             if (collections.sub(index).val('loaded')) {
-                                func();
+                                functions[obj.id]();
                             }
                         }, obj.delay || 1000);
                     }), 0);
                 } else {
-                    setTimeout(func, obj.delay || 0);
-                    // add autoupdate namespaces after changed devices/instances
-                    if (obj.id === 'namespaces') {
-                        that.getBinding('data').addListener('instances', function () {
-                            setTimeout(func, 500);
-                        });
+                    setTimeout(functions[obj.id], obj.delay || 0);
+                }
 
-                        that.getBinding('data').addListener('devices', function () {
-                            setTimeout(func, 500);
-                        });
-                    }
+                if (obj.id === 'namespaces') {
+                    that.getBinding('data').addListener('instances', function () {
+                        setTimeout(functions.namespaces, 0);
+                        setTimeout(functions.modules, 500);
+                    });
                 }
             });
         },
