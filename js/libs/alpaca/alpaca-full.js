@@ -14999,17 +14999,7 @@ var equiv = function () {
                         })(buttonsDef[i]);
                     }
 
-                    if (this.options.toolbarSticky) {
-                        toolbarElem.prependTo(containerElem);
-                    } else {
-                        toolbarElem.hide().prependTo(containerElem);
-                        containerElem.hover(function() {
-                            $('.alpaca-fieldset-array-item-toolbar', this).show();
-                        }, function() {
-                            $('.alpaca-fieldset-array-item-toolbar', this).hide();
-                        });
-                    }
-
+                    toolbarElem.prependTo(containerElem);
                 }
             }
         },
