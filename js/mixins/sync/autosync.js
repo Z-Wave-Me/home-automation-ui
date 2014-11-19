@@ -75,13 +75,14 @@ define([], function () {
                                 if (callback && typeof callback === 'function') {
                                     callback(response);
                                 }
+
                                 if (obj.hasOwnProperty('postSyncHandler')) {
                                     obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id));
-                                } else {
-                                    if (response.data) {
-                                        var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
-                                        dataBinding.merge(obj.id, Immutable.fromJS(models));
-                                    }
+                                }
+
+                                if (response.data) {
+                                    var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
+                                    dataBinding.merge(obj.id, Immutable.fromJS(models));
                                 }
 
                                 if (collections.sub(index).val('loaded') === false) {
@@ -110,6 +111,16 @@ define([], function () {
                     }), 0);
                 } else {
                     setTimeout(func, obj.delay || 0);
+                    // add autoupdate namespaces after changed devices/instances
+                    if (obj.id === 'namespaces') {
+                        that.getBinding('data').addListener('instances', function () {
+                            setTimeout(func, 500);
+                        });
+
+                        that.getBinding('data').addListener('devices', function () {
+                            setTimeout(func, 500);
+                        });
+                    }
                 }
             });
         },

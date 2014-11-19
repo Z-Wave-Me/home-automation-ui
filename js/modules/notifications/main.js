@@ -66,7 +66,7 @@ define([
                 binding = this.getDefaultBinding(),
                 notifications_binding = this.getBinding('data').sub('notifications'),
                 notifications = notifications_binding.val(),
-                show = this.getDefaultBinding().sub('notifications').sub('show_popup');
+                show = binding.sub('notifications.show_popup');
 
             return _.div({
                     className: 'overlay transparent show',
@@ -82,11 +82,11 @@ define([
                         }),
                         _.div({className: 'events-container'},
                             notifications.map(this.getEvent).toArray()
-                        ),
-                        _.div({className: 'button-container'},
-                            _.button({className: 'button hide-all-button'}, __('hide_all', 'case')),
-                            _.button({className: 'button hide-all-visible-button'}, __('hide_all_visible', 'case'))
                         )
+                        //_.div({className: 'button-container'},
+                        //    _.button({className: 'button hide-all-button'}, __('hide_all', 'case')),
+                        //    _.button({className: 'button hide-all-visible-button'}, __('hide_all_visible', 'case'))
+                        //)
                     )
                 )
             );

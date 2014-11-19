@@ -10,10 +10,7 @@ define([], function () {
                 title = metrics_binding.val('title'),
                 level = Sticky.get('App.Helpers.JS').isFloat(metrics_binding.val('level')) ?
                     binding.sub('metrics').val('level').toFixed(1) : metrics_binding.val('level'),
-                scaleTitle =
-                        binding.sub('metrics').hasOwnProperty('scaleTitle') &&
-                    String(metrics_binding.val('scaleTitle')).length > 0 ?
-                            ' ' + String(metrics_binding.val('scaleTitle')) : '';
+                scaleTitle = metrics_binding.val('scaleTitle') ? ' ' + String(metrics_binding.val('scaleTitle')) : '';
 
             return (
                 _.div({className: 'content'},
