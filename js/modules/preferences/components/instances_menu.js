@@ -36,7 +36,7 @@ define([
                 .set('select_instance_id', null)
                 .commit();
 
-            this.getBinding('data').addListener('namespaces', function () {
+            this.getBinding('data').addListener('modules', function () {
                 if (that.isMounted()) {
                     that.forceUpdate(function () {
                         that.renderAlpaca();
