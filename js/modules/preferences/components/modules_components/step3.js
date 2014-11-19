@@ -23,6 +23,16 @@ define([
                 form: null
             };
         },
+        componentWillMount: function () {
+            var that = this;
+            this.getBinding('data').addListener('namespaces', function () {
+                if (that.isMounted()) {
+                    that.forceUpdate(function () {
+                        that.renderAlpaca();
+                    });
+                }
+            });
+        },
         componentDidMount: function () {
             if (this.isMounted()) {
                 this.renderAlpaca();
