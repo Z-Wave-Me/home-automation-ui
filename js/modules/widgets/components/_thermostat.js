@@ -128,20 +128,23 @@ define([
                 step = this.state.step,
                 _timeout;
 
+            level = parseInt(level, 10);
 
             if (this.isMounted()) {
                 if (prev_level) {
-                    _timeout = function () {
-                        setTimeout(function () {
-                            prev_level = prev_level > level ? prev_level -= 1 : prev_level += 1;
-                            that._updateCircle(prev_level, (prev_level - that.state.min_level) / step / 100);
-                            if (prev_level === level) {
-                                return;
-                            }
-                            _timeout();
-                        }, 20);
-                    };
-                    _timeout();
+                    if (prev_level === level) {
+                        _timeout = function () {
+                            setTimeout(function () {
+                                prev_level = prev_level > level ? prev_level -= 1 : prev_level += 1;
+                                that._updateCircle(prev_level, (prev_level - that.state.min_level) / step / 100);
+                                if (prev_level === level) {
+                                    return;
+                                }
+                                _timeout();
+                            }, 20);
+                        };
+                        _timeout();
+                    }
                 } else {
                     that._updateCircle(level, (level - that.state.min_level) / step / 100);
 
