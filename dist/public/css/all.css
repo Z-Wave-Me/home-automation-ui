@@ -804,7 +804,8 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .loading-component .progress-bar{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:2000;position:fixed;margin:0 auto;top:35%;left:0;right:0;bottom:0;height:5px;width:200px;background:#fff;border:1px solid #29d}
 .loading-component .progress-bar .progress-activity{-ms-box-sizing:border-box;-o-box-sizing:border-box;box-sizing:border-box;transition:width 1s ease-in-out 0s linear;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0);max-width:200px;z-index:2000;display:block;position:absolute;left:0;top:0;height:100%;background:#29d}
 .loading-component .header{width:100%;text-align:center;font-size:16px;font-weight:700}
-.main-component{display:block;width:50%;height:100%;margin:0 auto}
+.panel-container{text-align:center}
+.main-component{display:inline-block;height:100%;margin:0 auto}
 .main-component .line-container{display:block;float:left;width:100%;height:120px}
 .main-component .line-container .main-menu-item{display:inline-block;width:80px;margin:10px 40px;text-align:center;cursor:pointer}
 .main-component .line-container .main-menu-item .title-menu-item{font-size:13px;opacity:.6}
@@ -812,7 +813,8 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .automation-component .footer-component,.automation-component .header-component{display:block;width:100%;margin:0;border-bottom:1px;float:left;padding:0 5px}
 .automation-component .pull-left,.automation-component .pull-right{width:50%}
 .automation-component .pull-right{text-align:right}
-.automation-component .instances-list{display:block;float:left;list-style-type:none;padding:0;margin:10px 0;overflow:hidden;overflow-y:auto;height:480px;width:100%}
+.automation-component .pull-left{text-align:left}
+.automation-component .instances-list{display:block;float:left;list-style-type:none;padding:0;margin:10px 0;overflow:hidden;overflow-y:auto;max-height:80vh;width:100%}
 .automation-component .instance-item{display:block;width:100%;float:left;cursor:pointer;height:30px;line-height:30px;vertical-align:middle;font-size:12.5px;margin:0;padding:0;transition:height .3s ease}
 .automation-component .instance-item .alpaca-main{max-width:730px}
 .automation-component .instance-item .instance-icon{display:block;margin:0 5px;float:left}
@@ -835,7 +837,7 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .automation-component .form-group .input-value{width:85%}
 .automation-component .modern-button{width:87%;font-size:14px;position:relative;bottom:0}
 .modules-component .header-component{text-align:center;height:16px;line-height:16px;vertical-align:middle;margin-bottom:10px}
-.modules-component .main-component{width:100%;height:460px;overflow:hidden;margin-bottom:5px}
+.modules-component .main-component{width:100%;overflow:hidden;margin-bottom:5px;height:70vh}
 .modules-component .step-title{display:block;font-size:13px;font-weight:700;line-height:16px}
 .modules-component .step-container{height:100%;width:100%;display:block;overflow:hidden}
 .modules-component .category-modules-list{overflow-y:auto;height:100%}
