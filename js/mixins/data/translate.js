@@ -11,22 +11,26 @@ define([], function () {
                 lang = index_lang !== -1 ? languages_binding.sub(index_lang).val('data') : null,
                 text;
 
-            text = String(lang.get(key) || 'no_ts');
+            if (key && lang) {
+                text = String(lang.get(key) || 'no_ts');
 
-            if (type && text) {
-                if (type === 'capitalize') {
-                    return this._capitalize(text);
-                } else if (type === 'case') {
-                    return this._toCase(text);
-                } else if (type === 'upper') {
-                    return text.toUpperCase();
-                } else if (type === 'lower') {
-                    return text.toLowerCase();
+                if (type && text) {
+                    if (type === 'capitalize') {
+                        return this._capitalize(text);
+                    } else if (type === 'case') {
+                        return this._toCase(text);
+                    } else if (type === 'upper') {
+                        return text.toUpperCase();
+                    } else if (type === 'lower') {
+                        return text.toLowerCase();
+                    } else {
+                        return text;
+                    }
                 } else {
                     return text;
                 }
             } else {
-                return text;
+                return null;
             }
         },
         getDefaultLang: function () {
