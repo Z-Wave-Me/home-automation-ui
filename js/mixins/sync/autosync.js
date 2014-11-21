@@ -86,7 +86,7 @@ define([], function () {
                                 var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
                                 if (typeof obj.save === 'function') {
                                     obj.save(ctx, dataBinding, models);
-                                } else if (models.lenght > 0) {
+                                } else if (models.length > 0) {
                                     models.forEach(function (model) {
                                         if (!dataBinding.sub(obj.id).val()) {
                                             dataBinding.set(obj.id, Immutable.List());
@@ -99,8 +99,8 @@ define([], function () {
                                         if (index_model !== -1) {
                                             dataBinding.sub(obj.id + '.' + index_model).set(Immutable.fromJS(model));
                                         } else {
-                                            dataBinding.sub(obj.id).update(function (devices) {
-                                                return devices.push(Immutable.fromJS(model));
+                                            dataBinding.sub(obj.id).update(function (sub) {
+                                                return sub.push(Immutable.fromJS(model));
                                             });
                                         }
                                     });
