@@ -614,7 +614,7 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .popover.left .arrow{top:50%;right:-11px;margin-top:-11px;border-left-color:#999;border-left-color:rgba(0,0,0,.25);border-right-width:0}
 .popover.left .arrow:after{right:4px;bottom:-10px;border-left-color:#fff;border-right-width:0;content:" "}
 .popover-events{width:450px;padding:0;overflow:initial;top:40px}
-.popover-events .popover-content{width:430px;border-radius:0;background-color:#fff;overflow:hidden;padding-bottom:2px}
+.popover-events .popover-content{width:auto;border-radius:0;background-color:#fff;overflow:hidden;padding-bottom:2px}
 .popover-events .hide-all-button{padding-left:10px;font-size:13px;background-color:#fff;color:#00bac4;display:block;float:left;width:96.6%;cursor:pointer}
 .popover-events .hide-all-button:hover{color:rgba(0,186,196,.6)}
 .popover-events .filter-events{width:97%;outline:0;border:0;font-size:12px;line-height:18px;height:18px;vertical-align:middle;margin:2px 0;background:#eee;border-radius:2px;padding:2px 6px;box-shadow:0 1px 1px rgba(0,0,0,.4) inset,0 1px 0 rgba(255,255,255,.2)}
