@@ -210,7 +210,6 @@ define([
         renderAlpaca: function (instanceId) {
             var that = this,
                 instanceJson,
-                module,
                 moduleJson,
                 $el,
                 instance = that.getModelFromCollection(instanceId, 'instances');
@@ -220,14 +219,13 @@ define([
             }
 
             instanceJson = instance.val().toJS();
-            module = that.getModelFromCollection(instanceJson.moduleId, 'modules');
-            moduleJson = module.val().toJS();
+            moduleJson = that.updateObjectAsNamespace(that.getOriginalModule(instanceJson.moduleId));
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
-                data: that.updateObjectAsNamespace(instanceJson.params),
-                schema: that.updateObjectAsNamespace(moduleJson.schema),
-                options: that.updateObjectAsNamespace(moduleJson.options),
+                data: instanceJson.params,
+                schema: moduleJson.schema,
+                options: moduleJson.options,
                 postRender: function (form) {
                     that.setState({form: form});
                 }

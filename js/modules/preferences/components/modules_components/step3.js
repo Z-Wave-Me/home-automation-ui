@@ -59,7 +59,7 @@ define([
                 data_binding = this.getBinding('data'),
                 instance = preferences_binding.sub('instance_temp'),
                 imported_instanceId = preferences_binding.val('import_instanceId'),
-                instanceJson, module_binding, moduleJson, $el, import_params, imported_instance_index;
+                instanceJson, moduleJson, $el, import_params, imported_instance_index;
 
             if (!instance) {
                 return;
@@ -76,16 +76,15 @@ define([
             }
 
             instanceJson = instance.val().toJS();
-            module_binding = that.getModelFromCollection(instanceJson.moduleId, 'modules');
-            moduleJson = module_binding.val().toJS();
+            moduleJson = that.updateObjectAsNamespace(that.getOriginalModule(instanceJson.moduleId));
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
-                data: that.updateObjectAsNamespace(this.extend(import_params || instanceJson.params, moduleJson.defaults)),
-                schema: that.updateObjectAsNamespace(moduleJson.schema),
-                options: that.updateObjectAsNamespace(moduleJson.options),
+                data: moduleJson.defaults,
+                schema: moduleJson.schema,
+                options: moduleJson.options,
                 postRender: function (form) {
-                    that.setState({form: form});
+                    that.form = form;
                 }
             });
         },
@@ -95,8 +94,8 @@ define([
                 instances_binding = this.getBinding('data').sub('instances'),
                 instance_binding = preferences_binding.sub('instance_temp');
 
-            if (that.state.form !== null) {
-                instance_binding.sub('params').merge(that.state.form.getValue());
+            if (that.form !== null) {
+                instance_binding.sub('params').merge(that.form.getValue());
                 that.save({
                     model: instance_binding,
                     serviceId: 'instances',

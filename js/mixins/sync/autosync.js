@@ -69,43 +69,43 @@ define([], function () {
             collections.val().forEach(function (collection, index) {
                 var obj = collection.toJS();
 
-                    functions[obj.id] = (function (callback) {
-                        that.fetch({
-                            serviceId: obj.id,
-                            params: obj.sinceField ? { since: dataBinding.val().get(obj.sinceField) || 0 } : null,
-                            success: function (response) {
-                                if (callback && typeof callback === 'function') {
-                                    callback(response);
-                                }
+                functions[obj.id] = (function (callback) {
+                    that.fetch({
+                        serviceId: obj.id,
+                        params: obj.sinceField ? { since: dataBinding.val().get(obj.sinceField) || 0 } : null,
+                        success: function (response) {
+                            if (callback && typeof callback === 'function') {
+                                callback(response);
+                            }
 
-                                if (obj.hasOwnProperty('postSyncHandler')) {
-                                    obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id));
-                                }
+                            if (obj.hasOwnProperty('postSyncHandler')) {
+                                obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id));
+                            }
 
-                                if (response.data) {
-                                    var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
-                                    if (obj.id === 'namespaces' || obj.id === 'modules') {
-                                        dataBinding.set(obj.id, Immutable.fromJS(models));
-                                    } else {
-                                        dataBinding.merge(obj.id, Immutable.fromJS(models));
-                                    }
-                                }
-
-                                if (collections.sub(index).val('loaded') === false) {
-                                    collections.sub(index).set('loaded', true);
-                                    ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
-                                        return percantage + ((1 / collections.val().count()) * 50);
-                                    });
-
-                                    if (collections.val().every(function (c) {
-                                        return c.get('loaded') === true;
-                                    })) {
-                                        ctx.getBinding().sub('default.system.loaded').set(true);
-                                    }
+                            if (response.data) {
+                                var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
+                                if (typeof obj.save === 'function') {
+                                    dataBinding.set(obj.id, obj.save(models));
+                                } else {
+                                    dataBinding.merge(obj.id, Immutable.fromJS(models));
                                 }
                             }
-                        });
+
+                            if (collections.sub(index).val('loaded') === false) {
+                                collections.sub(index).set('loaded', true);
+                                ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
+                                    return percantage + ((1 / collections.val().count()) * 50);
+                                });
+
+                                if (collections.val().every(function (c) {
+                                    return c.get('loaded') === true;
+                                })) {
+                                    ctx.getBinding().sub('default.system.loaded').set(true);
+                                }
+                            }
+                        }
                     });
+                });
 
                 if (obj.autoSync) {
                     setTimeout(functions[obj.id].bind(this, function () {
@@ -120,8 +120,7 @@ define([], function () {
                 }
 
                 if (obj.id === 'namespaces') {
-                    that.getBinding('data').addListener('instances', function () {
-                        setTimeout(functions.namespaces, 0);
+                    that.getBinding('data').addListener('namespaces', function () {
                         setTimeout(functions.modules, 500);
                     });
                 }

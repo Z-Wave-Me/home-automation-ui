@@ -159,10 +159,9 @@ define([], function () {
                         icon: null
                     }
                 },
-                parse: function (response, ctx) {
-                    return response.data.map(function (model) {
-                        return Sticky.get('App.Helpers.JS').getNamespacesData(ctx, model);
-                    });
+                postSyncHandler: function (ctx, response) {
+                    var data_binding = ctx.getBinding().sub('data');
+                    data_binding.set('modules_original', Immutable.Seq(response.data));
                 },
                 loaded: false
             },
