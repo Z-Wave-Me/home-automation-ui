@@ -11,11 +11,7 @@ define([], function () {
                 lang = index_lang !== -1 ? languages_binding.sub(index_lang).val('data') : null,
                 text;
 
-            if (lang !== null) {
-                text = lang.get(key);
-            } else {
-                text = null;
-            }
+            text = String(lang.get(key) || 'no_ts');
 
             if (type && text) {
                 if (type === 'capitalize') {
