@@ -85,9 +85,25 @@ define([], function () {
                             if (response.data) {
                                 var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
                                 if (typeof obj.save === 'function') {
-                                    dataBinding.set(obj.id, obj.save(models));
+                                    obj.save(ctx, dataBinding, models);
                                 } else {
-                                    dataBinding.merge(obj.id, Immutable.fromJS(models));
+                                    models.forEach(function (model) {
+                                        if (!dataBinding.sub(obj.id).val()) {
+                                            dataBinding.set(obj.id, Immutable.List());
+                                        }
+
+                                        var index_model = dataBinding.sub(obj.id).val().findIndex(function (md) {
+                                            return md.get('id') === model.id;
+                                        });
+
+                                        if (index_model !== -1) {
+                                            dataBinding.sub(obj.id + '.' + index_model).set(Immutable.fromJS(model));
+                                        } else {
+                                            dataBinding.sub(obj.id).update(function (devices) {
+                                                return devices.push(Immutable.fromJS(model));
+                                            });
+                                        }
+                                    });
                                 }
                             }
 
@@ -120,8 +136,11 @@ define([], function () {
                 }
 
                 if (obj.id === 'namespaces') {
-                    that.getBinding('data').addListener('namespaces', function () {
-                        setTimeout(functions.modules, 500);
+                    that.getBinding('data').addListener('instances', function () {
+                        setTimeout(functions.namespaces, 0);
+                    });
+                    that.getBinding('data').addListener('devices', function () {
+                        setTimeout(functions.namespaces, 0);
                     });
                 }
             });
