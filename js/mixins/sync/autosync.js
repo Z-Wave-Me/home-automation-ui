@@ -86,7 +86,7 @@ define([], function () {
                                 var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
                                 if (typeof obj.save === 'function') {
                                     obj.save(ctx, dataBinding, models);
-                                } else {
+                                } else if (models.lenght > 0) {
                                     models.forEach(function (model) {
                                         if (!dataBinding.sub(obj.id).val()) {
                                             dataBinding.set(obj.id, Immutable.List());
