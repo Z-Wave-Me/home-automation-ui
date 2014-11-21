@@ -837,7 +837,7 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .automation-component .form-group .input-value{width:85%}
 .automation-component .modern-button{width:87%;font-size:14px;position:relative;bottom:0}
 .modules-component .header-component{text-align:center;height:16px;line-height:16px;vertical-align:middle;margin-bottom:10px}
-.modules-component .main-component{width:100%;overflow:hidden;margin-bottom:5px;height:70vh;padding:10px 0}
+.modules-component .main-component{width:100%;overflow:hidden;margin-bottom:5px;height:70vh;padding:0 0 10px}
 .modules-component .step-title{display:block;font-size:13px;font-weight:700;line-height:16px}
 .modules-component .step-container{height:100%;width:100%;display:block;overflow:hidden}
 .modules-component .category-modules-list{overflow-y:auto;height:100%}
