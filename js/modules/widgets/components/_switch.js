@@ -68,7 +68,7 @@ define([
                 binding = this.getDefaultBinding(),
                 rearrange_showing = this.getBinding('footer').val('rearrange_showing'),
                 title = binding.val('metrics.title'),
-                level = binding.val('metrics.level') || binding.val('metrics.mode'),
+                level = binding.val('metrics.level') || binding.val('metrics.mode') || '',
                 classes = cx({
                     switch: true,
                     active: level === 'on' || level === 'open'

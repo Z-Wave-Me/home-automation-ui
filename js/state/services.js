@@ -63,8 +63,6 @@ define([], function () {
                     if (devices_binding.val()) {
                         dataBinding.update('deviceTags', function () {
                             var tags = devices_binding.val().reduce(function (memo, device, index) {
-                                memo = index === 1 ? Immutable.List() : memo;
-
                                 var device_tags = device.get('tags');
 
                                 if (device_tags.count() > 0 && !device.get('permanently_hidden')) {

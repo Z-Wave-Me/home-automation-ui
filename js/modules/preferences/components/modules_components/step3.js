@@ -3,6 +3,7 @@ define([
     // mixins
     '../../mixins/base_mixin',
     'mixins/data/data-layer',
+    'mixins/data/manipulation',
     'mixins/sync/sync-layer',
     'alpaca'
 ], function (
@@ -10,16 +11,27 @@ define([
     // mixins
     base_mixin,
     data_layer_mixin,
+    javascript_mixin,
     sync_layer_mixin
 ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
+        mixins: [Morearty.Mixin, base_mixin, javascript_mixin, data_layer_mixin, sync_layer_mixin, TranslateMixin],
         getInitialState: function () {
             return {
                 form: null
             };
+        },
+        componentWillMount: function () {
+            var that = this;
+            this.getBinding('data').addListener('modules', function () {
+                if (that.isMounted()) {
+                    that.forceUpdate(function () {
+                        that.renderAlpaca();
+                    });
+                }
+            });
         },
         componentDidMount: function () {
             if (this.isMounted()) {
@@ -29,8 +41,7 @@ define([
         render: function () {
             var _ = React.DOM,
                 __ = this.gls,
-                preferences_binding = this.getDefaultBinding(),
-                moduleId = preferences_binding.val('moduleId');
+                preferences_binding = this.getDefaultBinding();
 
             return _.div({ className: 'step-container' },
                 _.div({className: 'alpaca-main', ref: 'alpacaNodeRef'}),
@@ -61,7 +72,7 @@ define([
                         return instance.get('id') === imported_instanceId;
                     });
 
-                import_params = data_binding.sub('instances').sub(imported_instance_index).val('params').toJS();
+                import_params = data_binding.sub('instances.' + imported_instance_index).val('params').toJS();
             }
 
             instanceJson = instance.val().toJS();
@@ -70,7 +81,7 @@ define([
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
-                data: that.updateObjectAsNamespace(import_params || instanceJson.params),
+                data: that.updateObjectAsNamespace(this.extend(import_params || instanceJson.params, moduleJson.defaults)),
                 schema: that.updateObjectAsNamespace(moduleJson.schema),
                 options: that.updateObjectAsNamespace(moduleJson.options),
                 postRender: function (form) {

@@ -40,6 +40,7 @@ define([], function () {
         },
         pull: function () {
             var that = this,
+                functions = {},
                 ctx = that.getMoreartyContext(),
                 servicesBinding = ctx.getBinding().sub('services'),
                 dataBinding = ctx.getBinding().sub('data'),
@@ -66,8 +67,9 @@ define([], function () {
             });
 
             collections.val().forEach(function (collection, index) {
-                var obj = collection.toJS(),
-                    func = (function (callback) {
+                var obj = collection.toJS();
+
+                    functions[obj.id] = (function (callback) {
                         that.fetch({
                             serviceId: obj.id,
                             params: obj.sinceField ? { since: dataBinding.val().get(obj.sinceField) || 0 } : null,
@@ -75,11 +77,16 @@ define([], function () {
                                 if (callback && typeof callback === 'function') {
                                     callback(response);
                                 }
+
                                 if (obj.hasOwnProperty('postSyncHandler')) {
                                     obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id));
-                                } else {
-                                    if (response.data) {
-                                        var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
+                                }
+
+                                if (response.data) {
+                                    var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
+                                    if (obj.id === 'namespaces' || obj.id === 'modules') {
+                                        dataBinding.set(obj.id, Immutable.fromJS(models));
+                                    } else {
                                         dataBinding.merge(obj.id, Immutable.fromJS(models));
                                     }
                                 }
@@ -101,15 +108,22 @@ define([], function () {
                     });
 
                 if (obj.autoSync) {
-                    setTimeout(func.bind(this, function () {
+                    setTimeout(functions[obj.id].bind(this, function () {
                         setInterval(function () {
                             if (collections.sub(index).val('loaded')) {
-                                func();
+                                functions[obj.id]();
                             }
                         }, obj.delay || 1000);
                     }), 0);
                 } else {
-                    setTimeout(func, obj.delay || 0);
+                    setTimeout(functions[obj.id], obj.delay || 0);
+                }
+
+                if (obj.id === 'namespaces') {
+                    that.getBinding('data').addListener('instances', function () {
+                        setTimeout(functions.namespaces, 0);
+                        setTimeout(functions.modules, 500);
+                    });
                 }
             });
         },
