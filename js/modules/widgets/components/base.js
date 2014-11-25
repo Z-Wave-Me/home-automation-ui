@@ -24,7 +24,7 @@ define([
         render: function () {
             var binding = this.getDefaultBinding(),
                 _ = React.DOM,
-                device_type = binding.val('deviceType'),
+                device_type = binding.get('deviceType'),
                 Widget;
 
             if (device_type === "sensorBinary" ||
@@ -46,7 +46,7 @@ define([
             } else if (device_type === "switchControl") {
                 Widget = Control;
             } else {
-                //Widget = new Probe(Ctx);
+                //Widget = Probe;
             }
 
             return Widget({

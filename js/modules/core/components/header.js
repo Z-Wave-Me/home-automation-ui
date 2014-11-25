@@ -9,9 +9,9 @@ define([], function () {
         },
         toggleShowNotificationsPopup: function () {
             var binding = this.getDefaultBinding(),
-                show = binding.sub('notifications').val('show_popup');
+                show = binding.get('notifications.show_popup');
 
-            binding.sub('notifications').set('show_popup', !show);
+            binding.get('notifications.show_popup', !show);
 
             return false;
         },
@@ -20,13 +20,13 @@ define([], function () {
                 __ = this.gls,
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                nowShowing = binding.val('nowShowing'),
+                nowShowing = binding.get('nowShowing'),
                 notifications = binding.sub('notifications'),
-                notifications_count = notifications.val('count'),
-                notifications_severity = notifications.val('severity'),
-                notification_mode = notifications.sub('severity_modes').sub(notifications_severity),
+                notifications_count = notifications.get('count'),
+                notifications_severity = notifications.get('severity'),
+                notification_mode = notifications.sub('severity_modes.' + notifications_severity),
                 // TODO: rewrite after added severity in backend
-                notifications_message = notifications_count === 0 ? notification_mode.val('message') : 'warning',
+                notifications_message = notifications_count === 0 ? notification_mode.get('message') : 'warning',
                 events_class = cx({
                     ok: notifications_severity.toLowerCase() === 'ok' && notifications_count === 0,
                     // TODO: rewrite after added severity in backend
@@ -56,7 +56,7 @@ define([], function () {
                     gear: true,
                     fa: true,
                     'fa-gear': true,
-                    active: binding.val('overlays.preferences.showing')
+                    active: binding.get('overlays.preferences.showing')
                 });
 
             if (notifications_count === 0 && notifications_message !== 'no connection') {

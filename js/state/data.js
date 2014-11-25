@@ -5,6 +5,7 @@ define([], function () {
         devices: [],
         namespaces: [],
         modules: [],
+        modules_categories: [],
         instances: [],
         locations: [],
         profiles: [],

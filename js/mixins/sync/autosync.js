@@ -1,4 +1,4 @@
-define([], function () {
+define(['../data/manipulation'], function (manipulation) {
     "use strict";
 
     return ({
@@ -14,7 +14,7 @@ define([], function () {
                 localStorage.setItem('defaultProfileId', String(profileId));
 
                 var profiles = dataBinding.sub('profiles'),
-                    filter = profiles.val().filter(function (profile) {
+                    filter = profiles.get().filter(function (profile) {
                         return String(profile.get('id')) === String(profileId);
                     });
 
@@ -25,17 +25,19 @@ define([], function () {
                 localStorage.setItem('currentLanguage', String(lang));
             });
 
-            dataBinding.addListener('profiles', function (profiles) {
-                var activeId = localStorage.getItem('defaultProfileId'),
+            dataBinding.addListener('profiles', function (change_descriptor) {
+
+                var profiles = dataBinding.get('profiles'),
+                    activeId = localStorage.getItem('defaultProfileId'),
                     filter = profiles.filter(function (profile) {
-                        return String(profile.get('id')) === String(activeId);
+                        return typeof profile.get === 'function' ? String(profile.get('id')) === String(activeId) : null;
                     });
 
-                dataBinding.set('devicesOnDashboard', filter.toArray().length > 0 ? filter.toArray()[0].get('positions') : []);
+                dataBinding.set('devicesOnDashboard', filter.size > 0 ? filter.first().get('positions') : []);
             });
 
             dataBinding.addListener('notifications', function () {
-                defaultBinding.sub('notifications').set('count', dataBinding.sub('notifications').val().count());
+                defaultBinding.sub('notifications').set('count', dataBinding.sub('notifications').get().count());
             });
         },
         pull: function () {
@@ -47,7 +49,7 @@ define([], function () {
                 collections = servicesBinding.sub('collections'),
                 languages_binding = ctx.getBinding().sub('default.system.languages');
 
-            languages_binding.val().forEach(function (lang) {
+            languages_binding.get().forEach(function (lang) {
                 that.getLangFile(lang, function (response) {
                     dataBinding.update('languages', function (languages) {
                         return languages.push(Immutable.fromJS({
@@ -57,60 +59,82 @@ define([], function () {
                     });
 
                     ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
-                        return percantage + ((1 / languages_binding.val().count()) * 50);
+                        return percantage + ((1 / languages_binding.get().count()) * 50);
                     });
 
-                    if (dataBinding.sub('languages').val().count() === languages_binding.val().count()) {
+                    if (dataBinding.sub('languages').get().count() === languages_binding.get().count()) {
                         ctx.getBinding().sub('default.system.loaded_lang_files').set(true);
                     }
                 });
             });
 
-            collections.val().forEach(function (collection, index) {
+            collections.get().forEach(function (collection, index) {
                 var obj = collection.toJS();
 
-                    functions[obj.id] = (function (callback) {
-                        that.fetch({
-                            serviceId: obj.id,
-                            params: obj.sinceField ? { since: dataBinding.val().get(obj.sinceField) || 0 } : null,
-                            success: function (response) {
-                                if (callback && typeof callback === 'function') {
-                                    callback(response);
-                                }
+                functions[obj.id] = manipulation.debounce(function (callback) {
+                    var params = typeof obj.params === 'object' ? obj.params : {};
 
-                                if (obj.hasOwnProperty('postSyncHandler')) {
-                                    obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id));
-                                }
+                    if (obj.sinceField) {
+                        params.since = dataBinding.get(obj.sinceField) || 0;
+                    }
 
-                                if (response.data) {
-                                    var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
-                                    if (obj.id === 'namespaces' || obj.id === 'modules') {
-                                        dataBinding.set(obj.id, Immutable.fromJS(models));
-                                    } else {
-                                        dataBinding.merge(obj.id, Immutable.fromJS(models));
-                                    }
-                                }
+                    that.fetch({
+                        serviceId: obj.id,
+                        params: Object.keys(params).length > 0 ? params : null,
+                        success: function (response) {
+                            if (callback && typeof callback === 'function') {
+                                callback(response);
+                            }
 
-                                if (collections.sub(index).val('loaded') === false) {
-                                    collections.sub(index).set('loaded', true);
-                                    ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
-                                        return percantage + ((1 / collections.val().count()) * 50);
+                            if (obj.hasOwnProperty('postSyncHandler')) {
+                                obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id));
+                            }
+
+                            if (response.data) {
+                                var models = obj.hasOwnProperty('parse') ? obj.parse(response, ctx) : response.data;
+                                if (typeof obj.save === 'function') {
+                                    obj.save(ctx, dataBinding, models);
+                                } else if (models.length > 0) {
+                                    models.forEach(function (model) {
+                                        if (!dataBinding.sub(obj.id).get()) {
+                                            dataBinding.set(obj.id, Immutable.List());
+                                        }
+
+                                        var index_model = dataBinding.sub(obj.id).get().findIndex(function (md) {
+                                            return md.get('id') === model.id;
+                                        });
+
+                                        if (index_model !== -1) {
+                                            dataBinding.sub(obj.id + '.' + index_model).set(Immutable.fromJS(model));
+                                        } else {
+                                            dataBinding.sub(obj.id).update(function (sub) {
+                                                return sub.push(Immutable.fromJS(model));
+                                            });
+                                        }
                                     });
-
-                                    if (collections.val().every(function (c) {
-                                        return c.get('loaded') === true;
-                                    })) {
-                                        ctx.getBinding().sub('default.system.loaded').set(true);
-                                    }
                                 }
                             }
-                        });
+
+                            if (collections.sub(index).get('loaded') === false) {
+                                collections.sub(index).set('loaded', true);
+                                ctx.getBinding().sub('default.system.loaded_percentage').update(function (percantage) {
+                                    return percantage + ((1 / collections.get().count()) * 50);
+                                });
+
+                                if (collections.get().every(function (c) {
+                                    return c.get('loaded') === true;
+                                })) {
+                                    ctx.getBinding().sub('default.system.loaded').set(true);
+                                }
+                            }
+                        }
                     });
+                }, 300);
 
                 if (obj.autoSync) {
                     setTimeout(functions[obj.id].bind(this, function () {
                         setInterval(function () {
-                            if (collections.sub(index).val('loaded')) {
+                            if (collections.sub(index).get('loaded')) {
                                 functions[obj.id]();
                             }
                         }, obj.delay || 1000);
@@ -120,10 +144,7 @@ define([], function () {
                 }
 
                 if (obj.id === 'namespaces') {
-                    that.getBinding('data').addListener('instances', function () {
-                        setTimeout(functions.namespaces, 0);
-                        setTimeout(functions.modules, 500);
-                    });
+                    that.getBinding('data').addListener('devices', functions.namespaces);
                 }
             });
         },

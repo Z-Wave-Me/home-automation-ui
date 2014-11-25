@@ -72,7 +72,7 @@ define([
                 options = that.state.options;
 
             return Object.keys(options).map(function (option) {
-                if (item.sub('metrics').val(option)) {
+                if (item.get('metrics.' + option)) {
                     return _.span({
                         key: option.command,
                         ref: option.command,
@@ -89,14 +89,14 @@ define([
         render: function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                rearrange_showing = this.getBinding('footer').val('rearrange_showing'),
-                url = binding.val('metrics.url'),
-                icon = binding.val('metrics.icon');
+                rearrange_showing = this.getBinding('footer').get('rearrange_showing'),
+                url = binding.get('metrics.url'),
+                icon = binding.get('metrics.icon');
 
             return _.div({className: 'widget x2'},
                 rearrange_showing ? _.div({className: 'select-button'}) : null,
                 _.span({className: 'icon', style: {backgroundImage: 'url(' + icon + ')'}}),
-                _.span({className: 'title'}, binding.val('metrics.title')),
+                _.span({className: 'title'}, binding.get('metrics.title')),
                 _.div({className: 'metrics-container'},
                     _.div({key: 'control', className: 'control-block camera-block'},
                         _.div({className: 'control-buttons'},

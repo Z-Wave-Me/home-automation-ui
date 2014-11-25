@@ -24,15 +24,15 @@ define([
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
                 data_binding = this.getBinding('data'),
-                primary_filter = binding.val('primaryFilter'),
+                primary_filter = binding.get('primaryFilter'),
                 _binding = { default: binding, data: data_binding },
                 secondary_filter = null;
 
-            if (primary_filter === 'rooms' && data_binding.val('locations').count() > 0) {
+            if (primary_filter === 'rooms' && data_binding.get('locations').count() > 0) {
                 secondary_filter = FilterRooms({binding: _binding});
-            } else if (primary_filter === 'types' && data_binding.val('deviceTypes').count() > 0) {
+            } else if (primary_filter === 'types' && data_binding.get('deviceTypes').count() > 0) {
                 secondary_filter = FilterTypes({binding: _binding});
-            } else if (primary_filter === 'tags' && data_binding.val('deviceTags').count() > 0) {
+            } else if (primary_filter === 'tags' && data_binding.get('deviceTags').count() > 0) {
                 secondary_filter =  FilterTags({binding: _binding});
             }
 
@@ -46,7 +46,7 @@ define([
             var _ = React.DOM,
                 __ = this.gls,
                 binding = this.getDefaultBinding(),
-                primaryFilter = binding.val('primaryFilter');
+                primaryFilter = binding.get('primaryFilter');
 
             return _.div({className: 'filters'},
                 _.div({className: 'primary-filters'},

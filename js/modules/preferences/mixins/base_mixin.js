@@ -28,23 +28,24 @@ define([], function () {
         },
         getActiveNodeTree: function () {
             var binding = this.getMoreartyContext().getBinding().sub('preferences'),
-                activeNodeTreeId = binding.val('activeNodeTreeId'),
-                activeNode = this.searchTree(binding.sub('tree').val().toJS(), activeNodeTreeId);
+                activeNodeTreeId = binding.get('activeNodeTreeId'),
+                activeNode = this.searchTree(binding.get('tree').toJS(), activeNodeTreeId);
 
             return activeNode;
         },
         setActiveNodeTreeStatus: function (status) {
-            this.getMoreartyContext().getBinding().sub('preferences').set('activeNodeTreeStatus', status);
+            this.getMoreartyContext().getBinding().set('preferences.activeNodeTreeStatus', status);
         },
         setLeftPanelItemSelectedId: function (id) {
-            this.getMoreartyContext().getBinding().sub('preferences').set('leftPanelItemSelectedId', id);
+            this.getMoreartyContext().getBinding().set('preferences.leftPanelItemSelectedId', id);
         },
         clearTemporaryData:function () {
+            var binding = this.getMoreartyContext().getBinding();
             this.setActiveNodeTreeStatus('normal');
-            this.getMoreartyContext().getBinding().sub('preferences').set('searchString', '');
-            this.getMoreartyContext().getBinding().sub('preferences').set('searchStringLeftPanel', '');
+            binding.set('preferences.searchString', '');
+            binding.set('preferences.searchStringLeftPanel', '');
             this.setLeftPanelItemSelectedId(null);
             this.setLeftPanelItemSelectedId('');
         }
-    }
+    };
 });

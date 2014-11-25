@@ -46,7 +46,7 @@ define([], function () {
 
                     // remove old device
                     if (response.data.structureChanged) {
-                        remove_devices_ids = devices_binding.val().filter(function (device) {
+                        remove_devices_ids = devices_binding.get().filter(function (device) {
                             return response.data.devices.every(function (d) {
                                 return device.get('id') !== d.id;
                             });
@@ -60,9 +60,9 @@ define([], function () {
                     }
 
                     // update tags
-                    if (devices_binding.val()) {
+                    if (devices_binding.get()) {
                         dataBinding.update('deviceTags', function () {
-                            var tags = devices_binding.val().reduce(function (memo, device, index) {
+                            var tags = devices_binding.get().reduce(function (memo, device, index) {
                                 var device_tags = device.get('tags');
 
                                 if (device_tags.count() > 0 && !device.get('permanently_hidden')) {
@@ -80,9 +80,9 @@ define([], function () {
                     }
 
                     // update types
-                    if (devices_binding.val()) {
+                    if (devices_binding.get()) {
                         dataBinding.update('deviceTypes', function () {
-                            var types = devices_binding.val().reduce(function (memo, device, index) {
+                            var types = devices_binding.get().reduce(function (memo, device, index) {
 
                                 if (memo.indexOf(device.get('deviceType')) === -1 && !device.get('permanently_hidden')) {
                                     return memo.push(device.get('deviceType'));
@@ -159,10 +159,9 @@ define([], function () {
                         icon: null
                     }
                 },
-                parse: function (response, ctx) {
-                    return response.data.map(function (model) {
-                        return Sticky.get('App.Helpers.JS').getNamespacesData(ctx, model);
-                    });
+                postSyncHandler: function (ctx, response) {
+                    var data_binding = ctx.getBinding().sub('data');
+                    data_binding.set('modules_original', Immutable.Seq(response.data));
                 },
                 loaded: false
             },
@@ -185,6 +184,7 @@ define([], function () {
                 id: 'notifications',
                 url: '/notifications',
                 autoSync: true,
+                params: {pagination: true, limit: 100},
                 sinceField: 'notificationsUpdateTime',
                 methods: ['READ', 'UPDATE', 'DELETE'],
                 models: [

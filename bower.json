@@ -1,19 +1,19 @@
 {
-    "name": "Z-Wave",
-    "version": "2.0.0rc7",
-    "directory": "htdocs/bower_components",
-    "dependencies": {
-        "requirejs": "2.1.15",
-        "jquery": "2.1.1",
-        "jquery-ui": "1.11.2",
-        "react": "0.11.2",
-        "less": "2.0.x",
-        "moreartyjs": "git://github.com/moreartyjs/moreartyjs#0.5.0",
-        "immutable": "3.2.x",
-        "director": "1.2.2",
-        "ace": "1.1.7",
-        "ace-builds":  "1.1.7",
-        "d3": "3.4.12",
-        "font-awesome": "4.2.x"
-    }
+  "name": "Z-Wave",
+  "version": "2.0.0rc7",
+  "directory": "htdocs/bower_components",
+  "dependencies": {
+    "requirejs": "2.1.15",
+    "jquery": "2.1.1",
+    "jquery-ui": "1.11.2",
+    "immutable": "3.2.x",
+    "director": "1.2.2",
+    "react": "0.12.x",
+    "font-awesome": "4.2.x",
+    "ace": "1.1.8",
+    "ace-builds": "1.1.8",
+    "d3": "3.4.13",
+    "less": "2.1.0",
+    "moreartyjs": "0.7.4"
+  }
 }

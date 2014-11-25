@@ -15,7 +15,7 @@ define([
         getService: function (_serviceId) {
             var serviceId = _serviceId || this._serviceId,
                 binding = this.getMoreartyContext().getBinding().sub('services').sub('collections'),
-                service = binding.val().toArray().filter(function (service) {
+                service = binding.get().toArray().filter(function (service) {
                     return serviceId === service.toObject().id;
                 });
 
@@ -28,7 +28,7 @@ define([
             options = options || {};
 
             if (service) {
-                url = this.isModel() ? service.url + '/' + this.getDefaultBinding().val('id') : service.url;
+                url = this.isModel() ? service.url + '/' + this.getDefaultBinding().get('id') : service.url;
 
                 if (Boolean(command)) {
                     url += '/command/' + command;
@@ -43,7 +43,7 @@ define([
         },
         getLangFile: function (lang, callback) {
             var binding = this.getMoreartyContext().getBinding(),
-                path_lang_file = binding.sub('default.system.path_lang_file').val();
+                path_lang_file = binding.sub('default.system.path_lang_file').get();
 
             this._read(path_lang_file + '/language.' + lang + '.json', {
                 success: callback,
@@ -59,7 +59,7 @@ define([
                 collection = options.collection,
                 serviceId =  options.serviceId,
                 service = that.getService(serviceId),
-                modelId = model.val('id'),
+                modelId = model.get('id'),
                 url;
 
             if (!Boolean(serviceId)) {
@@ -92,7 +92,7 @@ define([
                 },
                 params: options.params || {},
                 method: model && modelId ? 'PUT' : 'POST',
-                data: JSON.stringify(this._compat(model.val().toJS()))
+                data: JSON.stringify(this._compat(model.get().toJS()))
             });
         },
         remove: function (options) {
@@ -104,7 +104,7 @@ define([
                 url;
 
             if (Boolean(model)) {
-                url = model.val('id') ? service.url + '/' + model.val('id') : service.url;
+                url = model.get('id') ? service.url + '/' + model.get('id') : service.url;
             } else if (collection) {
                 url = service.url;
             }
@@ -141,7 +141,7 @@ define([
             })
         },
         isModel: function () {
-            return this.getDefaultBinding().val('id') || this._isModel;
+            return this.getDefaultBinding().get('id') || this._isModel;
         },
         enableAutoSync: function () {
             this.autoSync.init.call(this);
@@ -170,7 +170,7 @@ define([
                 ctx = that.getMoreartyContext(),
                 dataBinding = ctx.getBinding().sub('data'),
                 collection_binding = dataBinding.sub(collection_name),
-                index = collection_binding.val().findIndex(function (device) {
+                index = collection_binding.get().findIndex(function (device) {
                     return model.id === device.get('id');
                 });
 
@@ -184,7 +184,7 @@ define([
 
             ids = Array.isArray(ids) ? ids : [ids];
             ids.forEach(function (id) {
-                var index = collection_binding.val().findIndex(function (device) {
+                var index = collection_binding.get().findIndex(function (device) {
                     return id === device.get('id');
                 });
                 collection_binding.sub(index).delete();
@@ -196,7 +196,7 @@ define([
                 dataBinding = ctx.getBinding().sub('data'),
                 collection_binding = dataBinding.sub(collection_name);
 
-            return collection_binding.val().findIndex(function (device) {
+            return collection_binding.get().findIndex(function (device) {
                 return modelId === device.get('id');
             });
         }

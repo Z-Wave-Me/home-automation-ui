@@ -20,7 +20,7 @@ define([
                 _binding = {binding: { default: binding, data: dataBinding, preferences: this.getBinding('preferences')}};
 
             return _.div({ className: 'main clearfix' },
-                binding.val('nowShowing') === 'widgets' ? Filters(_binding) : null,
+                binding.get('nowShowing') === 'widgets' ? Filters(_binding) : null,
                 Widgets(_binding),
                 Footer(_binding)
             );

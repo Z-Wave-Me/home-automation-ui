@@ -15,8 +15,8 @@ define([], function () {
             var binding = this.getDefaultBinding(),
                 dataBinding = this.getBinding('data');
 
-            if (dataBinding.val('locations').toArray().length > 0) {
-                binding.set('secondaryFilter', dataBinding.sub('locations').val().get(0).get('id'));
+            if (dataBinding.get('locations').toArray().length > 0) {
+                binding.set('secondaryFilter', dataBinding.sub('locations').get().get(0).get('id'));
             }
         },
         setSecondaryFilter: function (value) {
@@ -28,9 +28,9 @@ define([], function () {
                 binding = this.getDefaultBinding(),
                 dataBinding = this.getBinding('data'),
                 _ = React.DOM,
-                secondaryFilter = binding.val('secondaryFilter'),
+                secondaryFilter = binding.get('secondaryFilter'),
                 locationsBinding = dataBinding.sub('locations'),
-                locations = locationsBinding.val();
+                locations = locationsBinding.get();
 
             return _.div({className: 'filter-items'},
                 locations.map(function (item) {

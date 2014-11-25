@@ -16,7 +16,7 @@ define([
         render: function () {
             var cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                rearrange_showing = binding.val('footer.rearrange_showing'),
+                rearrange_showing = binding.get('footer.rearrange_showing'),
                 _ = React.DOM,
                 __ = this.gls,
                 rearrange_classes = cx({

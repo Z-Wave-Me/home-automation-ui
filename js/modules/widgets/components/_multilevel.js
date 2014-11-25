@@ -32,12 +32,12 @@ define([
         render: function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                rearrange_showing = this.getBinding('footer').val('rearrange_showing'),
+                rearrange_showing = this.getBinding('footer').get('rearrange_showing'),
                 cx = React.addons.classSet,
                 item_binding = binding,
-                title = item_binding.val('metrics.title'),
-                level = item_binding.val('metrics.level'),
-                icon = item_binding.val('metrics.icon'),
+                title = item_binding.get('metrics.title'),
+                level = item_binding.get('metrics.level'),
+                icon = item_binding.get('metrics.icon'),
                 styles = {
                     'background-image': '-webkit-gradient(linear,left top,  right top, color-stop(' + level / 100 + ', rgb( 64, 232, 240 )), color-stop(' + level / 100 + ', rgb( 190, 190, 190 )))'
                 };

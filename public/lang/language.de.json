@@ -64,5 +64,6 @@
     "room_name": "room name",
     "profile_name": "profile name",
     "widget_name": "widget name",
-    "type": "type"
+    "type": "type",
+    "rearrange_and_settings": "rearrange & settings"
 }

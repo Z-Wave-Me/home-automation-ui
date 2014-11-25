@@ -24,8 +24,8 @@ define([
         toggleSwitch: function () {
             var that = this,
                 binding = this.getDefaultBinding(),
-                isDoorLock = binding.val('deviceType') === 'doorlock',
-                level = binding.val('metrics.level'),
+                isDoorLock = binding.get('deviceType') === 'doorlock',
+                level = binding.get('metrics.level'),
                 command;
 
             if (!isDoorLock) {
@@ -66,19 +66,19 @@ define([
                 _ = React.DOM,
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                rearrange_showing = this.getBinding('footer').val('rearrange_showing'),
-                title = binding.val('metrics.title'),
-                level = binding.val('metrics.level') || binding.val('metrics.mode') || '',
+                rearrange_showing = this.getBinding('footer').get('rearrange_showing'),
+                title = binding.get('metrics.title'),
+                level = binding.get('metrics.level') || binding.get('metrics.mode') || '',
                 classes = cx({
                     switch: true,
                     active: level === 'on' || level === 'open'
                 }),
-                _isRGB = binding.val('deviceType') === 'switchRGBW',
+                _isRGB = binding.get('deviceType') === 'switchRGBW',
                 color = _isRGB ? binding.sub('metrics.color').toJS() : {};
 
-            return _.div({className: 'widget ' + binding.val('deviceType')},
+            return _.div({className: 'widget ' + binding.get('deviceType')},
                 rearrange_showing ? _.div({className: 'select-button'}) : null,
-                _.span({className: 'icon', style: {backgroundImage: 'url(' + binding.val('metrics.icon') + ')'}}),
+                _.span({className: 'icon', style: {backgroundImage: 'url(' + binding.get('metrics.icon') + ')'}}),
                 _.span({className: 'title'}, title),
                 _.div({className: 'metrics-container'},
                     _.span({onClick: this.toggleSwitch, className: classes},
@@ -86,7 +86,7 @@ define([
                         _.span({className: 'text'}, level.toUpperCase())
                     ),
                     _isRGB ? _.div({ref: 'pickerButton', className: 'picker-rect', style: {
-                        'background-color': 'rgb(' + [color.r, color.g, color.b].join(', ') + ')'
+                        backgroundColor: 'rgb(' + [color.r, color.g, color.b].join(', ') + ')'
                     }, onClick: this.onToggleShowPicker}) : null,
                     this.state.show_picker && _isRGB ?
                         _.div({

@@ -2,9 +2,12 @@
 @on-color: #00e359;
 @off-color: #00e359;
 
+.panel-container {
+  text-align: center;
+}
+
 .main-component {
-  display: block;
-  width: 50%;
+  display: inline-block;
   height: 100%;
   margin: 0 auto;
   .line-container {
@@ -47,6 +50,9 @@
   .pull-right {
     text-align: right;
   }
+  .pull-left {
+    text-align: left;
+  }
   /*
     Instances list
   */
@@ -54,11 +60,11 @@
     display: block;
     float: left;
     list-style-type: none;
-    padding: 0;
     margin: 10px 0;
     overflow: hidden;
     overflow-y: auto;
-    height: 480px;
+    max-height: 80vh;
+    padding: 10px 0;
     width: 100%;
   }
   .instance-item {
@@ -183,9 +189,10 @@
   }
   .main-component {
     width: 100%;
-    height: 460px;
     overflow: hidden;
     margin-bottom: 5px;
+    height: 70vh;
+    padding: 0 0 10px 0;
   }
   .step-title {
     display: block;

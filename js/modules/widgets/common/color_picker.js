@@ -134,7 +134,10 @@ define([
         // calculate relative position to the mouse and set dragging=true
         onMouseDown: function (el, e) {
             // only left mouse button
-            if (e.button !== 0) return;
+            if (e.button !== 0) {
+                e.preventDefault();
+                return false;
+            }
             var pos = $(this.refs.picker.getDOMNode()).offset();
             this.setState({
                 dragging: true,
@@ -162,7 +165,7 @@ define([
             } else if (this.state.el === 'slide') {
                 this.onDraggableSlideIndicator(e);
             } else {
-                return;
+                e.preventDefault();
             }
 
             this.setState({
@@ -182,7 +185,6 @@ define([
 
             pickerIndicator_element.style.left = (x - pickerIndicator_element.offsetWidth/2) + 'px';
             pickerIndicator_element.style.top = (y - pickerIndicator_element.offsetHeight/2) + 'px';
-            return false;
         },
         onDraggableSlideIndicator: function (e) {
             var y = e.offsetY,

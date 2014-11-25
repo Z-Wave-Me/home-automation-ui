@@ -70,7 +70,7 @@ define([
                                 _.input({
                                         className: 'ios-switch',
                                         type: 'checkbox',
-                                        checked: preferences_binding.val('show_turned_off'),
+                                        checked: preferences_binding.get('show_turned_off'),
                                         onChange: this.onShowTurnedOffHandler
                                     },
                                     _.div({},
@@ -86,12 +86,12 @@ define([
                             binding: {
                                 default: preferences_binding
                             },
-                            'search_attr': preferences_binding.sub('search_string_on_instance_page')
+                            search_attr: preferences_binding.sub('search_string_on_instance_page')
                         })
                     )
                 ),
                 _.ul({className: 'instances-list'},
-                    instances_binding.val().map(this.getInstance).toArray()
+                    instances_binding.get().map(this.getInstance).toArray()
                 )
             );
         },
@@ -101,17 +101,17 @@ define([
                 data_binding = this.getBinding('data'),
                 preferences_binding = this.getBinding('preferences'),
                 item_binding = data_binding.sub('instances').sub(index),
-                moduleId = item_binding.val('moduleId'),
+                moduleId = item_binding.get('moduleId'),
                 module_binding = this.getModelFromCollection(moduleId, 'modules'),
-                id = item_binding.val('id'),
-                icon = item_binding.val('icon') || null,
+                id = item_binding.get('id'),
+                icon = item_binding.get('icon') || null,
                 params_binding = item_binding.sub('params'),
-                hovered = preferences_binding.val('hover_instance_id') === id,
-                selected = preferences_binding.val('select_instance_id') === id,
+                hovered = preferences_binding.get('hover_instance_id') === id,
+                selected = preferences_binding.get('select_instance_id') === id,
                 status_classes = cx({
                     'instance-status': true,
-                    enable: item_binding.val('active'),
-                    disable: !item_binding.val('active')
+                    enable: item_binding.get('active'),
+                    disable: !item_binding.get('active')
                 }),
                 state_class = cx({
                     'instance-item': true,
@@ -128,8 +128,8 @@ define([
                 _.div({className: 'header-item', onClick: this.onToggleSelectItemList.bind(null, id)},
                     _.span({className: status_classes}),
                     _.span({className: 'instance-icon'}, icon),
-                    _.span({className: 'instance-title'}, params_binding.val('title') || module_binding.sub('defaults').val('title')),
-                    _.span({className: 'module-title'}, '(' + module_binding.sub('defaults').val('title') + ')'),
+                    _.span({className: 'instance-title'}, params_binding.get('title') || module_binding.sub('defaults').get('title')),
+                    _.span({className: 'module-title'}, '(' + module_binding.get('defaults.title') + ')'),
                     hovered || selected ? _.span({
                             className: 'instance-status-checkbox',
                             onClick: this.onStatusModuleHandler.bind(null, item_binding)
@@ -138,7 +138,7 @@ define([
                             _.input({
                                     className: 'ios-switch green',
                                     type: 'checkbox',
-                                    checked: item_binding.val('active'),
+                                    checked: item_binding.get('active'),
                                     readOnly: true
                                 },
                                 _.div({},
@@ -157,7 +157,7 @@ define([
                             className: 'input-value',
                             type: 'text',
                             placeholder: 'Title',
-                            value: item_binding.val('title'),
+                            value: item_binding.get('title'),
                             onChange: Morearty.Callback.set(item_binding, 'title')
                         })
                     ),
@@ -167,7 +167,7 @@ define([
                             key: 'description-input',
                             className: 'input-value textarea-type',
                             placeholder: 'Description',
-                            value: item_binding.val('description'),
+                            value: item_binding.get('description'),
                             onChange: Morearty.Callback.set(item_binding, 'description')
                         })
                     ),
@@ -195,39 +195,39 @@ define([
             ) : null;
         },
         onToggleHoverItemList: function (id) {
-            this.getBinding('preferences').sub('hover_instance_id').set(id);
+            this.getBinding('preferences').set('hover_instance_id', id);
         },
         onToggleSelectItemList: function (id) {
-            var selected = this.getBinding('preferences').val('select_instance_id') === id;
-            this.getBinding('preferences').sub('select_instance_id').set(selected ? null : id);
+            var that = this,
+                selected = that.getBinding('preferences').get('select_instance_id') === id;
+
+            that.getBinding('preferences').set('select_instance_id', selected ? null : id);
 
             if (!selected) {
-                this.forceUpdate(function () {
-                    this.renderAlpaca(id);
+                that.forceUpdate(function () {
+                    that.renderAlpaca(id);
                 });
             }
         },
         renderAlpaca: function (instanceId) {
             var that = this,
                 instanceJson,
-                module,
                 moduleJson,
                 $el,
                 instance = that.getModelFromCollection(instanceId, 'instances');
 
             if (!instance || !instanceId) {
-                return;
+                return false;
             }
 
-            instanceJson = instance.val().toJS();
-            module = that.getModelFromCollection(instanceJson.moduleId, 'modules');
-            moduleJson = module.val().toJS();
+            instanceJson = instance.get().toJS();
+            moduleJson = that.updateObjectAsNamespace(that.getOriginalModule(instanceJson.moduleId));
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
-                data: that.updateObjectAsNamespace(instanceJson.params),
-                schema: that.updateObjectAsNamespace(moduleJson.schema),
-                options: that.updateObjectAsNamespace(moduleJson.options),
+                data: instanceJson.params,
+                schema: moduleJson.schema,
+                options: moduleJson.options,
                 postRender: function (form) {
                     that.setState({form: form});
                 }
@@ -235,7 +235,7 @@ define([
         },
         onShowTurnedOffHandler: function (event) {
             this.getBinding('preferences').set('show_turned_off', event.target.checked);
-            return false;
+            event.preventDefault();
         },
         onStatusModuleHandler: function (instance, event) {
             var that = this;
@@ -290,24 +290,24 @@ define([
                 that.getBinding('preferences').set('select_instance_id', null);
                 that.getBinding('data').update('instances', function (instances) {
                     return instances.filter(function (instance) {
-                        return instance.get('id') !== item_binding.val('id');
+                        return instance.get('id') !== item_binding.get('id');
                     });
                 });
                 that.forceUpdate();
             }
         },
         isShown: function (instance) {
-            var module_id = instance.val('moduleId'),
-                search_string = this.getBinding('preferences').val('search_string_on_instance_page'),
+            var module_id = instance.get('moduleId'),
+                search_string = this.getBinding('preferences').get('search_string_on_instance_page'),
                 module = this.getModelFromCollection(module_id, 'modules'),
-                show_turned_off = this.getBinding('preferences').val('show_turned_off'),
-                title = instance.val('title') || '';
+                show_turned_off = this.getBinding('preferences').get('show_turned_off'),
+                title = instance.get('title') || '';
 
             if (search_string.length > 1) {
                 return (title.toLowerCase().indexOf(search_string) !== -1 ||
-                    module.sub('defaults').val('title').toLowerCase().indexOf(search_string) !== -1);
+                    module.sub('defaults').get('title').toLowerCase().indexOf(search_string) !== -1);
             } else {
-                if (show_turned_off || (!show_turned_off && instance.val('active'))) {
+                if (show_turned_off || (!show_turned_off && instance.get('active'))) {
                     return true;
                 }
             }

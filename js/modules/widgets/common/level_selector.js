@@ -17,9 +17,9 @@ define([
         mixins: [Morearty.Mixin, SyncLayerMixin, PopupMixin],
         getInitialState: function () {
             var metrics_binbind = this.getDefaultBinding().sub('metrics'),
-                min_level = parseInt(metrics_binbind.val('min')),
-                max_level = parseInt(metrics_binbind.val('max')),
-                level = parseInt(metrics_binbind.val('level'));
+                min_level = parseInt(metrics_binbind.get('min')),
+                max_level = parseInt(metrics_binbind.get('max')),
+                level = parseInt(metrics_binbind.get('level'));
 
             return {
                 twoPi: Math.PI * 2,
@@ -174,7 +174,7 @@ define([
 
             return _.div({onClick: this.stopPropagationAndPreventDefault, ref: 'popover', className: 'popover right popover-level-selector'},
                 _.div({className: 'popover-content'},
-                    _.div({className: 'header-title'}, binding.sub('metrics').val('title')),
+                    _.div({className: 'header-title'}, binding.sub('metrics').get('title')),
                     _.div({className: 'center-container'},
                         _.div({ref: 'progressContainer', className: 'pie-container'}),
                         _.div({className: 'control-container'},

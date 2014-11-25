@@ -60,9 +60,9 @@ define([
                     preferences_binding.atomically()
                         .set('instance_temp', Immutable.fromJS({
                             id: null,
-                            title: module.sub('defaults').val('title'),
-                            description: module.sub('defaults').val('description'),
-                            moduleId: module.val('id'),
+                            title: module.sub('defaults').get('title'),
+                            description: module.sub('defaults').get('description'),
+                            moduleId: module.get('id'),
                             active: true,
                             params: {},
                             import_instanceId: null
@@ -90,7 +90,7 @@ define([
                 __ = this.gls,
                 cx = React.addons.classSet,
                 preferences_binding = this.getBinding('preferences'),
-                step_numeric = preferences_binding.val('step'),
+                step_numeric = preferences_binding.get('step'),
                 step = this.state.steps[step_numeric];
 
             return _.div({ className: 'modules-component' },

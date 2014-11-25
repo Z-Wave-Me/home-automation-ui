@@ -17,13 +17,13 @@ define([
         },
         render: function () {
             var binding = this.getDefaultBinding(),
-                rearrange_showing = this.getBinding('footer').val('rearrange_showing'),
+                rearrange_showing = this.getBinding('footer').get('rearrange_showing'),
                 _ = React.DOM;
 
             return _.div({className: 'widget'},
                 rearrange_showing ? _.div({className: 'select-button'}) : null,
-                _.span({className: 'icon', style: {backgroundImage: 'url(' + binding.val('metrics.icon') + ')'}}),
-                _.span({className: 'title'}, binding.val('metrics.icon')),
+                _.span({className: 'icon', style: {backgroundImage: 'url(' + binding.get('metrics.icon') + ')'}}),
+                _.span({className: 'title'}, binding.get('metrics.icon')),
                 _.div({className: 'metrics-container'},
                     _.span({className: 'switch-door bubble-door active', onClick: this.toggleSwitch.bind(null, 'on')},
                         _.span({className: 'bubble'})
