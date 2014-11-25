@@ -57,7 +57,7 @@ define([], function () {
                     return String(profile.get('id')) === String(activeId);
                 });
 
-            if (size > 0 && index) {
+            if (size > 0 && index !== -1) {
                 return ctx.getBinding().sub('data.profiles.' + index);
             } else if (size > 0 && index === -1) {
                 return ctx.getBinding().sub('data.profiles.' + 0);
