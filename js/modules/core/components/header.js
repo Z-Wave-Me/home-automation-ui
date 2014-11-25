@@ -68,7 +68,13 @@ define([], function () {
             return _.header({ className: 'site-header clearfix' },
                 // logo
                 _.div({className: 'three columns alpha omega company-name-container'},
-                    _.a({className: 'company-name', href: '/', title: 'z-wave.me'})
+                    _.a({className: 'company-name', href: '/', title: 'z-wave.me'},
+                        _.span({className: ''}, 'Z'),
+                        _.span({className: 'gray'}, '-'),
+                        _.span({className: ''}, 'WAVE'),
+                        _.span({className: 'gray'}, _.i({className: 'fa fa-angle-right angle-right'})),
+                        _.span({className: ''}, 'ME')
+                    )
                 ),
                 // preferences
                 _.div({className: 'three columns preferences-block', onClick: this.onShowPreferences},

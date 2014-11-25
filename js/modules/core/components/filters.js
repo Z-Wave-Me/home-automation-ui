@@ -14,6 +14,7 @@ define([
     'use strict';
 
     return React.createClass({
+        displayName: 'filters',
         mixins: [Morearty.Mixin, TranslateMixin],
         setPrimaryFilter: function (filter) {
             this.getDefaultBinding().set('primaryFilter', filter);
@@ -49,7 +50,7 @@ define([
 
             return _.div({className: 'filters'},
                 _.div({className: 'primary-filters'},
-                    _.div({className: 'three columns'}),
+                    _.div({className: 'four columns'}),
                     _.div({className: 'columns filter-items'},
                         _.span({onClick: this.setPrimaryFilter.bind(null, 'all'), className: primaryFilter === 'all' ? 'filter selected' : 'filter'}, __('all','capitalize')),
                         _.span({onClick: this.setPrimaryFilter.bind(null, 'rooms'), className: primaryFilter === 'rooms' ? 'filter selected' : 'filter'}, __('rooms','capitalize')),
