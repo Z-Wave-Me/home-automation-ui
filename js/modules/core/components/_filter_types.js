@@ -15,8 +15,8 @@ define([], function () {
             var binding = this.getDefaultBinding(),
                 dataBinding = this.getBinding('data');
 
-            if (dataBinding.val('deviceTypes').count() > 0) {
-                binding.set('secondaryFilter', dataBinding.val('deviceTypes').first());
+            if (dataBinding.get('deviceTypes').count() > 0) {
+                binding.set('secondaryFilter', dataBinding.get('deviceTypes').first());
             }
         },
         setSecondaryFilter: function (value) {
@@ -28,9 +28,9 @@ define([], function () {
                 binding = this.getDefaultBinding(),
                 dataBinding = this.getBinding('data'),
                 _ = React.DOM,
-                secondaryFilter = binding.val('secondaryFilter'),
+                secondaryFilter = binding.get('secondaryFilter'),
                 typesBinding = dataBinding.sub('deviceTypes'),
-                types = typesBinding.val().toJS();
+                types = typesBinding.get().toJS();
 
             return _.div({className: 'secondary-filters'},
                 types

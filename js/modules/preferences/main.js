@@ -40,9 +40,9 @@ define([
                 __ = this.gls,
                 binding = this.getDefaultBinding(),
                 preferencesBinding = this.getBinding('preferences'),
-                overlay_show = binding.val('overlayShow'),
-                overlay_name = binding.val('overlayShowName'),
-                overlay_back_button_enabled = preferencesBinding.val('backButtonEnabled');
+                overlay_show = binding.get('overlayShow'),
+                overlay_name = binding.get('overlayShowName'),
+                overlay_back_button_enabled = preferencesBinding.get('backButtonEnabled');
 
             return (
                 _.div({

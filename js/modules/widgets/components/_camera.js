@@ -89,11 +89,11 @@ define([
         render: function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                title = binding.sub('metrics').val('title'),
-                url = binding.sub('metrics').val('url');
+                title = binding.sub('metrics').get('title'),
+                url = binding.sub('metrics').get('url');
 
             return (
-                _.div({key: 'container-camera-' + binding.val('id')},
+                _.div({key: 'container-camera-' + binding.get('id')},
                     _.div({key: 'control', className: 'control-block camera-block'},
                         _.span({ className: 'title-container'}, title),
                         _.div({className: 'control-buttons'},

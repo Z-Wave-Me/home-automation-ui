@@ -15,7 +15,7 @@ define([
         },
         toggleShowNotificationsPopup: function () {
             var binding = this.getDefaultBinding(),
-                show = binding.sub('notifications').val('show_popup');
+                show = binding.sub('notifications').get('show_popup');
 
             binding.sub('notifications').set('show_popup', !show);
 
@@ -24,7 +24,7 @@ define([
         isShownFilters: function () {
             var binding = this.getDefaultBinding();
 
-            return binding.val('nowShowing') === 'widgets' ?
+            return binding.get('nowShowing') === 'widgets' ?
                 Filters({binding: { default: binding, data: this.getBinding('data') }}) : null;
         },
         render: function () {
@@ -32,13 +32,13 @@ define([
                 __ = this.gls,
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                nowShowing = binding.val('nowShowing'),
+                nowShowing = binding.get('nowShowing'),
                 notifications = binding.sub('notifications'),
-                notifications_count = notifications.val('count'),
-                notifications_severity = notifications.val('severity'),
-                notification_mode = notifications.sub('severity_modes').sub(notifications_severity),
+                notifications_count = notifications.get('count'),
+                notifications_severity = notifications.get('severity'),
+                notification_mode = notifications.sub('severity_modes.' + notifications_severity),
                 // TODO: rewrite after added severity in backend
-                notifications_message = notifications_count === 0 ? notification_mode.val('message') : 'warning',
+                notifications_message = notifications_count === 0 ? notification_mode.get('message') : 'warning',
                 events_class = cx({
                     'events-container': true,
                     ok: notifications_severity.toLowerCase() === 'ok' && notifications_count === 0,

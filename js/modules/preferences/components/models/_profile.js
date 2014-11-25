@@ -18,7 +18,7 @@ define([
         mixins: [Morearty.Mixin, data_layer_mixin, TranslateMixin],
         isplayName: '_profile',
         setAsDefaultProfile: function (event) {
-            this.getBinding('preferences').set('defaultProfileId', event.target.checked ? this.getBinding('item').val('id') : null);
+            this.getBinding('preferences').set('defaultProfileId', event.target.checked ? this.getBinding('item').get('id') : null);
             return false;
         },
         componentWillMount: function () {
@@ -43,13 +43,13 @@ define([
                 preferencesBinding = that.getBinding('preferences'),
                 data_binding = that.getBinding('data'),
                 item_binding = that.getBinding('item'),
-                add_mode = preferencesBinding.val('activeNodeTreeStatus') === 'add',
+                add_mode = preferencesBinding.get('activeNodeTreeStatus') === 'add',
                 default_profile = that.getActiveProfile(),
-                default_profile_id = default_profile !== null ? default_profile.val('id') : null,
-                id = item_binding.val('id'),
-                title = item_binding.val('name'),
-                temp_string = that.getBinding('preferences').val('temp_string'),
-                description = item_binding.val('description'),
+                default_profile_id = default_profile !== null ? default_profile.get('id') : null,
+                id = item_binding.get('id'),
+                title = item_binding.get('name'),
+                temp_string = that.getBinding('preferences').get('temp_string'),
+                description = item_binding.get('description'),
                 classes_input_autocomplete = cx({
                     'text-input-autocomplete': true,
                     'focus': temp_string.length > 1
@@ -84,13 +84,13 @@ define([
                     !add_mode ? _.div({ key: 'form-device-input', className: 'form-group' },
                         _.label({ htmlFor: 'profile-tagsinput', className: 'input-label block'}, __('show_on_dashboard', 'capitalize')),
                         _.div({ id: 'profile-tagsinput', className: 'tagsinput'},
-                            item_binding.val('positions').map(function (label) {
-                                var device_index = data_binding.sub('devices').val().findIndex(function (device) {
+                            item_binding.get('positions').map(function (label) {
+                                var device_index = data_binding.sub('devices').get().findIndex(function (device) {
                                         return device.get('id') === label;
                                     }),
                                     device = data_binding.sub('devices.' + device_index);
 
-                                    return _.span({ key: label, className: 'tag label label-info'}, device.val('metrics.title'),
+                                    return _.span({ key: label, className: 'tag label label-info'}, device.get('metrics.title'),
                                     _.span({
                                         className: 'tag-remove',
                                         onClick: that.removeTagHandler.bind(null, label)
@@ -146,9 +146,9 @@ define([
                 __ = this.gls,
                 devices_binding = that.getBinding('data').sub('devices'),
                 item_binding = that.getBinding('item'),
-                temp_string = that.getBinding('preferences').val('temp_string'),
-                filtered_devices = devices_binding.val().filter(function (device) {
-                    return item_binding.val('positions').indexOf(device.get('id')) === -1 &&
+                temp_string = that.getBinding('preferences').get('temp_string'),
+                filtered_devices = devices_binding.get().filter(function (device) {
+                    return item_binding.get('positions').indexOf(device.get('id')) === -1 &&
                         device.get('metrics').get('title').toLowerCase().indexOf(temp_string.toLowerCase()) !== -1;
                 }),
                 deviceTypes = Sticky.get('App.Helpers.JS').arrayUnique(filtered_devices.map(function (device) {

@@ -11,7 +11,7 @@ define([], function () {
             var _ = React.DOM,
                 __ = this.gls,
                 default_binding = this.getMoreartyContext().getBinding().sub('default'),
-                current_lang = default_binding.sub('system.current_language').val(),
+                current_lang = default_binding.sub('system.current_language').get(),
                 languages_binding = default_binding.sub('system.languages');
 
 
@@ -25,7 +25,7 @@ define([], function () {
                                 onChange: this.onSelectLang,
                                 defaultValue: current_lang
                             },
-                            languages_binding.val().map(function (lang, index) {
+                            languages_binding.get().map(function (lang, index) {
                                 return _.option({
                                     key: index + '-lang',
                                     value: lang

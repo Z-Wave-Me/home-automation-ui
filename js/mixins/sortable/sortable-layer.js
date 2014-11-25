@@ -45,7 +45,7 @@ define([], function () {
             this.move(over, placement);
         },
         isDragging: function() {
-            return this.getDefaultBinding().val('dragging');
+            return this.getDefaultBinding().get('dragging');
         }
     }
 });

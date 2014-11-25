@@ -34,10 +34,10 @@ define([
                 binding = this.getDefaultBinding(),
                 cx = React.addons.classSet,
                 item_binding = binding,
-                title = item_binding.sub('metrics').val('title'),
-                level = item_binding.sub('metrics').val('level'),
+                title = item_binding.sub('metrics').get('title'),
+                level = item_binding.sub('metrics').get('level'),
                 styles = {
-                    'background-image': '-webkit-gradient(linear,left top,  right top, color-stop(' + level / 100 + ', rgb( 64, 232, 240 )), color-stop(' + level / 100 + ', rgb( 190, 190, 190 )))'
+                    'backgroundImage': '-webkit-gradient(linear,left top,  right top, color-stop(' + level / 100 + ', rgb( 64, 232, 240 )), color-stop(' + level / 100 + ', rgb( 190, 190, 190 )))'
                 },
                 progressClasses = cx({
                     'progress-bar': true,
