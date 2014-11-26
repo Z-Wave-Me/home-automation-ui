@@ -8,7 +8,7 @@ define([], function () {
 
             return (
                 _.div({className: 'content'},
-                    _.span({className: 'title-container'}, this.getDefaultBinding().sub('metrics').val('title')),
+                    _.span({className: 'title-container'}, this.getDefaultBinding().sub('metrics').get('title')),
                     _.button({className: 'quad-button up-button'}, 'Up'),
                     _.button({className: 'quad-button down-button'}, 'Down')
                 )

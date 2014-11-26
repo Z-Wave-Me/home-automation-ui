@@ -23,7 +23,7 @@ define([
 
             return _.div({ className: 'step-container' },
                 _.ul({className: 'category-modules-list'},
-                    modules_categories_binding.val().map(this.getCategory).toArray()
+                    modules_categories_binding.get().map(this.getCategory).toArray()
                 )
             );
         },
@@ -33,7 +33,7 @@ define([
                 cx = React.addons.classSet,
                 data_binding = this.getBinding('data'),
                 modules_binding = data_binding.sub('modules'),
-                filtered_modules = modules_binding.val().filter(function (_module) {
+                filtered_modules = modules_binding.get().filter(function (_module) {
                     return _module.get('category') === category.get('id');
                 }),
                 filtered_modules_length = filtered_modules.toArray().length,
@@ -49,7 +49,7 @@ define([
                     collapsed: !is_expanded,
                     'category-module-item': true
                 }),
-                search_string = this.getDefaultBinding().val('search_string_on_modules_list');
+                search_string = this.getDefaultBinding().get('search_string_on_modules_list');
 
             return _.li({key: 'category-' + category.get('id'), className: category_classes},
                 search_string.length < 3 ? _.div({
@@ -86,7 +86,7 @@ define([
                 version = _module.get('version'),
                 maturity = _module.get('maturity'),
                 is_used = this.isUsedSingletonModule(id),
-                search_string = this.getDefaultBinding().val('search_string_on_modules_list'),
+                search_string = this.getDefaultBinding().get('search_string_on_modules_list'),
                 is_match = search_string.length < 3 ? true :
                     title.toLowerCase().indexOf(search_string.toLowerCase()) !== -1 ||
                         id.toLowerCase().indexOf(search_string.toLowerCase()) !== -1;
@@ -164,7 +164,7 @@ define([
             var preferences_binding = this.getDefaultBinding(),
                 expanded = preferences_binding.sub('expanded');
 
-            return expanded.val().indexOf(categoryId) !== -1;
+            return expanded.get().indexOf(categoryId) !== -1;
         }
     });
 });

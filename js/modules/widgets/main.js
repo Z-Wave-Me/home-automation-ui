@@ -56,23 +56,23 @@ define([
             var __ = React.DOM,
                 binding = this.getDefaultBinding(),
                 data_binding = this.getBinding('data'),
-                primary_filter = binding.val('primaryFilter'),
-                secondary_filter = binding.val('secondaryFilter'),
+                primary_filter = binding.get('primaryFilter'),
+                secondary_filter = binding.get('secondaryFilter'),
                 items_binding = data_binding.sub('devices'),
                 active_profile = this.getActiveProfile(),
-                positions = active_profile !== null ? active_profile.val('positions') : [],
+                positions = active_profile !== null ? active_profile.get('positions') : [],
                 isShown, isSearchMatch;
 
             isSearchMatch = function (index) {
-                var search_string = binding.val('searchStringMainPanel'),
-                    title = items_binding.sub(index).sub('metrics').val('title');
+                var search_string = binding.get('searchStringMainPanel'),
+                    title = items_binding.get(index + '.metrics.title');
 
                 return search_string.length > 0 ? title.toLowerCase().indexOf(search_string.toLowerCase()) !== -1 : true;
             };
 
             isShown = function (item) {
                 if (!item.get('permanently_hidden')) {
-                    if (binding.val('nowShowing') === 'dashboard') {
+                    if (binding.get('nowShowing') === 'dashboard') {
                         return positions.indexOf(item.get('id')) !== -1 ? true : null;
                     } else {
                         if (primary_filter === 'rooms') {
@@ -91,7 +91,7 @@ define([
             };
 
             return __.section({id: 'devices-container', className: 'widgets'},
-                items_binding.val().map(function (item, index) {
+                items_binding.get().map(function (item, index) {
                     return isShown(item) && isSearchMatch(index) ?
                         BaseWidget({ key: index, binding: { default: items_binding.sub(index)} }) : null;
                 }).toArray()

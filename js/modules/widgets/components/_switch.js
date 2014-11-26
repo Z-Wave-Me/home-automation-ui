@@ -24,8 +24,8 @@ define([
         toggleSwitch: function () {
             var that = this,
                 binding = this.getDefaultBinding(),
-                isDoorLock = binding.val('deviceType') === 'doorlock',
-                level = binding.val('metrics.level'),
+                isDoorLock = binding.get('deviceType') === 'doorlock',
+                level = binding.get('metrics.level'),
                 command;
 
             if (!isDoorLock) {
@@ -66,20 +66,20 @@ define([
                 _ = React.DOM,
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                title = binding.val('metrics.title'),
-                level = binding.val('metrics.level') || '',
+                title = binding.get('metrics.title'),
+                level = binding.get('metrics.level') || '',
                 classes = cx({
                     switch: true,
                     active: level === 'on' || level === 'open'
                 }),
-                _isRGB = binding.val('deviceType') === 'switchRGBW',
+                _isRGB = binding.get('deviceType') === 'switchRGBW',
                 color = _isRGB ? binding.sub('metrics.color').toJS() : {};
 
             return _.div({className: 'content'},
                 _.span({className: 'title-container'}, title),
                 _isRGB ? _.div({ref: 'colorsContainer',className: 'colors-container'},
                     _.div({ref: 'pickerButton', className: 'picker', style: {
-                        'background-color': 'rgb(' + [color.r, color.g, color.b].join(', ') + ')'
+                        backgroundColor: 'rgb(' + [color.r, color.g, color.b].join(', ') + ')'
                     }, onClick: this.onToggleShowPicker})
                 ) : null,
                 _.span({onClick: this.toggleSwitch, className: classes},

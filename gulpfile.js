@@ -47,6 +47,14 @@ gulp.task("build", function () {
             'morearty',
             './bootstrap'
         ],
+        optimize: "uglify2",
+        skipDirOptimize: true,
+        generateSourceMaps: true,
+        findNestedDependencies: true,
+        preserveLicenseComments: false,
+        onBuildWrite: function (moduleName, path, singleContents) {
+            return singleContents.replace(/jsx!/g, '');
+        },
         out: 'main-built.js'
     })
         .pipe(uglify())

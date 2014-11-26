@@ -58,7 +58,7 @@ define([
         showInDashboardHandler: function (event) {
             var showInDashboard = event.target.checked,
                 activeProfile = this.getActiveProfile(),
-                deviceId = this.getBinding('item').val('id');
+                deviceId = this.getBinding('item').get('id');
 
             if (activeProfile) {
                 if (showInDashboard) {
@@ -108,14 +108,14 @@ define([
                 _ = React.DOM,
                 __ = this.gls,
                 item = that.getBinding('item'),
-                id = item.val('id'),
-                title = id ? item.sub('metrics').val('title') : null,
-                icon = id ? item.sub('metrics').val('icon') : null,
-                deviceType = item.val('deviceType'),
-                creatorId = item.val('creatorId'),
+                id = item.get('id'),
+                title = id ? item.sub('metrics').get('title') : null,
+                icon = id ? item.sub('metrics').get('icon') : null,
+                deviceType = item.get('deviceType'),
+                creatorId = item.get('creatorId'),
                 creatorIndex = creatorId ? this._getIndexModelFromCollection(creatorId, 'instances') : null,
-                temp_string = preferencesBinding.val('temp_string'),
-                current_tags = item.val('tags'),
+                temp_string = preferencesBinding.get('temp_string'),
+                current_tags = item.get('tags'),
                 classes = cx({
                     'preview': true,
                     'placehold': !icon
@@ -138,7 +138,7 @@ define([
                     ),
                     creatorIndex !== -1 ? _.div({ key: 'form-creatorId-input', className: 'data-group'},
                         _.span({className: 'label-item'}, 'creatorId'),
-                        _.span({className: 'value-item'}, (dataBinding.sub('instances').sub(creatorIndex).val('title') || '') + ' [' + creatorId + ']')
+                        _.span({className: 'value-item'}, (dataBinding.sub('instances').sub(creatorIndex).get('title') || '') + ' [' + creatorId + ']')
                     ) : null,
                     _.div({ key: 'form-name-input', className: 'form-group' },
                         _.label({ htmlFor: 'room-name', className: 'input-label'}, __('widget_name', 'capitalize') + ':'),
@@ -187,7 +187,7 @@ define([
                     //            _.span({ className: 'text-zone primary'}, _.strong({}, 'Drop file'), ' to upload'),
                     //            _.span({ className: 'text-zone secondary'}, '(or click)')
                     //        ),
-                    //        _.div({className: classes, style: icon ? {'background-image': 'url(' + icon + ')'} : {}})
+                    //        _.div({className: classes, style: icon ? {'backgroundImage': 'url(' + icon + ')'} : {}})
                     //    ),
                     //    _.input({ref: 'fileInput', className: 'hidden', type: 'file', onChange: this.handleFile})
                     //),
@@ -208,7 +208,7 @@ define([
                         _.input({
                                 className: 'ios-switch green',
                                 type: 'checkbox',
-                                checked: item.val('permanently_hidden'),
+                                checked: item.get('permanently_hidden'),
                                 onChange: this.PermanentlyHiddenHandler
                             },
                             _.div({},
@@ -245,11 +245,11 @@ define([
                 _ = React.DOM,
                 __ = this.gls,
                 item_binding = that.getBinding('item'),
-                current_tags = item_binding.val('tags'),
-                available_tags = that.getBinding('data').sub('deviceTags').val().filter(function (t) {
+                current_tags = item_binding.get('tags'),
+                available_tags = that.getBinding('data').sub('deviceTags').get().filter(function (t) {
                     return current_tags.indexOf(t) === -1;
                 }),
-                temp_string = that.getBinding('preferences').val('temp_string').toLowerCase(),
+                temp_string = that.getBinding('preferences').get('temp_string').toLowerCase(),
                 filtered_tags = available_tags.filter(function (tag) {
                     return temp_string.length > 1 ? tag.toLowerCase().indexOf(temp_string) !== -1 : true;
                 });

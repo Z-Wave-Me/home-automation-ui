@@ -13,6 +13,8 @@ requirejs.config({
         morearty: '../bower_components/moreartyjs/dist/morearty',
         immutable: '../bower_components/immutable/dist/immutable',
         director: '../bower_components/director/build/director',
+        "JSXTransformer": "../bower_components/react/JSXTransformer",
+        "jsx": "../bower_components/requirejs-react-jsx/jsx",
         // ace
         ace: '../bower_components/ace-builds/src/ace',
         'theme-chrome': '../bower_components/ace-builds/src/theme-chrome',
@@ -53,6 +55,7 @@ requirejs.config({
         react: {
             exports: 'React'
         },
+        JSXTransformer: 'JSXTransformer',
         director: {
             exports: 'Router'
         },
@@ -63,6 +66,14 @@ requirejs.config({
             exports: 'Morearty',
             deps: ['immutable', 'react']
         }
+    },
+    jsx: {
+        fileExtension: ".jsx",
+        transformOptions: {
+            harmony: true,
+            stripTypes: false
+        },
+        usePragma: false
     },
     // modules
     packages: [
@@ -144,7 +155,7 @@ require([
 
         require(['./bootstrap'], function (Bootstrap) {
             // render bootstrap
-            React.renderComponent(
+            React.render(
                 Bootstrap({ctx: Ctx}),
                 document.getElementById('app-container')
             );

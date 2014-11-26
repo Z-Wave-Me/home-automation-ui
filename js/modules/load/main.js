@@ -9,10 +9,10 @@ define([], function () {
                 default_binding = this.getDefaultBinding(),
                 system_binding = default_binding.sub('system'),
                 styles_progress = {
-                    width: system_binding.val('loaded_percentage') + '%'
+                    width: system_binding.get('loaded_percentage') + '%'
                 };
 
-            return system_binding.val('loaded') === false || system_binding.val('loaded_lang_file') === false ? (
+            return system_binding.get('loaded') === false || system_binding.get('loaded_lang_file') === false ? (
                 _.div({className: 'overlay show'},
                     _.div({className: 'overlay-wrapper'},
                         _.div({className: 'overlay-top'},

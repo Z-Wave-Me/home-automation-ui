@@ -25,13 +25,13 @@ define([
                 var location = itemBinding,
                     devices = itemsBinding;
 
-                currentIds = devices.val().toArray().filter(function (device) {
+                currentIds = devices.get().toArray().filter(function (device) {
                     return device.get('location') === location.get('id');
                 }).map(function (device) {
                     return device.get('id');
                 });
 
-                availableIds = devices.val().toArray().filter(function (device) {
+                availableIds = devices.get().toArray().filter(function (device) {
                     return currentIds.indexOf(device.get('id')) === -1;
                 }).map(function (device) {
                     return device.get('id');

@@ -15,9 +15,9 @@ define([
 
     return React.createClass({
         mixins: [Morearty.Mixin, sync_layer_mixin, popup_mixin, TranslateMixin],
-        hideNotificationsPopup: function () { // rewrite method
+        hideNotificationsPopup: function (e) { // rewrite method
+            e.preventDefault();
             this.getDefaultBinding().sub('notifications').set('show_popup', false);
-            return false;
         },
         componentWillMount: function () {
             var that = this,
@@ -35,11 +35,11 @@ define([
         getEvent: function (notification, index) {
             var notifications_options = this.getDefaultBinding().sub('notifications'),
                 notifications = this.getBinding('data').sub('notifications'),
-                search_string = notifications_options.val('searchString') || '',
+                search_string = notifications_options.get('searchString') || '',
                 EventComponent = null,
                 notice = notifications.sub(index);
 
-            if ((notice.val('message').toLowerCase().indexOf(search_string.toLowerCase()) !== -1 && search_string.length > 2) || search_string.length <=2) {
+            if ((notice.get('message').toLowerCase().indexOf(search_string.toLowerCase()) !== -1 && search_string.length > 2) || search_string.length <=2) {
                 EventComponent = Event({
                     binding: {
                         notification: notice,
@@ -65,8 +65,7 @@ define([
                 __ = this.gls,
                 binding = this.getDefaultBinding(),
                 notifications_binding = this.getBinding('data').sub('notifications'),
-                notifications = notifications_binding.val(),
-                show = binding.sub('notifications.show_popup');
+                notifications = notifications_binding.get();
 
             return _.div({
                     className: 'overlay transparent show',

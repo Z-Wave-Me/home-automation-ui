@@ -58,7 +58,7 @@ define([
                 preferences_binding = this.getDefaultBinding(),
                 data_binding = this.getBinding('data'),
                 instance = preferences_binding.sub('instance_temp'),
-                imported_instanceId = preferences_binding.val('import_instanceId'),
+                imported_instanceId = preferences_binding.get('import_instanceId'),
                 instanceJson, moduleJson, $el, import_params, imported_instance_index;
 
             if (!instance) {
@@ -67,15 +67,15 @@ define([
 
             if (!!imported_instanceId) {
                 imported_instance_index = data_binding
-                    .sub('instances').val()
+                    .sub('instances').get()
                     .findIndex(function (instance) {
                         return instance.get('id') === imported_instanceId;
                     });
 
-                import_params = data_binding.sub('instances.' + imported_instance_index).val('params').toJS();
+                import_params = data_binding.sub('instances.' + imported_instance_index).get('params').toJS();
             }
 
-            instanceJson = instance.val().toJS();
+            instanceJson = instance.get().toJS();
             moduleJson = that.updateObjectAsNamespace(that.getOriginalModule(instanceJson.moduleId));
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 

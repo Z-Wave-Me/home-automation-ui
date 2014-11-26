@@ -20,7 +20,7 @@ define([
     return React.createClass({
         mixins: [Morearty.Mixin, base_mixin, data_layer_mixin, TranslateMixin],
         componentDidMount: function () {
-            this.renderAlpaca(this.getBinding('preferences').val('leftPanelItemSelectedId'));
+            this.renderAlpaca(this.getBinding('preferences').get('leftPanelItemSelectedId'));
         },
         componentWillMount: function () {
             var that = this;
@@ -49,9 +49,9 @@ define([
                 return;
             }
 
-            instanceJson = instance.val().toJS();
+            instanceJson = instance.get().toJS();
             module = that.getModelFromCollection(instanceJson.moduleId, 'modules');
-            moduleJson = module.val().toJS();
+            moduleJson = module.get().toJS();
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
@@ -67,7 +67,7 @@ define([
             });
         },
         onStatusModuleHandler: function (event) {
-            var instanceId = this.getBinding('preferences').val('leftPanelItemSelectedId'),
+            var instanceId = this.getBinding('preferences').get('leftPanelItemSelectedId'),
                 instance = this.getModelFromCollection(instanceId, 'instances');
 
             instance.set('active', event.target.checked);
@@ -79,11 +79,11 @@ define([
             var that = this,
                 _ = React.DOM,
                 __ = this.gls,
-                instanceId = this.getBinding('preferences').val('leftPanelItemSelectedId'),
+                instanceId = this.getBinding('preferences').get('leftPanelItemSelectedId'),
                 data_binding = that.getBinding('data'),
                 preferencesBinding = that.getBinding('preferences'),
                 item_binding = this.getModelFromCollection(instanceId, 'instances'),
-                add_mode = preferencesBinding.val('activeNodeTreeStatus') === 'add';
+                add_mode = preferencesBinding.get('activeNodeTreeStatus') === 'add';
 
             return _.div({ className: 'model-component' },
                 _.div({ className: 'form-data automation clearfix' },
@@ -95,7 +95,7 @@ define([
                             _.input({
                                     className: 'ios-switch green',
                                     type: 'checkbox',
-                                    checked: item_binding.val('active'),
+                                    checked: item_binding.get('active'),
                                     onChange: that.onStatusModuleHandler
                                 },
                                 _.div({},

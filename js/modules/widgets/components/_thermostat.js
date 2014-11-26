@@ -20,9 +20,9 @@ define([
         mixins: [Morearty.Mixin, SyncLayerMixin],
         getInitialState: function () {
             var metrics_binbind = this.getDefaultBinding().sub('metrics'),
-                min_level = parseInt(metrics_binbind.val('min')),
-                max_level = parseInt(metrics_binbind.val('max')),
-                level = parseInt(metrics_binbind.val('level'));
+                min_level = parseInt(metrics_binbind.get('min')),
+                max_level = parseInt(metrics_binbind.get('max')),
+                level = parseInt(metrics_binbind.get('level'));
 
             return {
                 twoPi: Math.PI * 2,
@@ -36,7 +36,7 @@ define([
             this.getMoreartyContext()
                 .getBinding()
                 .sub('default')
-                .sub('show_popup_' + this.getDefaultBinding().val('id')).set(false);
+                .sub('show_popup_' + this.getDefaultBinding().get('id')).set(false);
             if (this.isMounted()) {
                 this.forceUpdate();
             }
@@ -50,13 +50,13 @@ define([
                 that.updateTemperature(level, prev_level);
             });
 
-            default_binding.set('show_popup_' + that.getDefaultBinding().val('id'), false);
+            default_binding.set('show_popup_' + that.getDefaultBinding().get('id'), false);
         },
         componentWillUnmount: function () {
             var that = this,
                 default_binding = this.getMoreartyContext().getBinding().sub('default');
 
-            default_binding.delete('show_popup_' + that.getDefaultBinding().val('id'));
+            default_binding.delete('show_popup_' + that.getDefaultBinding().get('id'));
         },
         componentDidMount: function () {
             var that = this,
@@ -163,19 +163,19 @@ define([
             this.getMoreartyContext()
                 .getBinding()
                 .sub('default')
-                .set('show_popup_' + this.getDefaultBinding().val('id'), true);
+                .set('show_popup_' + this.getDefaultBinding().get('id'), true);
             this.forceUpdate();
         },
         render: function () {
             var that = this,
                 _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                title = binding.sub('metrics').val('title'),
-                level = binding.sub('metrics').val('level'),
+                title = binding.sub('metrics').get('title'),
+                level = binding.sub('metrics').get('level'),
                 show_binding = this.getMoreartyContext()
                     .getBinding()
                     .sub('default')
-                    .sub('show_popup_' + binding.val('id'));
+                    .sub('show_popup_' + binding.get('id'));
 
             return (
                 _.div({className: 'content'},
@@ -185,7 +185,7 @@ define([
                         ref: 'progressContainer',
                         onClick: this.showSettings
                     }),
-                    show_binding.val() ? _.div({className: 'overlay transparent show fixed', onClick: this.hidePopup},
+                    show_binding.get() ? _.div({className: 'overlay transparent show fixed', onClick: this.hidePopup},
                         LevelSelector({
                             binding: {
                                 default: binding
