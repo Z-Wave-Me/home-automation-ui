@@ -1,4 +1,5 @@
 define([], function () {
+    'use strict';
 
     var Helpers = new function() {
         var Helpers = function() {

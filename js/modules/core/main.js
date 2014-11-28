@@ -1,7 +1,7 @@
 define([
     // components
-    './components/header',
-    './components/main',
+    'jsx!./components/header',
+    'jsx!./components/main',
     'Preferences',
     'Notifications',
     'Load',

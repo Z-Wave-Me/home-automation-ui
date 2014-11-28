@@ -17,7 +17,7 @@ define([], function () {
                     className: search_classes,
                     type: 'search',
                     placeholder: __('search'),
-                    onChange: Morearty.Callback.set(this.props.search_attr)
+                    onChange: Morearty.Callback.set(this.getDefaultBinding())
                 })
             );
         }

@@ -1,6 +1,6 @@
 define([
     // components
-    './components/base',
+    'jsx!./components/base',
     // mixins
     'mixins/data/data-layer'
 ], function (
@@ -13,45 +13,6 @@ define([
 
     return React.createClass({
         mixins: [Morearty.Mixin, data_layer_mixin],
-        profileEvent: null,
-        componentWillMount: function () {
-            var that = this;
-
-            that.getBinding('data').addListener('devicesOnDashboard', function () {
-                if (that.isMounted()) {
-                    that.forceUpdate();
-                }
-            });
-
-            that.getBinding('data').addListener('devices', function () {
-                if (that.isMounted()) {
-                    that.forceUpdate();
-                }
-            });
-
-            that.getBinding('preferences').addListener('defaultProfileId', function () {
-                if (that.isMounted()) {
-                    that.forceUpdate();
-                }
-            });
-
-            that.getDefaultBinding().addListener('primaryFilter', function () {
-                if (that.isMounted()) {
-                    that.forceUpdate();
-                }
-            });
-
-            that.getDefaultBinding().addListener('secondaryFilter', function () {
-                if (that.isMounted()) {
-                    that.forceUpdate();
-                }
-            });
-        },
-        componentWillUnmount: function () {
-            if (this.profileEvent) {
-                this.getActiveProfile().removeListener(this.profileEvent);
-            }
-        },
         render: function () {
             var __ = React.DOM,
                 binding = this.getDefaultBinding(),
@@ -59,6 +20,7 @@ define([
                 primary_filter = binding.get('primaryFilter'),
                 secondary_filter = binding.get('secondaryFilter'),
                 items_binding = data_binding.sub('devices'),
+                footer_binding = binding.sub('footer'),
                 active_profile = this.getActiveProfile(),
                 positions = active_profile !== null ? active_profile.get('positions') : [],
                 isShown, isSearchMatch;
@@ -73,14 +35,14 @@ define([
             isShown = function (item) {
                 if (!item.get('permanently_hidden')) {
                     if (binding.get('nowShowing') === 'dashboard') {
-                        return positions.indexOf(item.get('id')) !== -1 ? true : null;
+                        return positions.indexOf(item.get('id')) !== -1;
                     } else {
                         if (primary_filter === 'rooms') {
                             return item.get('location') === secondary_filter;
                         } else if (primary_filter === 'types') {
                             return item.get('deviceType') === secondary_filter;
                         } else if (primary_filter === 'tags') {
-                            return item.get('tags').toJS().indexOf(secondary_filter) !== -1;
+                            return item.get('tags').indexOf(secondary_filter) !== -1;
                         } else {
                             return true;
                         }
@@ -90,12 +52,19 @@ define([
                 }
             };
 
-            return __.section({className: 'widgets'},
-                items_binding.get().map(function (item, index) {
-                    return isShown(item) && isSearchMatch(index) ?
-                        BaseWidget({ key: index, binding: { default: items_binding.sub(index), footer: binding.sub('footer')} }) : null;
-                }).toArray()
+            return (
+                <section className='widgets'>
+                    {items_binding.get().map(function (item, index) {
+                        var binding = { default: items_binding.sub(index), footer: footer_binding};
+                        if (isShown(item) && isSearchMatch(index)) {
+                            return <BaseWidget key={index} binding={binding} />;
+                        } else {
+                            return null;
+                        }
+                    }).toArray()}
+                </section>
             );
+
         }
     });
 });

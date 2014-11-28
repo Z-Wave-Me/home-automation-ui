@@ -23,7 +23,6 @@ define([
         mixins: [Morearty.Mixin],
         render: function () {
             var binding = this.getDefaultBinding(),
-                _ = React.DOM,
                 device_type = binding.get('deviceType'),
                 Widget;
 

@@ -6,14 +6,15 @@
     "requirejs": "2.1.15",
     "jquery": "2.1.1",
     "jquery-ui": "1.11.2",
-    "immutable": "3.2.x",
     "director": "1.2.2",
     "react": "0.12.x",
     "font-awesome": "4.2.x",
     "ace": "1.1.8",
     "ace-builds": "1.1.8",
     "d3": "3.4.13",
-    "less": "2.1.0",
-    "moreartyjs": "0.7.4"
+    "moreartyjs": "0.7.4",
+    "requirejs-react-jsx": "latest",
+    "immutable": "3.3.0",
+    "less": "2.1.1"
   }
 }

@@ -15,7 +15,9 @@
 
     "excludeFiles": [
         "node_modules/**",
-        "htdocs/bower_components/**",
-        "htdocs/js/libs/**"
+        "bower_components/**",
+        "js/libs/**",
+        "dist/**",
+        "public/**"
     ]
 }

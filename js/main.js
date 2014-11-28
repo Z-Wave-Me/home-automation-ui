@@ -4,6 +4,7 @@ requirejs.config({
         // Major libraries
         jquery: '../bower_components/jquery/dist/jquery',
         requireLib: '../bower_components/requirejs/require',
+        text: '../bower_components/requirejs-text/text',
         // advanced libs
         'jquery-ui': '../bower_components/jquery-ui/jquery-ui',
         alpaca: 'libs/alpaca/alpaca-full',
