@@ -72,7 +72,7 @@ define([
                 options = that.state.options;
 
             return Object.keys(options).map(function (option) {
-                if (item.sub('metrics').val(option)) {
+                if (item.get('metrics.' + option)) {
                     return _.span({
                         key: option.command,
                         ref: option.command,
