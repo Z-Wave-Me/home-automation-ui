@@ -21,6 +21,11 @@ API Documentation: http://docs.zwayhomeautomation.apiary.io/
 Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home-automation-ui/issues
 
 # Changelog #
+* 2.0.0rc11
+    - Morearty 0.7.4
+    - React 0.12.1
+    - requirejs with jsx
+    - bugfixes
 * 2.0.0rc8-rc10
     - Fixes doorlock, switch
     - Fix TranslationMixin
