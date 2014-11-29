@@ -54,15 +54,18 @@ define([
                 .set('search_string_on_modules_list', '')
                 .commit();
 
-            this.module_listener = this.getBinding('preferences').addListener('moduleId', function (moduleId) {
-                if (moduleId) {
-                    var module = that.getModelFromCollection(moduleId, 'modules');
+            this.module_listener = preferences_binding.addListener('moduleId', function (descriptor) {
+                if (descriptor.isValueChanged()) {
+
+
+                    var _module = that.getModelFromCollection(preferences_binding.get('moduleId'), 'modules');
+
                     preferences_binding.atomically()
                         .set('instance_temp', Immutable.fromJS({
                             id: null,
-                            title: module.sub('defaults').get('title'),
-                            description: module.sub('defaults').get('description'),
-                            moduleId: module.get('id'),
+                            title: _module.get('defaults.title'),
+                            description: _module.get('defaults.description'),
+                            moduleId: _module.get('id'),
                             active: true,
                             params: {},
                             import_instanceId: null
