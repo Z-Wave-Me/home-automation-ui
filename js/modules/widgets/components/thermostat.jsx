@@ -164,35 +164,61 @@ define([
             this.forceUpdate();
         },
         render: function () {
-            var _ = React.DOM,
-                binding = this.getDefaultBinding(),
+            var binding = this.getDefaultBinding(),
                 rearrange_showing = this.getBinding('footer').get('rearrange_showing'),
                 title = binding.get('metrics.title'),
+                icon_style = {backgroundImage: 'url(' + binding.get('metrics.icon') + ')'},
                 show_binding = this.getMoreartyContext()
                     .getBinding()
                     .sub('default')
                     .sub('show_popup_' + binding.get('id'));
 
-            return _.div({className: 'widget'},
-                rearrange_showing ? _.div({className: 'select-button'}) : null,
-                _.span({className: 'icon', style: {backgroundImage: 'url(' + binding.get('metrics.icon') + ')'}}),
-                _.span({className: 'title'}, title),
-                _.div({className: 'metrics-container'},
-                    _.div({
-                        className: 'progress-container',
-                        ref: 'progressContainer',
-                        onClick: this.showSettings
-                    }),
-                    show_binding.get() ? _.div({className: 'overlay transparent show fixed', onClick: this.hidePopup},
-                        LevelSelector({
-                            binding: {
-                                default: binding
-                            },
-                            show: show_binding
-                        })
-                    ) : null
-                )
+            return (
+                <div className='widget thermostat'>
+                    {rearrange_showing ? <div className='select-button'></div> : null}
+                    <span className='icon' style={icon_style}></span>
+                    <span className='title'>{title}</span>
+                    {!rearrange_showing ?
+                        <div className='metrics-container'>
+                            <div
+                                className='progress-container'
+                                ref='progressContainer'
+                                onClick={this.showSettings}
+                            ></div>
+                            {show_binding.get() ?
+                                <div
+                                    className='overlay transparent show fixed'
+                                    onClick={this.hidePopup}
+                                ><LevelSelector bingin={binding} show={show_binding} /></div>
+                            : null}
+                        </div> :
+                        <div className='settings-container'>
+                            <span className='setting fa-gear fa'></span>
+                        </div>
+                    }
+                </div>
             );
+
+            //return _.div({className: 'widget'},
+            //    rearrange_showing ? _.div({className: 'select-button'}) : null,
+            //    _.span({className: 'icon', style: {backgroundImage: 'url(' + binding.get('metrics.icon') + ')'}}),
+            //    _.span({className: 'title'}, title),
+            //    _.div({className: 'metrics-container'},
+            //        _.div({
+            //            className: 'progress-container',
+            //            ref: 'progressContainer',
+            //            onClick: this.showSettings
+            //        }),
+            //        show_binding.get() ? _.div({className: 'overlay transparent show fixed', onClick: this.hidePopup},
+            //            LevelSelector({
+            //                binding: {
+            //                    default: binding
+            //                },
+            //                show: show_binding
+            //            })
+            //        ) : null
+            //    )
+            //);
         }
     });
 });

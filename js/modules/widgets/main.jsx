@@ -1,6 +1,6 @@
 define([
     // components
-    'jsx!./components/base',
+    'jsx!./components/_base',
     // mixins
     'mixins/data/data-layer'
 ], function (

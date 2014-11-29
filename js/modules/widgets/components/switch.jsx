@@ -51,6 +51,20 @@ define([
             }
             return false;
         },
+        onColorChangeHandler: function (color) {
+            var binding = this.getDefaultBinding(),
+                color = binding.sub('metrics.color');
+
+            this.fetch({
+                serviceId: 'devices',
+                model: binding,
+                params: {
+                    red: color.r,
+                    green: color.g,
+                    blue: color.b
+                }
+            }, 'exact');
+        },
         componentDidUpdate: function () {
             if (this.isMounted() && this.state.show_picker) {
                 var color_picker = document.getElementsByClassName('picker-container')[0],
@@ -74,42 +88,45 @@ define([
                     active: level === 'on' || level === 'open'
                 }),
                 _isRGB = binding.get('deviceType') === 'switchRGBW',
-                color = _isRGB ? binding.sub('metrics.color').toJS() : {};
+                color = _isRGB ? binding.sub('metrics.color').toJS() : {},
+                icon_style = {'backgroundImage': 'url(' + binding.get('metrics.icon') + ')'};
 
-            return _.div({className: 'widget ' + binding.get('deviceType')},
-                rearrange_showing ? _.div({className: 'select-button'}) : null,
-                _.span({className: 'icon', style: {backgroundImage: 'url(' + binding.get('metrics.icon') + ')'}}),
-                _.span({className: 'title'}, title),
-                _.div({className: 'metrics-container'},
-                    _.span({onClick: this.toggleSwitch, className: classes},
-                        _.span({className: 'bubble'}),
-                        _.span({className: 'text'}, level.toUpperCase())
-                    ),
-                    _isRGB ? _.div({ref: 'pickerButton', className: 'picker-rect', style: {
-                        backgroundColor: 'rgb(' + [color.r, color.g, color.b].join(', ') + ')'
-                    }, onClick: this.onToggleShowPicker}) : null,
-                    this.state.show_picker && _isRGB ?
-                        _.div({
-                            className: 'overlay transparent show fixed',
-                            onClick: this.onToggleShowPicker
-                        }, ColorPicker({
-                            binding: {
-                                default: binding.sub('metrics').sub('color')
-                            },
-                            handler: function (color) {
-                                that.fetch({
-                                    serviceId: 'devices',
-                                    model: binding,
-                                    params: {
-                                        red: color.r,
-                                        green: color.g,
-                                        blue: color.b
-                                    }
-                                }, 'exact');
-                            }
-                        })
-                    ) : null
-                )
+            return (
+                <div className={'widget ' + binding.get('deviceType')}>
+                    {rearrange_showing ? <div className='select-button'></div> : null}
+                    <span className='icon' style={icon_style}></span>
+                    <span className='title'>{title}</span>
+                    {!rearrange_showing ?
+                        <div className='metrics-container'>
+                            <span className={classes} onClick={this.toggleSwitch}>
+                                <span className='bubble'></span>
+                                <span className='text'>{level.toUpperCase()}</span>
+                            </span>
+                            {_isRGB ?
+                                <div
+                                    ref='pickerButton'
+                                    className='picker-rect'
+                                    style={{'backgroundColor': 'rgb(' + [color.r, color.g, color.b].join(', ') + ')'}}
+                                    onClick={this.onToggleShowPicker}
+                                ></div>
+                            : null}
+                            {this.state.show_picker && _isRGB ?
+                                <div
+                                    className='overlay transparent show fixed'
+                                    onClick={this.onToggleShowPicker}
+                                    >
+                                    <ColorPicker
+                                        binding={binding.sub('metrics.color')}
+                                        handler={this.onColorChangeHandler}
+                                    />
+                                </div>
+                            : null}
+                        </div> :
+                        <div className='settings-container'>
+                            <span className='setting fa-gear fa'></span>
+                        </div>
+                        }
+                </div>
             );
         }
     });
