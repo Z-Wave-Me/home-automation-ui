@@ -1,33 +1,43 @@
 define([
     // mixins
+    'mixins/data/manipulation',
     'mixins/sync/sync-layer'
 ], function (
+    manipulation_mixin,
     sync_layer_mixin
     ) {
     'use strict';
 
     return React.createClass({
         _serviceId: 'devices',
-        mixins: [Morearty.Mixin, sync_layer_mixin],
+        mixins: [Morearty.Mixin, sync_layer_mixin, manipulation_mixin],
+        getInitialState: function () {
+            var that = this;
+
+            return {
+                setValueFunc: that.debounce(function (level, binding) {
+                    that.fetch({
+                        params: {
+                            level: level
+                        },
+                        model: binding,
+                        serviceId: 'devices'
+                    }, 'exact');
+                }, 100)
+            };
+        },
         onToggleHovering: function (hover) {
             this._hover = hover;
             this.forceUpdate();
             return false;
         },
         onChangeLevel: function (event) {
-            var that = this,
-                metrics_binding = this.getDefaultBinding().sub('metrics');
+            var binding = this.getDefaultBinding(),
+                metrics_binding = binding.sub('metrics'),
+                level = event.target.value;
 
-            that.fetch({
-                params: {
-                    level: event.target.value
-                },
-                model: this.getDefaultBinding(),
-                serviceId: 'devices'
-            }, 'exact');
-
-            metrics_binding.set('level', event.target.value);
-            that.forceUpdate();
+            metrics_binding.set('level', level);
+            this.state.setValueFunc(level, binding);
         },
         render: function () {
             var _ = React.DOM,
@@ -52,9 +62,18 @@ define([
                 _.div({className: 'content', onMouseEnter: this.onToggleHovering.bind(null, true), onMouseLeave: this.onToggleHovering.bind(null, false)},
                     _.span({className: 'text title-container'}, this._hover ? '' : title),
                     _.progress({className: progressClasses, value: level, min: 0, max: 100}),
-                    _.input({className: rangeClasses, onChange: this.onChangeLevel, type: 'range', min: 0, max: 100, value: level, step: 1, style: styles})
+                    _.input({
+                        className: rangeClasses,
+                        onChange: this.onChangeLevel,
+                        type: 'range',
+                        min: 0,
+                        max: 100,
+                        value: level,
+                        step: 1,
+                        style: styles
+                    })
                 )
-            )
+            );
         }
     });
 });
