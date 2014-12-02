@@ -5,8 +5,6 @@ define([
     'mixins/data/data-layer',
     'mixins/sync/sync-layer'
 ], function (
-    // components
-    _base_search,
     // mixins
     base_mixin,
     data_layer_mixin,

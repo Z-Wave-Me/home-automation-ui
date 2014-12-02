@@ -1,18 +1,20 @@
 define([
     // components
-    'Preferences/components/common/_base_search',
+    'jsx!Preferences/components/common/base_search',
     // mixins
-    'mixins/data/profiles'
+    'mixins/data/profiles',
+    'mixins/sync/sync-layer'
 ], function (
     // components
     BaseSearch,
     // mixins
-    ProfilesMixin
+    ProfilesMixin,
+    SyncLayerMixin
 ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, TranslateMixin, ProfilesMixin],
+        mixins: [Morearty.Mixin, TranslateMixin, ProfilesMixin, SyncLayerMixin],
         componentWillMount: function () {
             this.getDefaultBinding().set('footer.search_string', '');
         },
@@ -20,8 +22,12 @@ define([
             this.getDefaultBinding().delete('footer.search_string');
         },
         onSelectDeviceHandler: function (device_id) {
-            this.addDeviceToPositions(device_id);
-            this.getDefaultBinding().set('footer.search_string', '');
+            var binding = this.getDefaultBinding();
+            var active_profile = this.addDeviceToPositions(device_id);
+            binding.set('footer.search_string', '');
+            if (active_profile) {
+                this.save({model: active_profile, serviceId: 'profiles'});
+            }
         },
         getAutoComplete: function () {
             var that = this,
@@ -50,17 +56,17 @@ define([
                                 <li key='subgroup-{type}' className='subgroup'>
                                     <span key='subgroup-title-{type}' className='title-subgroup'>{type}</span>
                                     <ul key='items-{type}' className='items'>
-                                            {matches_devices.filter(function (device) {
-                                                return device.get('deviceType') === type;
-                                            }).map(function (device) {
-                                                var id = device.get('id');
-                                                return (
-                                                    <li
-                                                        onClick={that.onSelectDeviceHandler.bind(null, id)}
-                                                        key={id}
-                                                        className='item'>{device.get('metrics').get('title')}
-                                                    </li>);
-                                            }).toArray()}
+                                        {matches_devices.filter(function (device) {
+                                            return device.get('deviceType') === type;
+                                        }).map(function (device) {
+                                            var id = device.get('id');
+                                            return (
+                                                <li
+                                                    onClick={that.onSelectDeviceHandler.bind(null, id)}
+                                                    key={id}
+                                                    className='item'>{device.get('metrics').get('title')}
+                                                </li>);
+                                        }).toArray()}
                                     </ul>
                                 </li>);
                         }).toArray()
@@ -74,6 +80,10 @@ define([
         },
         onSetRearrangeMenu: function (status) {
             this.getDefaultBinding().set('footer.rearrange_showing', status);
+        },
+        onDrop: function (e) {
+            console.log(e);
+            e.preventDefault();
         },
         render: function () {
             var cx = React.addons.classSet,
@@ -101,7 +111,7 @@ define([
                             </div>
                         : null}
                         {rearrange_showing ?
-                            <div className='drop-here-container columns four'>
+                            <div onDrop={this.onDrop} className='drop-here-container columns four'>
                                 <span className='minus fa fa-minus-circle'></span>
                                 <span className='drop-here'>Drop here to remove</span>
                             </div>

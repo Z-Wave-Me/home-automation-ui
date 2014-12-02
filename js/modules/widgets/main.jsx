@@ -1,18 +1,23 @@
 define([
     // components
     'jsx!./components/_base',
+    'jsx!./common/settings',
     // mixins
-    'mixins/data/data-layer'
+    'mixins/data/profiles'
 ], function (
     // components
     BaseWidget,
+    Settings,
     // mixins
-    data_layer_mixin
+    profiles_mixin
     ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, data_layer_mixin],
+        mixins: [Morearty.Mixin, profiles_mixin],
+        dragOver: function(e) {
+
+        },
         render: function () {
             var __ = React.DOM,
                 binding = this.getDefaultBinding(),
@@ -62,6 +67,7 @@ define([
                             return null;
                         }
                     }).toArray()}
+                    <Settings binding={binding} />
                 </section>
             );
 

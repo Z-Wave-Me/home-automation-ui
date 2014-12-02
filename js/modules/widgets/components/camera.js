@@ -89,44 +89,37 @@ define([
         render: function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                rearrange_showing = this.getBinding('footer').get('rearrange_showing'),
-                url = binding.get('metrics.url'),
-                icon = binding.get('metrics.icon');
+                url = binding.get('metrics.url');
 
-            return _.div({className: 'widget x2'},
-                rearrange_showing ? _.div({className: 'select-button'}) : null,
-                _.span({className: 'icon', style: {backgroundImage: 'url(' + icon + ')'}}),
-                _.span({className: 'title'}, binding.get('metrics.title')),
-                _.div({className: 'metrics-container'},
-                    _.div({key: 'control', className: 'control-block camera-block'},
-                        _.div({className: 'control-buttons'},
-                            this.getCommandsButton()
-                        )
-                    ),
-                    _.div({key: 'view', className: 'view-block camera-block'},
-                        _.img({
-                            className: 'camera-image',
-                            src: url,
-                            onClick: this.toggleShowPopup
-                        }),
-                        _.span({className: 'camera-icon'})
-                    ),
-                    this.state.show ? _.div({
-                            className: 'overlay transparent show fixed',
-                            onClick: this.toggleShowPopup
-                        },
-                        _.div({className: 'popover popover-camera', onClick: this.stopPropagationAndPreventDefault},
-                            _.div ({className: 'popover-content'},
-                                _.div({className: 'image-container'},
-                                    _.img({className: 'camera-image', src: url})
-                                ),
-                                _.div({className: 'control-container'},
-                                    this.getCommandsButton()
-                                )
+            return _.div({className: 'metrics-container'},
+                _.div({key: 'control', className: 'control-block camera-block'},
+                    _.div({className: 'control-buttons'},
+                        this.getCommandsButton()
+                    )
+                ),
+                _.div({key: 'view', className: 'view-block camera-block'},
+                    _.img({
+                        className: 'camera-image',
+                        src: url,
+                        onClick: this.toggleShowPopup
+                    }),
+                    _.span({className: 'camera-icon'})
+                ),
+                this.state.show ? _.div({
+                        className: 'overlay transparent show fixed',
+                        onClick: this.toggleShowPopup
+                    },
+                    _.div({className: 'popover popover-camera', onClick: this.stopPropagationAndPreventDefault},
+                        _.div ({className: 'popover-content'},
+                            _.div({className: 'image-container'},
+                                _.img({className: 'camera-image', src: url})
+                            ),
+                            _.div({className: 'control-container'},
+                                this.getCommandsButton()
                             )
                         )
-                    ) : null
-                )
+                    )
+                ) : null
             );
         }
     });

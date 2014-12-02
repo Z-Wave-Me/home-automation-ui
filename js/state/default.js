@@ -61,6 +61,12 @@ define([], function () {
             rearrange_showing: false,
             search_string: null
         },
+        widgets: {
+            settings: {
+                showed: false,
+                device_id: null
+            }
+        },
         // menu settings
         primaryFilter: 'all',
         secondaryFilter: '',

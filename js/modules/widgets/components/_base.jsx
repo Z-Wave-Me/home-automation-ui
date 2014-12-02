@@ -4,7 +4,7 @@ define([
     'jsx!./switch',
     'jsx!./multilevel',
     'jsx!./control',
-    './_camera',
+    './camera',
     'jsx!./toggle',
     'jsx!./thermostat'
 ], function (
@@ -20,36 +20,76 @@ define([
     'use strict';
 
     return React.createClass({
+        dragStart: function(e) {
+        },
+        dragEnd: function(e) {
+
+        },
+        move: function(over,append) {
+
+        },
+        dragOver: function(e) {
+        },
+        update: function() {
+
+        },
         mixins: [Morearty.Mixin],
         render: function () {
-            var binding = this.getDefaultBinding(),
+            var cx = React.addons.classSet,
+                binding = this.getDefaultBinding(),
+                footer_binding = this.getBinding('footer'),
                 device_type = binding.get('deviceType'),
-                _binding = { default: binding, footer: this.getBinding('footer') },
-                Widget;
+                big_devices_type = ['camera'],
+                rearrange_showing = footer_binding.get('rearrange_showing'),
+                metrics_binding = binding.sub('metrics'),
+                icon_style = {backgroundImage: metrics_binding.get('icon')},
+                widget_css_classes = cx({
+                    widget: true,
+                    x2: big_devices_type.indexOf(device_type) !== -1
+                }),
+                DeviceMetrics;
 
             if (device_type === "sensorBinary" ||
                 device_type === "sensorMultilevel" ||
                 device_type === "battery") {
-                Widget = <Probe binding={_binding} />;
+                DeviceMetrics = Probe;
             } else if (device_type === "fan") {
-                Widget = <Probe binding={_binding} />;
+                DeviceMetrics = Probe;
             } else if (device_type === "switchMultilevel") {
-                Widget = <Multilevel binding={_binding} />;
+                DeviceMetrics = Multilevel;
             } else if (device_type === "thermostat") {
-                Widget = <Thermostat binding={_binding} />;
+                DeviceMetrics = Thermostat;
             } else if (device_type === "switchBinary" || device_type === "switchRGBW" || device_type === "doorlock") {
-                Widget = <Switch binding={_binding} />;
+                DeviceMetrics = Switch;
             } else if (device_type === "toggleButton") {
-                Widget = <Toggle binding={_binding} />;
+                DeviceMetrics = Toggle;
             } else if (device_type === "camera") {
-                Widget = <Camera binding={_binding} />;
+                DeviceMetrics = Camera;
             } else if (device_type === "switchControl") {
-                Widget = <Control binding={_binding} />;
+                DeviceMetrics = Control;
             } else {
-                //Widget = <Probe binding={_binding} />;
+                //DeviceMetrics = <Probe binding={_binding} />;
             }
 
-            return Widget;
+            return (
+                <div
+                    ref={binding.get('id')}
+                    draggable="true"
+                    className={widget_css_classes + ' ' + binding.get('deviceType')}
+                    onDragEnd={this.dragEnd}
+                    onDragStart={this.dragStart}
+                >
+                    {rearrange_showing ? <div className='select-button'></div> : null}
+                    <span className='icon' style={icon_style}></span>
+                    <span className='title'>{metrics_binding.get('title')}</span>
+                    {!rearrange_showing ?
+                        <DeviceMetrics binding={binding} /> :
+                        <div className='settings-container'>
+                            <span className='setting fa-gear fa'></span>
+                        </div>
+                    }
+                </div>
+            );
         }
     });
 });

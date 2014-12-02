@@ -14,7 +14,7 @@ define([
         // public
         getService: function (_serviceId) {
             var serviceId = _serviceId || this._serviceId,
-                binding = this.getMoreartyContext().getBinding().sub('services').sub('collections'),
+                binding = this.getMoreartyContext().getBinding().sub('services.collections'),
                 service = binding.get().toArray().filter(function (service) {
                     return serviceId === service.toObject().id;
                 });

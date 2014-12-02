@@ -76,11 +76,8 @@ define([
             }
         },
         render: function () {
-            var that = this,
-                _ = React.DOM,
-                cx = React.addons.classSet,
+            var cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                rearrange_showing = this.getBinding('footer').get('rearrange_showing'),
                 title = binding.get('metrics.title'),
                 level = binding.get('metrics.level') || binding.get('metrics.mode') || '',
                 classes = cx({
@@ -88,20 +85,14 @@ define([
                     active: level === 'on' || level === 'open'
                 }),
                 _isRGB = binding.get('deviceType') === 'switchRGBW',
-                color = _isRGB ? binding.sub('metrics.color').toJS() : {},
-                icon_style = {'backgroundImage': 'url(' + binding.get('metrics.icon') + ')'};
+                color = _isRGB ? binding.sub('metrics.color').toJS() : {};
 
             return (
-                <div className={'widget ' + binding.get('deviceType')}>
-                    {rearrange_showing ? <div className='select-button'></div> : null}
-                    <span className='icon' style={icon_style}></span>
-                    <span className='title'>{title}</span>
-                    {!rearrange_showing ?
-                        <div className='metrics-container'>
-                            <span className={classes} onClick={this.toggleSwitch}>
-                                <span className='bubble'></span>
-                                <span className='text'>{level.toUpperCase()}</span>
-                            </span>
+                <div className='metrics-container'>
+                    <span className={classes} onClick={this.toggleSwitch}>
+                        <span className='bubble'></span>
+                        <span className='text'>{level.toUpperCase()}</span>
+                    </span>
                             {_isRGB ?
                                 <div
                                     ref='pickerButton'
@@ -109,23 +100,18 @@ define([
                                     style={{'backgroundColor': 'rgb(' + [color.r, color.g, color.b].join(', ') + ')'}}
                                     onClick={this.onToggleShowPicker}
                                 ></div>
-                            : null}
+                                : null}
                             {this.state.show_picker && _isRGB ?
                                 <div
                                     className='overlay transparent show fixed'
                                     onClick={this.onToggleShowPicker}
-                                    >
+                                >
                                     <ColorPicker
                                         binding={binding.sub('metrics.color')}
                                         handler={this.onColorChangeHandler}
                                     />
                                 </div>
-                            : null}
-                        </div> :
-                        <div className='settings-container'>
-                            <span className='setting fa-gear fa'></span>
-                        </div>
-                        }
+                                : null}
                 </div>
             );
         }

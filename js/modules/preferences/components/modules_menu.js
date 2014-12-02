@@ -1,6 +1,6 @@
 define([
     // components
-    './common/_base_search',
+    'jsx!./common/base_search',
     './modules_components/step1',
     './modules_components/step2',
     './modules_components/step3',
@@ -54,9 +54,9 @@ define([
                 .set('search_string_on_modules_list', '')
                 .commit();
 
-            this.module_listener = this.getBinding('preferences').addListener('moduleId', function (moduleId) {
-                if (moduleId) {
-                    var module = that.getModelFromCollection(moduleId, 'modules');
+            this.module_listener = preferences_binding.addListener('moduleId', function (change_descriptor) {
+                if (change_descriptor) {
+                    var module = that.getModelFromCollection(preferences_binding.get('moduleId'), 'modules');
                     preferences_binding.atomically()
                         .set('instance_temp', Immutable.fromJS({
                             id: null,

@@ -1,6 +1,6 @@
 define([
     // components
-    './common/_base_search',
+    'jsx!./common/base_search',
     './common/_buttons_group',
     // mixins
     '../mixins/base_mixin',

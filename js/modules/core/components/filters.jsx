@@ -3,7 +3,7 @@ define([
     'jsx!./_filter_rooms',
     'jsx!./_filter_tags',
     'jsx!./_filter_types',
-    'Preferences/components/common/_base_search'
+    'jsx!Preferences/components/common/base_search'
 ], function (
     // components
     FilterRooms,

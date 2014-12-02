@@ -42,7 +42,7 @@ define(function () {
         addDeviceToPositions: function (device_id) {
             var active_profile = this.getActiveProfile();
 
-            if (active_profile !== null) {
+            if (active_profile.get('id') > 0) {
                 active_profile.update('positions', function (positions) {
                     if (positions.indexOf(device_id) === -1) {
                         return positions.push(device_id);
@@ -50,6 +50,8 @@ define(function () {
                         return positions;
                     }
                 });
+
+                return active_profile;
             }
         },
         removeDeviceFromPositions: function (device_id) {
@@ -61,7 +63,9 @@ define(function () {
                         return pos !== device_id;
                     });
                 });
+
+                return active_profile;
             }
         }
-    }
+    };
 });

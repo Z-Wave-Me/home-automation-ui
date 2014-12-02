@@ -10,7 +10,7 @@ define([
     './models/_automation',
     './common/_base_button',
     './common/_base_left_panel',
-    './common/_base_search',
+    'jsx!./common/base_search',
     '../mixins/base_mixin',
     'mixins/data/data-layer'
 ], function (
