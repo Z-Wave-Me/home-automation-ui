@@ -31,11 +31,15 @@
 
 .widget .select-button {
   display: flex;
-  background: rgba(45, 51, 53, 0.7) url(../img/border-icon.png) no-repeat center center;
-  width: 20px;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
   cursor: pointer;
+  width: 0;
+  transition: all .3s ease-out;
+  &.rearrange {
+    width: 20px;
+    background: rgba(45, 51, 53, 0.7) url(../img/border-icon.png) no-repeat center center;
+  }
   &.selected {
     cursor: move;
   }

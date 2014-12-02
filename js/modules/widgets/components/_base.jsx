@@ -47,6 +47,10 @@ define([
                     widget: true,
                     x2: big_devices_type.indexOf(device_type) !== -1
                 }),
+                select_button_css_classes = cx({
+                    rearrange: rearrange_showing,
+                    'select-button': true
+                }),
                 DeviceMetrics;
 
             if (device_type === "sensorBinary" ||
@@ -79,7 +83,7 @@ define([
                     onDragEnd={this.dragEnd}
                     onDragStart={this.dragStart}
                 >
-                    {rearrange_showing ? <div className='select-button'></div> : null}
+                    <div className={select_button_css_classes}></div>
                     <span className='icon' style={icon_style}></span>
                     <span className='title'>{metrics_binding.get('title')}</span>
                     {!rearrange_showing ?
