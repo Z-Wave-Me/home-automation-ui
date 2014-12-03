@@ -34,6 +34,15 @@ define([
 
         },
         mixins: [Morearty.Mixin],
+        onClickSettings: function (deviceId) {
+            var default_binding = this.getMoreartyContext().getBinding().sub('default');
+
+            default_binding
+                .atomically()
+                .set('widgets.settings.showing', true)
+                .set('widgets.settings.device_id', deviceId)
+                .commit();
+        },
         render: function () {
             var cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
@@ -88,7 +97,10 @@ define([
                     <span className='title'>{metrics_binding.get('title')}</span>
                     {!rearrange_showing ?
                         <DeviceMetrics binding={binding} /> :
-                        <div className='settings-container'>
+                        <div
+                            className='settings-container'
+                            onClick={this.onClickSettings.bind(null, binding.get('id'))
+                        }>
                             <span className='setting fa-gear fa'></span>
                         </div>
                     }

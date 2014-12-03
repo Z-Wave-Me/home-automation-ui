@@ -19,8 +19,7 @@ define([
 
         },
         render: function () {
-            var __ = React.DOM,
-                binding = this.getDefaultBinding(),
+            var binding = this.getDefaultBinding(),
                 data_binding = this.getBinding('data'),
                 primary_filter = binding.get('primaryFilter'),
                 secondary_filter = binding.get('secondaryFilter'),
@@ -67,7 +66,7 @@ define([
                             return null;
                         }
                     }).toArray()}
-                    <Settings binding={binding} />
+                    <Settings binding={{default: binding, data: data_binding}} />
                 </section>
             );
 

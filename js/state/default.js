@@ -63,7 +63,7 @@ define([], function () {
         },
         widgets: {
             settings: {
-                showed: false,
+                showing: false,
                 device_id: null
             }
         },

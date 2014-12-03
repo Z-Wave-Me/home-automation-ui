@@ -23,26 +23,34 @@ define([], function () {
             }
 
         },
+        onClickCloseButton: function () {
+            this.getBinding('showing').set(false);
+        },
         render: function () {
             var cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
-                className = cx({
+                showing = this.getBinding('showing').toJS(),
+                popover_class_name = cx({
                     popover: true,
-                    hidden: true
-                });
+                    active: Boolean(showing)
+                }),
+                overlay_class_name = cx({
+                    hidden: !Boolean(showing),
+                    overlay: true
+                }),
+                options = this.props.options;
 
             return (
-                <div className={className}>
-                    <section className='popup-header'>
-                        <span className='columns alpha omega three'></span>
-                        <span className='columns alpha omega six'>title</span>
-                        <span classNane='columns alpha omega three'>
-                            <i className='close-button fa fa-close'></i>
-                        </span>
-                    </section>
-                    <section className='popup-content'>
-
-                    </section>
+                <div>
+                    <div className={popover_class_name}>
+                        <section className='popover-header'>{options.title}</section>
+                        <section className='popover-content'></section>
+                        <section className='popover-footer'>
+                            <span className='material-button cancel' onClick={this.onClickCloseButton}>CANCEL</span>
+                            <span className='material-button submit' onClick={options.submit}>SUBMIT</span>
+                        </section>
+                    </div>
+                    <div className={overlay_class_name} onClick={this.onClickCloseButton}></div>
                 </div>
             );
         }
