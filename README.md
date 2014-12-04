@@ -53,7 +53,7 @@ Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home
 # Gulp #
     ## Build ##
     
-    -    Install nodejs
+    -    Install nodejs (example Ubuntu install)
     
          $ sudo add-apt-repository -y ppa:chris-lea/node.js
          $ sudo apt-get -y update
