@@ -235,7 +235,8 @@ define([
                             items: dataBinding.sub('devices')
                         },
                         model: item,
-                        serviceId: this.props.serviceId
+                        serviceId: this.props.serviceId,
+                        noDelete: true
                     })
                 )
             );
