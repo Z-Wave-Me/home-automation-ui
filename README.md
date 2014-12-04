@@ -53,12 +53,16 @@ Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home
 # Gulp #
     ## Build ##
     
-    -   Install node.js
+    -    Install nodejs
+    
+         $ sudo add-apt-repository -y ppa:chris-lea/node.js
+         $ sudo apt-get -y update
+         $ sudo apt-get -y install nodejs
 
     -   Install npm-packages
 
         $ cd /path/to/automationFolder
-        $ sudo npm install --global gulp bower && npm install && gulp
+        $ sudo npm install -g gulp bower && npm install && gulp
 
     -   Compile front-end to /path/to/automationFolder/dist.
 
