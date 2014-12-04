@@ -20,12 +20,13 @@ define([
         saveHandler: function () {
             var that = this,
                 item = this.getBinding('item'),
-                items = this.getBinding('items'),
-                isNew = !Boolean(item.get('id'));
+                items = this.getBinding('items');
 
-            if (this.isMounted()) {
-                this.setState({ loading: true });
+            if (this.state.loading) {
+                return;
             }
+
+            this.setState({ loading: true });
 
             that.save({
                 model: item,
@@ -41,15 +42,21 @@ define([
                         that._updateModel(response, that.props.serviceId);
                     }
 
-                    that.setActiveNodeTreeStatus('normal');
-
                     if (that.isMounted()) {
                         that.setState({ loading: false });
+                        that.setActiveNodeTreeStatus('saved');
+                        that.forceUpdate();
+
+                        setTimeout(function () {
+                            that.setActiveNodeTreeStatus('normal');
+                        }, 1000);
                     }
                 }
             });
 
-            return false;
+            if (that.isMounted()) {
+                that.forceUpdate();
+            }
         },
         removeHandler: function () {
             var that = this,
@@ -57,6 +64,14 @@ define([
                 items = that.getBinding('items'),
                 index = items.get().indexOf(item.get()),
                 selected_index;
+
+            if (this.state.loading) {
+                return;
+            }
+
+            if (this.isMounted()) {
+                this.setState({ loading: true });
+            }
 
             if (index > 0) {
                 selected_index = index - 1;
@@ -81,10 +96,16 @@ define([
                         }
 
                         that.setState({ loading: false });
-                        that.forceUpdate();
+                        if (that.isMounted()) {
+                            that.forceUpdate();
+                        }
                     }
                 }
             });
+
+            if (that.isMounted()) {
+                that.forceUpdate();
+            }
         },
         getButtons: function () {
             var _ = React.DOM,
@@ -118,6 +139,11 @@ define([
                         onClick: this.setActiveNodeTreeStatus.bind(null, 'normal')
                     }, __('no', 'upper'))
                 ];
+            } else if (binding.get('activeNodeTreeStatus') === 'saved') {
+                return _.div({
+                    key: 'saved-button',
+                    className: 'modern-button light-mode center'
+                }, __('saved', 'upper'), '!');
             } else {
                 return [
                     _.div({
@@ -127,11 +153,11 @@ define([
                     }, __('save', 'upper'),
                         this.state.loading ? _.div({ className: 'spinner' }) : null
                     ),
-                    _.div({
+                    !this.props.noDelete ? _.div({
                         key: 'delete-button',
                         className: 'modern-button red-mode center',
                         onClick: this.setActiveNodeTreeStatus.bind(null, 'pending')
-                    }, __('delete', 'upper'))
+                    }, __('delete', 'upper')) : null
                 ];
             }
         },

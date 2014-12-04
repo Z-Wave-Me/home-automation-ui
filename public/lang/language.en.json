@@ -9,6 +9,7 @@
   "modules": "modules",
   "search": "search",
   "save": "save",
+  "saved": "saved",
   "delete": "delete",
   "device_name": "device name",
   "description": "description",

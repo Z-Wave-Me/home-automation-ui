@@ -23,7 +23,8 @@ define([
         getInitialState: function () {
             return {
                 loading: false,
-                form: null
+                form: null,
+                saved: false
             };
         },
         componentWillMount: function () {
@@ -175,18 +176,23 @@ define([
                         _.span({className: 'label-span'}, 'moduleId:'),
                         _.span({key: 'moduleId-info', className: 'span-value link'}, moduleId)
                     ),
-                    _.div({
+                    !this.state.saved ? _.div({
                             key: 'save-button',
                             className: 'modern-button green-mode center',
                             onClick: this.onSaveInstanceHandler.bind(null, item_binding)
                         }, 'Save', this.state.loading ? _.div({ className: 'spinner' }) : null
-                    ),
-                    _.div({
+                    ) : null,
+                    !this.state.saved ? _.div({
                             key: 'remove-button',
                             className: 'modern-button red-mode center',
                             onClick: this.onRemoveInstanceHandler.bind(null, item_binding)
                         }, 'Remove', this.state.loading ? _.div({ className: 'spinner' }) : null
-                    )
+                    ) : null,
+                    this.state.saved ? _.div({
+                            key: 'saved-button',
+                            className: 'modern-button light-mode center'
+                        }, 'Saved', this.state.loading ? _.div({ className: 'spinner' }) : null
+                    ) : null
                 ) : null,
                 // right panel
                 selected ? _.div({className: 'right-panel-instance panel-instances'},
@@ -272,7 +278,12 @@ define([
                     success: function () {
                         //that.setState({'loading': false});
                         if (that.isMounted()) {
+                            that.setState({saved: true});
                             that.forceUpdate();
+
+                            setTimeout(function () {
+                                that.setState({saved: false});
+                            }, 1000);
                         }
                     }
                 });
