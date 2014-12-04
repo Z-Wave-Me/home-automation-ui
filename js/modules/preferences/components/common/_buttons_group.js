@@ -20,8 +20,7 @@ define([
         saveHandler: function () {
             var that = this,
                 item = this.getBinding('item'),
-                items = this.getBinding('items'),
-                isNew = !Boolean(item.get('id'));
+                items = this.getBinding('items');
 
             if (this.isMounted()) {
                 this.setState({ loading: true });
