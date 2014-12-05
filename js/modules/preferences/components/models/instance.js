@@ -62,7 +62,7 @@ define([
                     _.span({className: 'module-title'}, '(' + module_binding.get('defaults.title') + ')'),
                     hovered || selected ? _.span({
                             className: 'instance-status-checkbox',
-                            onClick: this.onStatusModuleHandler.bind(null, item_binding)
+                            onClick: this.onStatusModuleHandler
                         },
                         _.label({className: 'switch-container'},
                             _.input({
@@ -179,18 +179,16 @@ define([
             }
 
         },
-        onStatusModuleHandler: function (instance, e) {
-            var that = this;
+        onStatusModuleHandler: function (e) {
             e.preventDefault();
+            var that = this,
+                instance = this.getDefaultBinding();
+
+            instance.set('active', !instance.get('active'));
 
             that.save({
                 model: instance,
-                serviceId: 'instances',
-                success: function () {
-                    instance.update('active', function (active) {
-                        return !active;
-                    });
-                }
+                serviceId: 'instances'
             });
 
             return false;

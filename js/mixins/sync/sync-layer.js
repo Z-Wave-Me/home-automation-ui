@@ -95,12 +95,12 @@ define([
                     }
 
                     if (typeof options.success === 'function') {
-                        options.success(model || collection, response.data)
+                        options.success(model || collection, response.data);
                     }
                 },
                 params: options.params || {},
                 method: model && modelId ? 'PUT' : 'POST',
-                data: JSON.stringify(this._compat(model.get().toJS()))
+                data: JSON.stringify(model.toJS())
             });
         },
         remove: function (options) {
