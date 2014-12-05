@@ -105,7 +105,7 @@ define([
                             dataBinding.sub('devices').get().filter(function (device) {
                                 return device.get('location') === item.get('id');
                             }).map(function (device) {
-                                return _.span({ key: device.get('id'), className: 'tag label label-info'}, device.get('id'),
+                                return _.span({ key: device.get('id'), className: 'tag label label-info'}, device.get('metrics').get('title'),
                                     _.span({
                                         className: 'tag-remove',
                                         onClick: that.removeTagHandler.bind(null, device.get('id'))
@@ -169,7 +169,7 @@ define([
                                         className: 'result-item',
                                         onClick: that.addTagHandler.bind(null, device.get('id'))
                                     },
-                                    _.strong({ className: 'strong-deviceId' }, '[' + device.get('id') + '] '),  device.get('metrics').title
+                                    _.strong({ className: 'strong-deviceId' }, device.get('metrics').get('title'))
                                 );
                             }).toArray()
                         )
