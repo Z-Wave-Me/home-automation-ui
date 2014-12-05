@@ -4705,8 +4705,11 @@ input[type='range']::-moz-focusring {
   overflow: hidden;
   overflow-y: auto;
   max-height: 80vh;
+  min-height: 10vh;
   padding: 10px 0;
   width: 100%;
+  z-index: 2000;
+  position: relative;
 }
 .automation-component .instance-item {
   display: block;

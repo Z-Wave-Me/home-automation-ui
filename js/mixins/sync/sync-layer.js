@@ -28,7 +28,15 @@ define([
             options = options || {};
 
             if (service) {
-                url = this.isModel() ? service.url + '/' + this.getDefaultBinding().get('id') : service.url;
+                if (options.hasOwnProperty('model')) {
+                    if (options.model) {
+                        url = service.url + '/' + this.getDefaultBinding().get('id');
+                    } else {
+                        url = service.url;
+                    }
+                } else {
+                    url = this.isModel() ? service.url + '/' + this.getDefaultBinding().get('id') : service.url;
+                }
 
                 if (Boolean(command)) {
                     url += '/command/' + command;
@@ -138,7 +146,7 @@ define([
                 success: callback,
                 params: _options.params,
                 method: 'DELETE'
-            })
+            });
         },
         isModel: function () {
             return this.getDefaultBinding().get('id') || this._isModel;

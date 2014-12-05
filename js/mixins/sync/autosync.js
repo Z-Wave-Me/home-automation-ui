@@ -142,10 +142,6 @@ define(['../data/manipulation'], function (manipulation) {
                 } else {
                     setTimeout(functions[obj.id], obj.delay || 0);
                 }
-
-                if (obj.id === 'namespaces') {
-                    that.getBinding('data').addListener('devices', functions.namespaces);
-                }
             });
         },
         equals: function ( x, y ) {
