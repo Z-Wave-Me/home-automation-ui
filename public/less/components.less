@@ -155,8 +155,8 @@
 /* popover + overlay */
 .overlay {
   position: fixed;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
@@ -189,7 +189,6 @@
 
 .popover-header {
   display: flex;
-  flex: 1;
   height: 24px;
   justify-content: space-between;
   text-align: center;
@@ -225,4 +224,22 @@
   }
 }
 
+/* popover menu */
+
+.popover-header .menu-container {
+  font-size: 11px;
+}
+
+.menu-container .menu-item {
+  margin-left: 3px;
+  cursor: pointer;
+  .fa {
+    margin: 0 3px;
+  }
+}
+
+.menu-item.selected {
+  color: @blue;
+  cursor: default;
+}
 
