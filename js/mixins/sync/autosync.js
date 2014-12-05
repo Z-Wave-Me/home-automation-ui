@@ -21,8 +21,8 @@ define(['../data/manipulation'], function (manipulation) {
                 dataBinding.set('devicesOnDashboard', filter.count() > 0 ? filter.toArray()[0].get('positions') : []);
             });
 
-            defaultBinding.sub('system.current_language').addListener(function (lang) {
-                localStorage.setItem('currentLanguage', String(lang));
+            defaultBinding.sub('system.current_language').addListener(function (change_descriptor) {
+                localStorage.setItem('currentLanguage', String(defaultBinding.get('system.current_language')));
             });
 
             dataBinding.addListener('profiles', function (change_descriptor) {
@@ -40,6 +40,7 @@ define(['../data/manipulation'], function (manipulation) {
                 defaultBinding.sub('notifications').set('count', dataBinding.sub('notifications').get().count());
             });
         },
+
         pull: function () {
             var that = this,
                 functions = {},
