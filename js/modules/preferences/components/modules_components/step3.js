@@ -23,25 +23,21 @@ define([
                 form: null
             };
         },
-        componentWillMount: function () {
-            var that = this;
-            this.getBinding('data').addListener('modules', function () {
-                if (that.isMounted()) {
-                    that.forceUpdate(function () {
-                        that.renderAlpaca();
-                    });
-                }
-            });
-        },
         componentDidMount: function () {
+            var that = this;
             if (this.isMounted()) {
-                this.renderAlpaca();
+                that.fetch({
+                    serviceId: 'namespaces',
+                    success: function (response) {
+                        that.getBinding('data').set('namespaces', Immutable.fromJS(response.data));
+                        that.renderAlpaca();
+                    }
+                });
             }
         },
         render: function () {
             var _ = React.DOM,
-                __ = this.gls,
-                preferences_binding = this.getDefaultBinding();
+                __ = this.gls;
 
             return _.div({ className: 'step-container' },
                 _.div({className: 'alpaca-main', ref: 'alpacaNodeRef'}),
@@ -58,8 +54,9 @@ define([
                 preferences_binding = this.getDefaultBinding(),
                 data_binding = this.getBinding('data'),
                 instance = preferences_binding.sub('instance_temp'),
+                import_params = {},
                 imported_instanceId = preferences_binding.get('import_instanceId'),
-                instanceJson, moduleJson, $el, import_params, imported_instance_index;
+                instanceJson, moduleJson, $el, imported_instance_index;
 
             if (!instance) {
                 return;
@@ -80,7 +77,7 @@ define([
             $el = $(that.refs.alpacaNodeRef.getDOMNode());
 
             $el.empty().alpaca({
-                data: moduleJson.defaults,
+                data: that.extend(moduleJson.defaults, import_params),
                 schema: moduleJson.schema,
                 options: moduleJson.options,
                 postRender: function (form) {
@@ -96,6 +93,7 @@ define([
 
             if (that.form !== null) {
                 instance_binding.sub('params').merge(that.form.getValue());
+                instance_binding.delete('import_instanceId');
                 that.save({
                     model: instance_binding,
                     serviceId: 'instances',

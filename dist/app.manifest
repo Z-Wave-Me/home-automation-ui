@@ -4,10 +4,6 @@ CACHE MANIFEST
 CACHE:
 js/main-built.js
 public/css/all.css
-public/fonts/glyphicons-halflings-regular.eot
-public/fonts/glyphicons-halflings-regular.svg
-public/fonts/glyphicons-halflings-regular.ttf
-public/fonts/glyphicons-halflings-regular.woff
 public/fonts/helveticaneue-bold.woff
 public/fonts/helveticaneue.woff
 public/lang/language.de.json
@@ -24,4 +20,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: 42fb3e38231171ec34ee2476f5e1740c8740f37709f57c74052190f249d13da5
+# hash: 07e5d62823076d418590f08051b23bf17b79107f16467e5c83d07ba52538f15f

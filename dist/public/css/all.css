@@ -966,7 +966,7 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .alpaca-controlfield-text input{width:200px;height:12px;padding:3px;font-size:12px;line-height:20px}
 .alpaca-controlfield-label{display:block;width:100%;text-align:left;float:left;font-size:12.5px;padding:0;margin:0;height:16px;line-height:16px}
 .alpaca-controlfield-label div{font-size:12.5px}
-.alpaca-fieldset{border-radius:10px;padding:2px 7px;position:relative;border:1px groove threedface;margin:2px}
+.alpaca-fieldset{position:relative;margin:2px;border-radius:5px;padding:5px;border:1px solid threedface}
 .alpaca-fieldset-legend{padding:2px 8px;border-top:none;font-weight:700;font-size:10px;margin:0;height:12px;line-height:12px}
 .alpaca-fieldset-item-container{display:inline-block;float:left;width:100%;text-align:left}
 .alpaca-fieldset-array-item-toolbar button,.alpaca-fieldset-array-toolbar button{margin-top:0;color:#000;padding:5px 3px;width:auto;height:auto;font-size:11px;line-height:14px;margin-right:2px;font-weight:400;background-color:rgba(48,48,48,.2)}
