@@ -135,6 +135,9 @@ define([], function () {
                     methods: ['READ'],
                     defaults: null
                 },
+                save: function (ctx, data_binding, models) {
+                    data_binding.set('namespaces', Immutable.fromJS(models));
+                },
                 loaded: false
             },
             {

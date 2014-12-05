@@ -30,20 +30,13 @@ define([
         componentWillMount: function () {
             var that = this,
                 preferences_binding = this.getBinding('preferences');
+
             preferences_binding.atomically()
                 .set('show_turned_off', true)
                 .set('search_string_on_instance_page', '')
                 .set('hover_instance_id', null)
                 .set('select_instance_id', null)
                 .commit();
-
-            this.getBinding('data').addListener('modules', function () {
-                if (that.isMounted()) {
-                    that.forceUpdate(function () {
-                        that.renderAlpaca();
-                    });
-                }
-            });
         },
         preventDefault: function (e) {
             e.preventDefault();
@@ -129,7 +122,7 @@ define([
                 _.div({className: 'header-item', onClick: this.onToggleSelectItemList.bind(null, id)},
                     _.span({className: status_classes}),
                     _.span({className: 'instance-icon'}, icon),
-                    _.span({className: 'instance-title'}, params_binding.get('title') || module_binding.sub('defaults').get('title')),
+                    _.span({className: 'instance-title'}, item.get('title') || module_binding.sub('defaults').get('title')),
                     _.span({className: 'module-title'}, '(' + module_binding.get('defaults.title') + ')'),
                     hovered || selected ? _.span({
                             className: 'instance-status-checkbox',
@@ -211,7 +204,13 @@ define([
 
             if (!selected) {
                 that.forceUpdate(function () {
-                    that.renderAlpaca(id);
+                    that.fetch({
+                        serviceId: 'namespaces',
+                        success: function (response) {
+                            that.getBinding('data').set('namespaces', Immutable.fromJS(response.data));
+                            that.renderAlpaca(id);
+                        }
+                    });
                 });
             }
         },
