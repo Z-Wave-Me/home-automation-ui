@@ -23,6 +23,7 @@ define([
                     return binding.get('widgets.settings.device_id') === device.get('id');
                 }),
                 device_binding = index !== -1 ? devices_binding.sub(index) : null,
+                selected = binding.get('widgets.settings.menu_selected'),
                 popup_binding = {
                     default: binding,
                     showing: binding.sub('widgets.settings.showing'),
@@ -31,15 +32,29 @@ define([
                 options = {
                     title: device_binding ? device_binding.get('metrics.title').toUpperCase() : '',
                     menu: [
-                        {id: 'settings', title: 'SETTINGS', icon: 'fa-pie-chart'},
-                        {id: 'statistics', title: 'STATISTICS', icon: 'fa-cogs'}
+                        {id: 'settings', title: 'SETTINGS', icon: 'fa-cogs'},
+                        {id: 'statistics', title: 'STATS', icon: 'fa-pie-chart'}
                     ],
                     menu_handler: this.onSelectedMenuItem
                 };
 
             return (
                 <Popup binding={popup_binding} options={options}>
-                    <span className='sss'></span>
+                    {selected === 'settings' ?
+                        <div className="content-block settings">
+                            <div className="content">
+
+                            </div>
+                            <ul className="tags">
+                                <li><a href="#" className="tag">HTML</a></li>
+                                <li><a href="#" className="tag">CSS</a></li>
+                                <li><a href="#" className="tag">JavaScript</a></li>
+                            </ul>
+                        </div> :
+                        <div className="content-block statistics">
+
+                        </div>
+                    }
                 </Popup>
             );
         }
