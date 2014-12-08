@@ -163,7 +163,7 @@ define([
                                 );
                             }).toArray()
                         ),
-                        _.input({
+                        Morearty.DOM.input({
                             className: classes_input_autocomplete,
                             placeholder: __('tags', 'capitalize'),
                             onChange: Morearty.Callback.set(preferencesBinding, 'temp_string'),
@@ -192,7 +192,7 @@ define([
                     //    _.input({ref: 'fileInput', className: 'hidden', type: 'file', onChange: this.handleFile})
                     //),
                     _.label({className: 'switch-container'},
-                        _.input({
+                        Morearty.DOM.input({
                                 className: 'ios-switch green',
                                 type: 'checkbox',
                                 checked: this.showInDashBoard(id),
@@ -205,7 +205,7 @@ define([
                         __('show_on_dashboard', 'capitalize')
                     ),
                     _.label({className: 'switch-container'},
-                        _.input({
+                        Morearty.DOM.input({
                                 className: 'ios-switch green',
                                 type: 'checkbox',
                                 checked: item.get('permanently_hidden'),

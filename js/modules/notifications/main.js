@@ -74,7 +74,7 @@ define([
                 _.div({onClick: this.stopPropagationAndPreventDefault, ref: 'popup', className: 'popover bottom popover-events'},
                     _.div({className: 'arrow'}),
                     _.div({className: 'popover-content'},
-                        _.input({
+                        Morearty.DOM.input({
                             className: 'filter-events',
                             placeholder: __('filter_here'),
                             onChange: Morearty.Callback.set(binding.sub('notifications'), 'searchString')

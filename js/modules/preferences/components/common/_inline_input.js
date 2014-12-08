@@ -54,7 +54,7 @@ define([
                             _.span({ className: 'tag-remove'})
                         )
                     }),
-                    _.input({ className: 'text-input', placeholder: 'deviceId'})
+                    Morearty.DOM.input({ className: 'text-input', placeholder: 'deviceId'})
                 )
             );
         }

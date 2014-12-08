@@ -3,12 +3,12 @@ CACHE MANIFEST
 
 CACHE:
 js/main-built.js
-public/css/all.css
 public/fonts/helveticaneue-bold.woff
 public/fonts/helveticaneue.woff
 public/lang/language.de.json
 public/lang/language.en.json
 public/lang/language.ru.json
+public/css/all.css
 
 
 NETWORK:
@@ -20,4 +20,4 @@ https://*
 SETTINGS:
 prefer-online
 
-# hash: d51e34e099a51d0a007fc636f47afa8edc160a5859b3be7dc53510fa15705843
+# hash: 8f5483b94b41fb2aee523534c3a4cb1de2ba2813828d24dbd739b1d11349048c

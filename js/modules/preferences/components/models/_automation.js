@@ -92,7 +92,7 @@ define([
                     ),
                     !add_mode ? _.div({ key: 'form-default-profile-input', className: 'form-group' },
                         _.label({className: 'switch-container'},
-                            _.input({
+                            Morearty.DOM.input({
                                     className: 'ios-switch green',
                                     type: 'checkbox',
                                     checked: item_binding.get('active'),

@@ -8,7 +8,7 @@ define([], function () {
                 __ = this.gls;
 
             return _.div({ className: 'base-search-component' },
-                _.input({
+                Morearty.DOM.input({
                     className: 'search-input',
                     type: 'search',
                     placeholder: __('search'),
