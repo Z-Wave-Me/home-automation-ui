@@ -142,8 +142,8 @@ define([
                     ) : null,
                     _.div({ key: 'form-name-input', className: 'form-group' },
                         _.label({ htmlFor: 'room-name', className: 'input-label'}, __('widget_name', 'capitalize') + ':'),
-                        _.input({
-                            onChange: Morearty.Callback.set(item.sub('metrics'), 'title'),
+                        Morearty.DOM.input({
+                            onChange: Morearty.Callback.set(item.sub('metrics.title')),
                             id: 'room-name',
                             className: 'input-value',
                             type: 'text',
