@@ -88,13 +88,20 @@ define([
         render: function () {
             var cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
+                now_showing = binding.get('nowShowing'),
                 rearrange_showing = binding.get('footer.rearrange_showing'),
                 __ = this.gls,
                 rearrange_classes = cx({
                     'rearrange-menu': true,
                     mini: !rearrange_showing
                 }),
+                menu_label_text;
+
+            if (now_showing !== 'widgets') {
                 menu_label_text = !rearrange_showing ? __('rearrange_and_settings', 'case') : 'Drag & drop to rearrange';
+            } else {
+                menu_label_text = 'Settings';
+            }
 
             return (
                 <div className='footer'>
@@ -103,14 +110,14 @@ define([
                             <span className='pencil fa fa-pencil'></span>
                             <span className='menu-label'>{menu_label_text}</span>
                         </div>
-                        {rearrange_showing ?
+                        {rearrange_showing && now_showing !== 'widgets' ?
                             <div className='add-dashboard-container columns four'>
                                 <ul className='autocomplete'>{this.getAutoComplete()}</ul>
                                 <span className='plus fa fa-plus-circle'></span>
                                 <BaseSearch binding={binding.sub('footer.search_string')} />
                             </div>
                         : null}
-                        {rearrange_showing ?
+                        {rearrange_showing && now_showing !== 'widgets' ?
                             <div onDrop={this.onDrop} className='drop-here-container columns four'>
                                 <span className='minus fa fa-minus-circle'></span>
                                 <span className='drop-here'>Drop here to remove</span>
