@@ -66,6 +66,19 @@ define(function () {
 
                 return active_profile;
             }
+        },
+        toggleDevicePositions: function (device_id) {
+            var active_profile = this.getActiveProfile();
+
+            if (active_profile !== null) {
+                if (active_profile.get('positions').indexOf(device_id) === -1) {
+                    this.addDeviceToPositions(device_id);
+                } else {
+                    this.removeDeviceFromPositions(device_id);
+                }
+
+                return active_profile;
+            }
         }
     };
 });

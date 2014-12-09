@@ -64,7 +64,8 @@ define([], function () {
         widgets: {
             settings: {
                 showing: false,
-                device_id: null
+                device_id: null,
+                sync_status: null
             }
         },
         // menu settings

@@ -169,7 +169,8 @@
   top: ~'calc(50% - 200px)';
   left: ~'calc(50% - 400px)';
   width: 800px;
-  height: 400px;
+  min-height: 450px;
+  height: auto;
   z-index: 3;
   background: #fff;
   color: #444;
@@ -246,13 +247,13 @@
 /* tags */
 .tags {
   list-style: none;
-  margin: 0;
   overflow: hidden;
   padding: 0;
 }
 
 .tags li {
   float: left;
+  margin-bottom: 8px;
 }
 
 .tag {
@@ -264,9 +265,10 @@
   line-height: 26px;
   padding: 0 20px 0 23px;
   position: relative;
-  margin: 0 10px 10px 0;
+  margin-right: 5px;
   text-decoration: none;
   transition: color 0.2s ease-out;
+  cursor: default;
 }
 
 .tag::before {
@@ -301,3 +303,53 @@
   border-left-color: @blue;
 }
 
+.tag.new {
+  padding: 0 10px;
+  &:before {
+    display: none;
+  }
+  &:hover,
+  &:focus {
+    input {
+      color: #fff;
+    }
+    ::-webkit-input-placeholder { /* WebKit browsers */
+      color:    #fff;
+    }
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color:    #fff;
+      opacity:  1;
+    }
+    ::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color:    #fff;
+      opacity:  1;
+    }
+    :-ms-input-placeholder { /* Internet Explorer 10+ */
+      color:    #fff;
+    }
+  }
+  &.failure {
+    background: @dark-red;
+    color: #fff;
+    &::after {
+      color: #fff;
+      border-left-color: @dark-red;
+    }
+    input {
+      color: #fff;
+    }
+  }
+}
+
+.tag .input-new-tag {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  width: 50px;
+  transition: width .3s ease-out;
+  &:focus {
+    width: 100px;
+    border: 0;
+    box-shadow: none;
+  }
+}

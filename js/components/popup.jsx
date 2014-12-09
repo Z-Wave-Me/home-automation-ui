@@ -1,4 +1,6 @@
-define([], function () {
+define([
+    'jsx!components/button'
+], function (Button) {
     "use strict";
 
     return React.createClass({
@@ -11,15 +13,15 @@ define([], function () {
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
                 showing = this.getBinding('showing').toJS(),
-                popover_class_name = cx({
-                    popover: true,
-                    active: Boolean(showing)
-                }),
                 overlay_class_name = cx({
                     hidden: !Boolean(showing),
                     overlay: true
                 }),
                 options = this.props.options,
+                popover_class_name = cx({
+                    popover: true,
+                    active: Boolean(showing)
+                }) + ' ' + options.className || '',
                 menu = options.menu ? options.menu.map(function (menu_item) {
                     var menu_item_classes = cx({
                         'menu-item': true,
@@ -32,19 +34,43 @@ define([], function () {
                             <span className='menu-item-title'>{menu_item.title}</span>
                         </span>
                         );
-                }) : null;
+                }) : null,
+                dynamic_title = this.getBinding('dynamic_title') ? this.getBinding('dynamic_title').get() : '',
+                title = options.title + dynamic_title,
+                status_binding = this.getBinding('status_binding').get() || 'normal';
 
             return (
                 <div>
-                    <div className={popover_class_name}>
+                    <div className={popover_class_name }>
                         <section className='popover-header'>
-                            {options.title}
+                            {title}
                             {menu ? <span className='menu-container'>{menu}</span> : null}
                         </section>
                         <section className='popover-content'>{this.props.children}</section>
-                        <section className='popover-footer'>
-                            <span className='material-button cancel' onClick={this.onClickCloseButton}>CANCEL</span>
-                            <span className='material-button submit' onClick={options.submit}>SUBMIT</span>
+                        <section className='popover-footer material'>
+                            {options.buttons.close && status_binding === 'normal' ? <Button
+                                classes='grey'
+                                title='close'
+                                handler={this.onClickCloseButton}
+                            /> : null}
+                            {options.buttons.cancel && status_binding === 'normal' ? <Button
+                                classes='grey'
+                                title='cancel'
+                                handler={options.onCancelHandler}
+                            /> : null}
+                            {options.buttons.save && status_binding === 'normal' ? <Button
+                                classes='green raised'
+                                title='save'
+                                handler={options.onSaveHandler}
+                            /> : null}
+                            {status_binding === 'sync' ? <Button
+                                classes='grey label-blue'
+                                title='syncing...'
+                            /> : null}
+                            {status_binding === 'saved' ? <Button
+                                classes='green raised'
+                                title='saved'
+                            /> : null}
                         </section>
                     </div>
                     <div className={overlay_class_name} onClick={this.onClickCloseButton}></div>

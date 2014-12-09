@@ -1,0 +1,442 @@
+@green: #008000;
+
+.material {
+  font-family: 'Roboto Helvetica';
+}
+
+/* checkboxes */
+.material.checkbox-container {
+  margin: 5px 0;
+  .description {
+    font-size: 11px;
+    color: @gray;
+    height: 12px;
+    line-height: 12px;
+    vertical-align: middle;
+    margin: 0;
+    padding-left: 35px;
+  }
+}
+
+.checkbox-group {
+  position: relative;
+  height: 24px;
+
+  .checkbox {
+    display: none;
+  }
+
+  .label {
+    cursor: pointer;
+    padding-left:50px;
+    height: 24px;
+  }
+
+  .title {
+    line-height: 24px;
+    font-weight: 400;
+    font-family: Roboto;
+    padding-left: 35px;
+  }
+
+  /* checkbox css */
+  .label span {
+    display:block;
+    position:absolute;
+    left:0;
+    transition-duration:0.3s;
+  }
+
+  .label .circle {
+    background:#FFF;
+    left:-30px;
+    top:-30px;
+    height:80px;
+    width:80px;
+    z-index:-1;
+    border-radius:50%;
+  }
+
+  .label .box     {
+    border:2px solid #000;
+    height:20px;
+    width:20px;
+    z-index:888;
+    transition-delay:0.2s;
+  }
+
+  .label .check         {
+    top: -7px;
+    left: 6px;
+    width: 12px;
+    height: 24px;
+    border:2px solid #0f9d58;
+    border-top: none;
+    border-left: none;
+    opacity:0;
+    z-index:888;
+    transform:rotate(180deg);
+    transition-delay:0.3s;
+  }
+
+  /* when checkbox is checked */
+  .label .circle {
+    animation: growCircle 0.3s ease;
+  }
+  .checkbox:checked ~ .label .box {
+    opacity:0;
+    transform: scale(0) rotate(-180deg);
+  }
+  .checkbox:checked ~ .label .check {
+    opacity: 1;
+    transform :scale(1) rotate(45deg);
+  }
+
+  @keyframes growCircle {
+    0%, 100% { transform:scale(0); }
+    70% {
+      background:#DDD;
+      transform:scale(1.25);
+    }
+  }
+}
+
+/* inputs */
+.material.input-container {
+  margin: 20px 10px 10px 0;
+  .group {
+    position: relative;
+  }
+  input {
+    font-size: 18px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 300px;
+    border: none;
+    border-bottom: 1px solid #757575;
+    margin: 0;
+    box-sizing: border-box;
+    box-shadow: none;
+    border-radius: 0;
+    transition: all .3s ease-out;
+    color: #444;
+  }
+
+  input:focus {
+    outline: none;
+    padding-left: 5px;
+  }
+
+  label {
+    color: #999;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+  }
+
+  /* active state */
+  input:focus ~ label,
+  input:valid ~ label {
+    top: -20px;
+    font-size: 14px;
+    color: @blue;
+  }
+
+  /* BOTTOM BARS ================================= */
+  .bar {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+
+  .bar:before, .bar:after {
+    content: '';
+    height: 2px;
+    width: 0;
+    bottom: 1px;
+    position: absolute;
+    background: @blue;
+    transition: 0.2s ease all;
+  }
+
+  .bar:before {
+    left: 50%;
+  }
+
+  .bar:after {
+    right: 50%;
+  }
+
+  /* active state */
+  input:focus ~ .bar:before, input:focus ~ .bar:after {
+    width: 50%;
+  }
+
+  /* HIGHLIGHTER ================================== */
+  .highlight {
+    position: absolute;
+    height: 64%;
+    top: 16%;
+    left: 0;
+    pointer-events: none;
+    background: @blue;
+    opacity:0.5;
+  }
+
+  /* active state */
+  /* active state */
+  input:focus ~ .highlight {
+    -webkit-animation:inputHighlighter 0.3s ease;
+    -moz-animation:inputHighlighter 0.3s ease;
+    animation:inputHighlighter 0.3s ease;
+  }
+
+  /* ANIMATIONS ================ */
+  @-webkit-keyframes inputHighlighter {
+    0% { width: 100px; background: @blue; }
+    100% { width:0; background:transparent; }
+  }
+  @-moz-keyframes inputHighlighter {
+    0% { width: 100px; background: @blue; }
+    100% { width:0; background:transparent; }
+  }
+  @keyframes inputHighlighter {
+    0% { width: 100px; background: @blue; }
+    100% { width:0; background:transparent; }
+  }
+}
+
+.material {
+  /* raised-buttons */
+  .button {
+    display: inline-block;
+    position: relative;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 2px;
+    font-size: 0.9em;
+    background-color: #fff;
+    color: #646464;
+    margin: 0 0 0 5px;
+    padding: 0 10px;
+    text-align: center;
+  }
+
+  .button.narrow {
+    width: 60px;
+  }
+
+  .button.grey {
+    background-color: #eee;
+  }
+
+  .button.blue {
+    background-color: #4285f4;
+    color: #fff;
+  }
+
+  .button.green {
+    background-color: #0f9d58;
+    color: #fff;
+  }
+
+  .button.label-blue {
+    color: #4285f4;
+  }
+
+  .button.label-red {
+    color: #d23f31;
+  }
+
+  .button.raised {
+    transition: box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: 0.2s;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+  }
+
+  .button.raised:active {
+    box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+    transition-delay: 0s;
+  }
+}
+
+.material.toggle-container {
+  user-select: none;
+  line-height: 48px;
+  vertical-align: middle;
+  * {
+    .ease-out();
+  }
+
+  .toggle {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    width: 48px;
+    line-height: 16px;
+    user-select: none;
+    vertical-align: middle;
+    margin-right: 10px;
+  }
+
+  .label {
+    display: inline-block;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  .toggle-bar {
+    background-color: #000000;
+    height: 1px;
+    position: relative;
+    top: 11px;
+    width: 48px;
+  }
+
+  .radio-button {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+  }
+
+  .radio-button * {
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  }
+
+  .radio-button-target {
+    background-color: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 50%;
+    height: 16px;
+    width: 16px;
+    float: left;
+  }
+
+  .radio-button-fill {
+    background-color: transparent;
+    border-radius: 50%;
+    height: 16px;
+    transform: scale(0);
+    width: 16px;
+  }
+
+  .radio-button-label {
+    line-height: 16px;
+    float: left;
+    margin-left: 8px;
+  }
+
+  .toggle.is-toggled {
+    .toggle-bar {
+      background-color: @blue;
+    }
+    .radio-button {
+      transform: translate3d(32px, 0, 0);
+      border-color: @blue;
+    }
+    .radio-button-fill {
+      background-color: @blue;
+      border-color: @blue;
+      transform: scale(1.1);
+    }
+    .toggle-thumb {
+      left: 16px;
+      background-color: @blue;
+    }
+
+    &.green {
+      .toggle-bar {
+        background-color: @green;
+      }
+      .radio-button {
+        border-color: @green;
+      }
+      .radio-button-fill {
+        background-color: @green;
+        border-color: @green;
+      }
+      .toggle-thumb {
+        background-color: @green;
+      }
+    }
+  }
+}
+
+.material.paper-container {
+  width: 256px;
+  background-color: #ffffff;
+
+  * {
+    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  }
+
+  .z-depth-1 {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.24);
+  }
+
+  .rounded {
+    border-radius: 2px;
+    background-clip: padding-box;
+    .paper {
+      border-radius: 2px;
+      background-clip: padding-box;
+    }
+  }
+
+  .paper {
+    background-color: #ffffff;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    height: 100%;
+    width: 100%;
+  }
+
+  .menu-item {
+    transition: background-color 200ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+    cursor: pointer;
+    line-height: 48px;
+    padding-left: 24px;
+    padding-right: 24px;
+    background-color: rgba(0, 0, 0, 0);
+    position: relative;
+    overflow: hidden;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.035);
+    }
+  }
+
+  .ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background-clip: padding-box;
+  }
+
+  .menu-item-data {
+    display: block;
+    padding-left: 38px;
+    line-height: 32px;
+    height: 32px;
+    vertical-align: top;
+    top: -12px;
+    position: relative;
+    font-weight: 300;
+    & * {
+      user-select: none;
+    }
+  }
+
+  .title {
+    font-weight: 600;
+  }
+}
