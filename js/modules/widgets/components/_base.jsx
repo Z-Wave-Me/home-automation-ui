@@ -21,17 +21,10 @@ define([
 
     return React.createClass({
         dragStart: function(e) {
+            this.getBinding('footer').set('active_id', this.getDefaultBinding().get('id'));
         },
         dragEnd: function(e) {
-
-        },
-        move: function(over,append) {
-
-        },
-        dragOver: function(e) {
-        },
-        update: function() {
-
+            this.getBinding('footer').set('active_id', null);
         },
         mixins: [Morearty.Mixin],
         onClickSettings: function (deviceId) {

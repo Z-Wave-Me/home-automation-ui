@@ -59,7 +59,9 @@ define([], function () {
         },
         footer: {
             rearrange_showing: false,
-            search_string: null
+            search_string: null,
+            active_drop_zone: false,
+            active_id: null
         },
         widgets: {
             settings: {

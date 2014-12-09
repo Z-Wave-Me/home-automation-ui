@@ -82,8 +82,24 @@ define([
             this.getDefaultBinding().set('footer.rearrange_showing', status);
         },
         onDrop: function (e) {
-            console.log(e);
+            this.removeDeviceFromPositions(this.getDefaultBinding().get('footer.active_id'));
+            this.getDefaultBinding().set('footer.active_drop_zone', false);
+
+            var active_profile = this.getActiveProfile();
+
+            if (active_profile) {
+                this.save({
+                    serviceId: 'profiles',
+                    model: active_profile
+                });
+            }
+        },
+        onDragOver: function (e) {
+            this.getDefaultBinding().set('footer.active_drop_zone', true);
             e.preventDefault();
+        },
+        onDragLeave: function () {
+            this.getDefaultBinding().set('footer.active_drop_zone', false);
         },
         render: function () {
             var cx = React.addons.classSet,
@@ -95,7 +111,11 @@ define([
                     'rearrange-menu': true,
                     mini: !rearrange_showing
                 }),
-                menu_label_text;
+                menu_label_text,
+                drop_classes = cx({
+                    'active-zone': binding.get('footer.active_drop_zone'),
+                    'drop-here': true
+                });
 
             if (now_showing !== 'widgets') {
                 menu_label_text = !rearrange_showing ? __('rearrange_and_settings', 'case') : 'Drag & drop to rearrange';
@@ -118,9 +138,15 @@ define([
                             </div>
                         : null}
                         {rearrange_showing && now_showing !== 'widgets' ?
-                            <div onDrop={this.onDrop} className='drop-here-container columns four'>
+                            <div className='drop-here-container columns four'>
                                 <span className='minus fa fa-minus-circle'></span>
-                                <span className='drop-here'>Drop here to remove</span>
+                                <span
+                                    onDrop={this.onDrop}
+                                    onDragOver={this.onDragOver}
+                                    onDragStart={this.onDragStart}
+                                    onDragLeave={this.onDragLeave}
+                                    className={drop_classes}
+                                >Drop here to remove</span>
                             </div>
                         : null}
                         {rearrange_showing ?
