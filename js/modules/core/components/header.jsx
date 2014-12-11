@@ -7,8 +7,16 @@ define([], function () {
             this.getDefaultBinding().set('overlayShow', true);
         },
         toggleShowNotificationsPopup: function () {
-            var binding = this.getDefaultBinding();
-            binding.get('notifications.show_popup', !binding.get('notifications.show_popup'));
+            var binding = this.getDefaultBinding(),
+                is_show = binding.get('notifications.show_popup');
+
+            if (!is_show) {
+                binding.set('notifications.show_popup', true);
+                binding.set('notifications.show_popup', 'active');
+            } else {
+                binding.set('notifications.show_popup', true);
+                binding.set('notifications.show_popup', false);
+            }
         },
         render: function () {
             var __ = this.gls,

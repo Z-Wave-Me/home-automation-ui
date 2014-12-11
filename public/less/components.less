@@ -161,6 +161,9 @@
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
+  &.transparent {
+    opacity: 0;
+  }
 }
 
 .popover {
@@ -242,6 +245,22 @@
 .menu-item.selected {
   color: @blue;
   cursor: default;
+}
+
+/* */
+.popup {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 30vw;
+  width: 300px;
+  height: 300px;
+  opacity: 0;
+  transition: all .3s ease-out;
+  &.active {
+    display: flex;
+    opacity: 1;
+  }
 }
 
 /* tags */

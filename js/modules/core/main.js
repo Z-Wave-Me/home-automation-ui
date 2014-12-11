@@ -3,7 +3,7 @@ define([
     'jsx!./components/header',
     'jsx!./components/main',
     'Preferences',
-    'Notifications',
+    'jsx!modules/notifications/notifications',
     'Load',
     // mixins
     'mixins/sync/sync-layer'
@@ -56,7 +56,7 @@ define([
                         data: that.getBinding('data'),
                         preferences: that.getBinding('preferences')
                     }
-                })
+                }),
                 //Preferences({binding: {
                 //    default: binding,
                 //    data: that.getBinding('data'),
@@ -67,13 +67,13 @@ define([
                 //    data: that.getBinding('data'),
                 //    preferences: that.getBinding('preferences')
                 //}}),
-                //binding.sub('notifications').val('show_popup') ? Notifications({
-                //    binding: {
-                //        default: binding,
-                //        data: that.getBinding('data'),
-                //        preferences: that.getBinding('preferences')
-                //    }
-                //}) : null
+                Notifications({
+                    binding: {
+                        default: binding,
+                        data: that.getBinding('data'),
+                        preferences: that.getBinding('preferences')
+                    }
+                })
             );
         }
     });

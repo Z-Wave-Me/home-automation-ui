@@ -83,10 +83,6 @@ requirejs.config({
             location: 'modules/preferences'//,
         },
         {
-            name: 'Notifications',
-            location: 'modules/notifications'//,
-        },
-        {
             name: 'App',
             location: 'modules/core'
         },

@@ -1,6 +1,7 @@
 define([
-    'jsx!components/button'
-], function (Button) {
+    'jsx!components/button',
+    'jsx!components/overlay'
+], function (Button, Overlay) {
     "use strict";
 
     return React.createClass({
@@ -11,12 +12,7 @@ define([
         render: function () {
             var that = this,
                 cx = React.addons.classSet,
-                binding = this.getDefaultBinding(),
                 showing = this.getBinding('showing').toJS(),
-                overlay_class_name = cx({
-                    hidden: !Boolean(showing),
-                    overlay: true
-                }),
                 options = this.props.options,
                 popover_class_name = cx({
                     popover: true,
@@ -73,7 +69,7 @@ define([
                             /> : null}
                         </section>
                     </div>
-                    <div className={overlay_class_name} onClick={this.onClickCloseButton}></div>
+                    <Overlay binding={this.getBinding('showing')} />
                 </div>
             );
         }
