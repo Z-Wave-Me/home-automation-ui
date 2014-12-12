@@ -65,7 +65,7 @@ define([
                             onClick: this.onStatusModuleHandler
                         },
                         _.label({className: 'switch-container'},
-                            _.input({
+                            Morearty.DOM.input({
                                     className: 'ios-switch green',
                                     type: 'checkbox',
                                     checked: item_binding.get('active'),
@@ -82,7 +82,7 @@ define([
                 selected ? _.div({className: 'left-panel-instance panel-instances'},
                     _.div({key: 'form-group-title', className: 'form-group'},
                         _.label({className: 'input-label'}, 'title:'),
-                        _.input({
+                        Morearty.DOM.input({
                             key: 'title-input',
                             className: 'input-value',
                             type: 'text',
@@ -93,7 +93,7 @@ define([
                     ),
                     _.div({key: 'form-group-description', className: 'form-group'},
                         _.label({className: 'input-label'}, 'description:'),
-                        _.textarea({
+                        Morearty.DOM.textarea({
                             key: 'description-input',
                             className: 'input-value textarea-type',
                             placeholder: 'Description',

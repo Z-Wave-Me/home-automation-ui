@@ -35,7 +35,7 @@ define([
                     _.div({ className: 'form-data automation clearfix' },
                         _.div({key: 'form-group-title', className: 'form-group'},
                             _.label({className: 'input-label'}, 'title:'),
-                            _.input({
+                            Morearty.DOM.input({
                                 key: 'title-input',
                                 className: 'input-value',
                                 type: 'text',
@@ -46,7 +46,7 @@ define([
                         ),
                         _.div({key: 'form-group-description', className: 'form-group'},
                             _.label({className: 'input-label'}, 'description:'),
-                            _.textarea({
+                            Morearty.DOM.textarea({
                                 key: 'description-input',
                                 className: 'input-value textarea-type',
                                 placeholder: __('description', 'capitalize'),

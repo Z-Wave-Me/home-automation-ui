@@ -62,7 +62,7 @@ define([
                 _.div({className: 'content', onMouseEnter: this.onToggleHovering.bind(null, true), onMouseLeave: this.onToggleHovering.bind(null, false)},
                     _.span({className: 'text title-container'}, this._hover ? '' : title),
                     _.progress({className: progressClasses, value: level, min: 0, max: 100}),
-                    _.input({
+                    Morearty.DOM.input({
                         className: rangeClasses,
                         onChange: this.onChangeLevel,
                         type: 'range',
