@@ -65,5 +65,7 @@
     "profile_name": "profile name",
     "widget_name": "widget name",
     "type": "type",
-    "saved": "saved"
+    "saved": "saved",
+    "open": "open",
+    "close": "close"
 }

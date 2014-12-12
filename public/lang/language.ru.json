@@ -65,5 +65,7 @@
     "profile_name": "имя профайла",
     "widget_name": "имя виджета",
     "type": "тип",
-    "saved": "saved"
+    "saved": "сохранен",
+    "open": "открыт",
+    "close": "закрыт"
 }

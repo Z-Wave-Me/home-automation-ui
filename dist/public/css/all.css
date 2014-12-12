@@ -453,20 +453,20 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .widget .content-widget .content{display:block;float:left;height:auto;min-height:29%;width:85%;font-size:17px;font-family:HelveticaNeue;color:#666;margin-left:4%}
 .widget .content-widget .content .switch{cursor:pointer;display:block;border-radius:12px;background-color:#bebebe;width:76px;height:26px;line-height:28px;float:right;margin-top:12px;margin-right:3%}
 .widget .content-widget .content .switch .bubble{display:block;border-radius:50%;background-color:#fff;box-shadow:0 2px 0 0 rgba(0,0,0,.2);width:20px;height:20px;margin:3.8% 4%;float:left}
-.widget .content-widget .content .switch .text{float:right;height:26px;font-size:20px;font-weight:700;margin-right:25%;text-decoration:none;color:#333;-moz-transform:matrix(0.5,0,0,.5,0,0);-webkit-transform:matrix(0.5,0,0,.5,0,0);width:24px}
+.widget .content-widget .content .switch .text{height:26px;position:absolute;font-size:20px;font-weight:700;text-decoration:none;color:#333;-moz-transform:matrix(0.5,0,0,.5,0,0);-webkit-transform:matrix(0.5,0,0,.5,0,0);width:100px;left:214px;text-align:center}
 .widget .content-widget .content .switch a{text-decoration:none;color:#333}
 .widget .content-widget .content .switch.active{background-color:#40e8f0}
 .widget .content-widget .content .switch.active .bubble{float:right}
-.widget .content-widget .content .switch.active .text{margin-right:0;margin-left:17%;float:left}
+.widget .content-widget .content .switch.active .text{left:192px}
 .widget .content-widget .content .title-metrics{width:180px;display:block;float:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;height:46px}
 .widget .content-widget .content .switch-door{cursor:pointer;display:block;border-radius:12px;background-color:#bebebe;width:76px;height:26px;line-height:28px;float:right;margin-top:12px;margin-right:3%}
 .widget .content-widget .content .switch-door .bubble{display:block;border-radius:50%;background-color:#fff;box-shadow:0 2px 0 0 rgba(0,0,0,.2);width:20px;height:20px;margin:3.8% 4%;float:left}
-.widget .content-widget .content .switch-door .text{height:26px;font-size:20px;font-weight:700;margin-right:25%;text-decoration:none;color:#333;-moz-transform:matrix(0.5,0,0,.5,0,0);-webkit-transform:matrix(0.5,0,0,.5,0,0)}
+.widget .content-widget .content .switch-door .text{height:26px;position:absolute;font-size:20px;font-weight:700;text-decoration:none;color:#333;-moz-transform:matrix(0.5,0,0,.5,0,0);-webkit-transform:matrix(0.5,0,0,.5,0,0);left:214px;text-align:center}
 .widget .content-widget .content .switch-door a{text-decoration:none;color:#333}
 .widget .content-widget .content .switch-door .text{float:left;margin-left:0;width:0}
 .widget .content-widget .content .switch-door.active{background-color:#40e8f0}
 .widget .content-widget .content .switch-door.active .bubble{float:right}
-.widget .content-widget .content .switch-door.active .text{margin-right:0;margin-left:17%;float:left}
+.widget .content-widget .content .switch-door.active .text{left:192px}
 .widget .content-widget .content .switch-door.bubble-door{background:0 0;width:25px}
 .widget .content-widget .content .switch-door.bubble-door.active{background:0 0}
 .widget .content-widget .content .switch-door.bubble-door .bubble{border:1px solid #ccc;transition:all .1s;box-shadow:0 5px 0 #84261a}
@@ -505,20 +505,20 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .widget-small .content-widget .content{display:block;float:left;height:auto;min-height:29%;width:85%;font-size:17px;font-family:HelveticaNeue;color:#666}
 .widget-small .content-widget .content .switch{cursor:pointer;display:block;border-radius:12px;background-color:#bebebe;width:76px;height:26px;line-height:28px;float:right;margin-top:12px;margin-right:3%}
 .widget-small .content-widget .content .switch .bubble{display:block;border-radius:50%;background-color:#fff;box-shadow:0 2px 0 0 rgba(0,0,0,.2);width:20px;height:20px;margin:3.8% 4%;float:left}
-.widget-small .content-widget .content .switch .text{float:right;height:26px;font-size:20px;font-weight:700;margin-right:25%;text-decoration:none;color:#333;-moz-transform:matrix(0.5,0,0,.5,0,0);-webkit-transform:matrix(0.5,0,0,.5,0,0);width:24px}
+.widget-small .content-widget .content .switch .text{height:26px;position:absolute;font-size:20px;font-weight:700;text-decoration:none;color:#333;-moz-transform:matrix(0.5,0,0,.5,0,0);-webkit-transform:matrix(0.5,0,0,.5,0,0);width:100px;left:214px;text-align:center}
 .widget-small .content-widget .content .switch a{text-decoration:none;color:#333}
 .widget-small .content-widget .content .switch.active{background-color:#40e8f0}
 .widget-small .content-widget .content .switch.active .bubble{float:right}
-.widget-small .content-widget .content .switch.active .text{margin-right:0;margin-left:17%;float:left}
+.widget-small .content-widget .content .switch.active .text{left:192px}
 .widget-small .content-widget .content .title-metrics{width:180px;display:block;float:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;height:46px}
 .widget-small .content-widget .content .switch-door{cursor:pointer;display:block;border-radius:12px;background-color:#bebebe;width:76px;height:26px;line-height:28px;float:right;margin-top:12px;margin-right:3%}
 .widget-small .content-widget .content .switch-door .bubble{display:block;border-radius:50%;background-color:#fff;box-shadow:0 2px 0 0 rgba(0,0,0,.2);width:20px;height:20px;margin:3.8% 4%;float:left}
-.widget-small .content-widget .content .switch-door .text{height:26px;font-size:20px;font-weight:700;margin-right:25%;text-decoration:none;color:#333;-moz-transform:matrix(0.5,0,0,.5,0,0);-webkit-transform:matrix(0.5,0,0,.5,0,0)}
+.widget-small .content-widget .content .switch-door .text{height:26px;position:absolute;font-size:20px;font-weight:700;text-decoration:none;color:#333;-moz-transform:matrix(0.5,0,0,.5,0,0);-webkit-transform:matrix(0.5,0,0,.5,0,0);left:214px;text-align:center}
 .widget-small .content-widget .content .switch-door a{text-decoration:none;color:#333}
 .widget-small .content-widget .content .switch-door .text{float:left;margin-left:0;width:0}
 .widget-small .content-widget .content .switch-door.active{background-color:#40e8f0}
 .widget-small .content-widget .content .switch-door.active .bubble{float:right}
-.widget-small .content-widget .content .switch-door.active .text{margin-right:0;margin-left:17%;float:left}
+.widget-small .content-widget .content .switch-door.active .text{left:192px}
 .widget-small .content-widget .content .switch-door.bubble-door{background:0 0;width:25px}
 .widget-small .content-widget .content .switch-door.bubble-door.active{background:0 0}
 .widget-small .content-widget .content .switch-door.bubble-door .bubble{border:1px solid #ccc;transition:all .1s;box-shadow:0 5px 0 #84261a}

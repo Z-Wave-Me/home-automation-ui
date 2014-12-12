@@ -2,15 +2,16 @@ define([], function () {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin],
+        mixins: [Morearty.Mixin, TranslateMixin],
         render: function () {
-            var _ = React.DOM;
+            var _ = React.DOM,
+                __ = this.gls;
 
             return (
                 _.div({className: 'content'},
-                    _.span({className: 'title-container'}, this.getDefaultBinding().sub('metrics').get('title')),
-                    _.button({className: 'quad-button up-button'}, 'Up'),
-                    _.button({className: 'quad-button down-button'}, 'Down')
+                    _.span({className: 'title-container'}, this.getDefaultBinding().get('metrics.title')),
+                    _.button({className: 'quad-button up-button'}, __('up', 'capitalize')),
+                    _.button({className: 'quad-button down-button'}, __('down', 'capitalize'))
                 )
             );
         }

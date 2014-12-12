@@ -15,7 +15,7 @@ define([
 
     return React.createClass({
         _serviceId: 'devices',
-        mixins: [Morearty.Mixin, SyncLayerMixin, DomMixin],
+        mixins: [Morearty.Mixin, SyncLayerMixin, DomMixin, TranslateMixin],
         getInitialState: function () {
             return {
                 show_picker: false
@@ -64,6 +64,7 @@ define([
         render: function () {
             var that = this,
                 _ = React.DOM,
+                __ = this.gls,
                 cx = React.addons.classSet,
                 binding = this.getDefaultBinding(),
                 title = binding.get('metrics.title'),
@@ -84,7 +85,7 @@ define([
                 ) : null,
                 _.span({onClick: this.toggleSwitch, className: classes},
                     _.span({className: 'bubble'}),
-                    _.span({className: 'text'}, level.toUpperCase())
+                    _.span({className: 'text'}, __(level, 'upper'))
                 ),
                 this.state.show_picker && _isRGB ?
                     _.div({
