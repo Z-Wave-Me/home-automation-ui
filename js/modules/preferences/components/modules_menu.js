@@ -103,14 +103,6 @@ define([
                         search_attr: preferences_binding.sub('search_string_on_modules_list')
                     })
                 ),
-                _.div({className: 'main-component'},
-                    step.component({
-                        binding: {
-                            default: preferences_binding,
-                            data: this.getBinding('data')
-                        }
-                    })
-                ),
                 _.div({className: 'footer-component'},
                     _.div({className: 'stepbar-container'},
                         _.ul({className: 'stepbar'},
@@ -119,6 +111,14 @@ define([
                             _.li({className: step_numeric === 3 ? 'active' : null}, __('configuration', 'capitalize'))
                         )
                     )
+                ),
+                _.div({className: 'main-component'},
+                    step.component({
+                        binding: {
+                            default: preferences_binding,
+                            data: this.getBinding('data')
+                        }
+                    })
                 )
             );
         }
