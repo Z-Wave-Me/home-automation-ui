@@ -145,6 +145,7 @@ define([
         },
         updateLevel: function (type) {
             var that = this;
+
             if (type === 'increase') {
                 this.setState({current_level: this.state.current_level + 1 <= this.state.max_level ? this.state.current_level + 1 : this.state.max_level});
             } else if (type === 'decrease') {
@@ -154,19 +155,35 @@ define([
             } else if (type === 'min') {
                 this.setState({current_level: this.state.min_level});
             }
-            this.forceUpdate(function () {
-                this._updateCircle(this.state.current_level);
-                this.fetch({
-                    model: this.getDefaultBinding(),
-                    serviceId: 'devices',
-                    params: {
-                        level: this.state.current_level
-                    },
-                    success: function () {
-                        that.getDefaultBinding().sub('metrics').set('level', that.state.current_level);
-                    }
-                }, 'exact');
+            that.forceUpdate(function () {
+                that._updateCircle(that.state.current_level);
+                that.getDefaultBinding().set('metrics.level', that.state.current_level);
             });
+        },
+        hidePopup: function () {
+            this.getMoreartyContext()
+                .getBinding()
+                .sub('default')
+                .sub('show_popup_' + this.getDefaultBinding().get('id')).set(false);
+
+            if (this.isMounted()) {
+                this.forceUpdate();
+            }
+        },
+        done: function (e) {
+            var that = this;
+
+            e.preventDefault();
+
+            that.fetch({
+                model: that.getDefaultBinding(),
+                serviceId: 'devices',
+                params: {
+                    level: that.state.current_level
+                }
+            }, 'exact');
+
+            that.hidePopup();
         },
         render: function () {
             var _ = React.DOM,
@@ -209,7 +226,8 @@ define([
                             _.span({className: 'line blue'}),
                             _.span({className: 'text'}, 'set')
                         )
-                    )
+                    ),
+                    _.button({className: 'done-button', onClick: this.done}, 'DONE')
                 )
             );
         }
