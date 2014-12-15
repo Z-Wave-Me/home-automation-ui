@@ -4,6 +4,7 @@ define([
     'jsx!./components/main',
     'Preferences',
     'jsx!modules/notifications/notifications',
+    'jsx!modules/feedback/feedback',
     'Load',
     // mixins
     'mixins/sync/sync-layer'
@@ -13,6 +14,7 @@ define([
     Main,
     Preferences,
     Notifications,
+    Feedback,
     Load,
     // mixins
     sync_layer_mixin
@@ -73,6 +75,9 @@ define([
                         data: that.getBinding('data'),
                         preferences: that.getBinding('preferences')
                     }
+                }),
+                Feedback({
+                    binding: binding
                 })
             );
         }

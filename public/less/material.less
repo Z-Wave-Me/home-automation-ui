@@ -104,10 +104,17 @@
 /* inputs */
 .material.input-container {
   margin: 20px 10px 10px 0;
+  display: flex;
+  .icon {
+    align-self: flex-end;
+    font-size: 20px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+  }
   .group {
     position: relative;
   }
-  input {
+  .input-field {
     font-size: 18px;
     padding: 10px 10px 10px 5px;
     display: block;
@@ -122,7 +129,7 @@
     color: #444;
   }
 
-  input:focus {
+  .input-field:focus {
     outline: none;
     padding-left: 5px;
   }
@@ -139,8 +146,8 @@
   }
 
   /* active state */
-  input:focus ~ label,
-  input:valid ~ label {
+  .input-field:focus ~ label,
+  .input-field:valid ~ label {
     top: -20px;
     font-size: 14px;
     color: @blue;
@@ -172,7 +179,8 @@
   }
 
   /* active state */
-  input:focus ~ .bar:before, input:focus ~ .bar:after {
+  .input-field:focus ~ .bar:before,
+  .input-field:focus ~ .bar:after {
     width: 50%;
   }
 
@@ -189,7 +197,7 @@
 
   /* active state */
   /* active state */
-  input:focus ~ .highlight {
+  .input-field:focus ~ .highlight {
     -webkit-animation:inputHighlighter 0.3s ease;
     -moz-animation:inputHighlighter 0.3s ease;
     animation:inputHighlighter 0.3s ease;

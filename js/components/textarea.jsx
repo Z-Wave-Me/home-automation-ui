@@ -25,10 +25,10 @@ define([], function () {
                 icon = this.props.icon;
 
             return (
-                <div className='material input-container'>
+                <div className='material input-container textarea-container'>
                     {icon ? <i className={'icon fa ' + icon}/> : null}
                     <div className='group'>
-                        <Morearty.DOM.input
+                        <Morearty.DOM.textarea
                             type='text'
                             value={binding.get()}
                             onFocus={this.onSavePreviousData}
