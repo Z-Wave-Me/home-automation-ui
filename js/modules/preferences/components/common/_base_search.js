@@ -12,7 +12,8 @@ define([], function () {
                     className: 'search-input',
                     type: 'search',
                     placeholder: __('search'),
-                    onChange: Morearty.Callback.set(this.props.search_attr)
+                    onChange: Morearty.Callback.set(this.props.search_attr),
+                    value: this.props.search_attr.get()
                 })
             );
         }
