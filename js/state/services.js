@@ -25,7 +25,7 @@ define([], function () {
                 autoSync: true,
                 sinceField: 'devicesUpdateTime',
                 methods: ['READ'],
-                postSyncHandler: function (ctx, response) {
+                postSyncHandler: function (ctx, response, collection, xhr) {
                     var that = this,
                         remove_devices_ids,
                         dataBinding = ctx.getBinding().sub('data'),
@@ -94,6 +94,10 @@ define([], function () {
 
                             return types.sort();
                         });
+                    }
+
+                    if (xhr.getResponseHeader('Date')) {
+                        ctx.getBinding().sub('default').set('system.serverTime', xhr.getResponseHeader('Date'));
                     }
                 },
                 parse: function (response, ctx) {

@@ -38,7 +38,7 @@ define([], function () {
                 if (xhr.readyState === 4) {
                     if (xhr.status < 400) {
                         if (Boolean(options.success) && typeof options.success === 'function') {
-                            options.success(that._parse(xhr.responseText));
+                            options.success(that._parse(xhr.responseText), xhr);
                         } else {
                             //console.debug('options.success is not function')
                         }

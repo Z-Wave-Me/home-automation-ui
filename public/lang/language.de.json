@@ -67,5 +67,6 @@
     "type": "type",
     "saved": "saved",
     "open": "open",
-    "close": "close"
+    "close": "close",
+    "server_time": "server time"
 }

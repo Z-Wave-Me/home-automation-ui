@@ -70,5 +70,6 @@
   "profile_name": "profile name",
   "widget_name": "widget name",
   "open": "open",
-  "close": "close"
+  "close": "close",
+  "server_time": "server time"
 }

@@ -50,6 +50,7 @@ define([
                         'data-overlay-name': overlay_name || 'default'
                     },
                     _.div({className: 'overlay-wrapper'},
+                        _.span({className: 'server-time'}, __('server_time', 'capitalize') + ': ' + binding.get('system.serverTime')),
                         _.div({className: 'overlay-top'},
                             _.div({className: 'overlay-left-top-panel overlay-top-panel'},
                                 _.span({

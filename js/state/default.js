@@ -9,6 +9,7 @@ define([], function () {
         nowShowing: 'dashboard', // start route
         // system
         system: {
+            serverTime: '',
             network_connected: false,
             loaded: false,
             loaded_lang_files: false,
