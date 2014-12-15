@@ -170,8 +170,8 @@ define([
             var that = this,
                 _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                title = binding.sub('metrics').get('title'),
-                level = binding.sub('metrics').get('level'),
+                title = binding.get('metrics.title'),
+                level = binding.sub('metrics.level'),
                 show_binding = this.getMoreartyContext()
                     .getBinding()
                     .sub('default')

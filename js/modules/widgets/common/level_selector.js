@@ -3,18 +3,20 @@ define([
     'd3',
     // mixins
     'mixins/sync/sync-layer',
+    'mixins/data/manipulation',
     'mixins/ui/popup'
 ], function (
     // libs
     d3,
     // mixins
     SyncLayerMixin,
+    JSMixin,
     PopupMixin
 ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, SyncLayerMixin, PopupMixin],
+        mixins: [Morearty.Mixin, SyncLayerMixin, PopupMixin, JSMixin],
         getInitialState: function () {
             var metrics_binbind = this.getDefaultBinding().sub('metrics'),
                 min_level = parseInt(metrics_binbind.get('min')),
@@ -185,15 +187,30 @@ define([
 
             that.hidePopup();
         },
+        onWheel: function (e) {
+            if (e.nativeEvent !== null) {
+                if (e.nativeEvent.wheelDelta > 0) {
+                    this.updateLevel('increase');
+                } else if (e.nativeEvent.wheelDelta < 0) {
+                    this.updateLevel('decrease');
+                }
+            }
+        },
         render: function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding();
 
-            return _.div({onClick: this.stopPropagationAndPreventDefault, ref: 'popover', className: 'popover right popover-level-selector'},
+            return _.div({
+                    onClick: this.stopPropagationAndPreventDefault,
+                    ref: 'popover', className: 'popover right popover-level-selector'},
                 _.div({className: 'popover-content'},
                     _.div({className: 'header-title'}, binding.sub('metrics').get('title')),
                     _.div({className: 'center-container'},
-                        _.div({ref: 'progressContainer', className: 'pie-container'}),
+                        _.div({
+                            ref: 'progressContainer',
+                            onWheel: this.throttle(this.onWheel, 100),
+                            className: 'pie-container'
+                        }),
                         _.div({className: 'control-container'},
                             _.div({className: 'line-button'},
                                 _.span({

@@ -98,6 +98,7 @@ define([
 
             return _.div({ className: 'modules-component' },
                 _.div({className: 'header-component'},
+
                     _.span({className: 'step-title'}, step.description),
                     _base_search({
                         search_attr: preferences_binding.sub('search_string_on_modules_list')

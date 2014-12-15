@@ -798,8 +798,8 @@ input[type=range],input[type=range]::-moz-focus-inner,input[type=range]::-moz-fo
 .overlay .stepbar-container .stepbar li:before{content:counter(step);counter-increment:step;width:20px;line-height:20px;display:block;font-size:10px;color:#333;background:#fff;border-radius:3px;margin:0 auto 5px;text-align:center}
 .overlay .stepbar-container .stepbar li:after{content:'';width:100%;height:2px;background:#fff;position:absolute;left:-50%;top:9px;z-index:-1}
 .overlay .stepbar-container .stepbar li:first-child:after{content:none}
-.overlay .stepbar-container .stepbar li.active:after,.overlay .stepbar-container .stepbar li.active:before{background:#00bac4;color:#fff}
-.overlay .stepbar-container .stepbar li.active{color:#00bac4}
+.overlay .stepbar-container .stepbar li.active:after,.overlay .stepbar-container .stepbar li.active:before{background:#444;color:#fff}
+.overlay .stepbar-container .stepbar li.active{color:#444}
 .alpaca-main{margin:0 auto;padding:5px 10px;max-height:350px;overflow-y:auto}
 .alpaca-main .alpaca-controlfield-helper,.alpaca-main .alpaca-controlfield-message{line-height:17px;font-size:11px;vertical-align:middle}
 .loading-component .progress-bar{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;z-index:2000;position:fixed;margin:0 auto;top:35%;left:0;right:0;bottom:0;height:5px;width:200px;background:#fff;border:1px solid #29d}
