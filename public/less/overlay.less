@@ -41,10 +41,6 @@
     height: 100%;
     width: 80%;
     margin: 0 auto;
-    text-align: center;
-    .server-time {
-      font-size: 11px;
-    }
   }
   .overlay-top {
     display: inline-block;
@@ -52,10 +48,14 @@
     line-height: 50px;
     width: 100%;
     height: 50px;
+    position: relative;
+    z-index: 1002;
+    color: rgb(237, 237, 237);
     .overlay-top-panel {
       height: 50px;
       width: 30%;
       float: left;
+      color: rgb(237, 237, 237);
       &.overlay-left-top-panel {
         text-align: left;
       }
@@ -81,8 +81,8 @@
       height: 22px;
       line-height: 22px;
       width: 22px;
-      border: 2px solid #222;
-      color: #222;
+      border: 2px solid rgb(237, 237, 237);
+      color: rgb(237, 237, 237);
       font-size: 14px;
       cursor: pointer;
       margin-left: 5px;
@@ -347,4 +347,20 @@
     font-size: 16px;
     font-weight: bold;
   }
+}
+
+.server-time {
+  font-size: 11px;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
+.overlay-black {
+  position: absolute;
+  height: 50px;
+  background: #444;
+  top: 0;
+  width: 100%;
+  z-index: 1001;
 }
