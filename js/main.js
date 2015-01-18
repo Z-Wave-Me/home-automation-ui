@@ -139,11 +139,12 @@ require([
 
     require(['morearty'], function (Morearty) {
         var Ctx = Morearty.createContext({
-            default: Immutable.fromJS(defaultBinding),
-            preferences: Immutable.fromJS(preferencesBinding),
-            services: Immutable.fromJS(servicesBinding),
-            data: Immutable.fromJS(dataBinding)
-        }, {
+            initialState: {
+                default: Immutable.fromJS(defaultBinding),
+                preferences: Immutable.fromJS(preferencesBinding),
+                services: Immutable.fromJS(servicesBinding),
+                data: Immutable.fromJS(dataBinding)
+            },
             requestAnimationFrameEnabled: true
         });
 
