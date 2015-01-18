@@ -157,7 +157,7 @@ define([
 
             this.state.foreground.attr('d', arc.endAngle(twoPi * percent));
             this.state.front.attr('d', arc.endAngle(twoPi * percent));
-            this.state.numberText.text(level + '°C');
+            this.state.numberText.text(level + '℃');
         },
         showSettings: function () {
             this.getMoreartyContext()
