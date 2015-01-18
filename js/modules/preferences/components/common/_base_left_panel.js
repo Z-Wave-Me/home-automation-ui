@@ -61,7 +61,7 @@ define([
                     title = obj.params.title;
                 }
 
-                if ((searchString.length > 2 && title.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) || searchString.length <= 2) {
+                if ((searchString.length > 1 && title.toLowerCase().indexOf(searchString.toLowerCase()) !== -1) || searchString.length < 2) {
                     return _.li({
                             className: leftPanelItemSelectedId === item.get('id') && statusNode !== 'add' ? 'item-model selected' : 'item-model',
                             key: index,
