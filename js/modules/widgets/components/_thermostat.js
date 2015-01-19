@@ -125,18 +125,14 @@ define([
         },
         updateTemperature: function (level, prev_level) {
             var that = this,
-                step = this.state.step,
-                _timeout;
+                step = that.state.step;
 
             level = parseInt(level, 10);
+            console.log(level)
+            console.log(that.isMounted())
+            console.log(prev_level)
             if (that.isMounted()) {
-                if (prev_level) {
-                    prev_level = prev_level > level ? prev_level - 1 : prev_level + 1;
-                    that._updateCircle(prev_level, (prev_level - that.state.min_level) / step / 100);
-                } else {
-                    that._updateCircle(level, (level - that.state.min_level) / step / 100);
-
-                }
+                that._updateCircle(level, (level - that.state.min_level) / step / 100);
             }
         },
         _updateCircle: function (level, percent) {
