@@ -46,8 +46,8 @@ define([
             var that = this,
                 default_binding = this.getMoreartyContext().getBinding().sub('default');
 
-            that.getDefaultBinding().sub('metrics').addListener('level', function (level, prev_level) {
-                that.updateTemperature(level, prev_level);
+            that.getDefaultBinding().addListener('metrics.level', function (cd) {
+                that.updateTemperature(that.getDefaultBinding().get('metrics.level'), cd.getPreviousValue());
             });
 
             default_binding.set('show_popup_' + that.getDefaultBinding().get('id'), false);
@@ -129,22 +129,10 @@ define([
                 _timeout;
 
             level = parseInt(level, 10);
-
-            if (this.isMounted()) {
+            if (that.isMounted()) {
                 if (prev_level) {
-                    if (prev_level === level) {
-                        _timeout = function () {
-                            setTimeout(function () {
-                                prev_level = prev_level > level ? prev_level -= 1 : prev_level += 1;
-                                that._updateCircle(prev_level, (prev_level - that.state.min_level) / step / 100);
-                                if (prev_level === level) {
-                                    return;
-                                }
-                                _timeout();
-                            }, 20);
-                        };
-                        _timeout();
-                    }
+                    prev_level = prev_level > level ? prev_level - 1 : prev_level + 1;
+                    that._updateCircle(prev_level, (prev_level - that.state.min_level) / step / 100);
                 } else {
                     that._updateCircle(level, (level - that.state.min_level) / step / 100);
 
