@@ -21,6 +21,11 @@ API Documentation: http://docs.zwayhomeautomation.apiary.io/
 Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home-automation-ui/issues
 
 # Changelog #
+* 2.0.1
+    - Update Morearty to 0.7.5
+    - Update Immutable to 3.5.x
+    - Fixes on Preferences/Modules/Instances views
+    - Minor design fix
 * 2.0.0rc11
     - Morearty 0.7.4
     - React 0.12.1
