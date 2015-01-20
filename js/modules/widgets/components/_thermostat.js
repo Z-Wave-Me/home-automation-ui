@@ -123,14 +123,12 @@ define([
                 that.updateTemperature(current_level);
             });
         },
-        updateTemperature: function (level, prev_level) {
+        updateTemperature: function (level) {
             var that = this,
                 step = that.state.step;
 
             level = parseInt(level, 10);
-            console.log(level)
-            console.log(that.isMounted())
-            console.log(prev_level)
+
             if (that.isMounted()) {
                 that._updateCircle(level, (level - that.state.min_level) / step / 100);
             }
