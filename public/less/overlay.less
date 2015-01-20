@@ -48,10 +48,14 @@
     line-height: 50px;
     width: 100%;
     height: 50px;
+    position: relative;
+    z-index: 1002;
+    color: #fff;
     .overlay-top-panel {
       height: 50px;
       width: 30%;
       float: left;
+      color: #fff;
       &.overlay-left-top-panel {
         text-align: left;
       }
@@ -64,7 +68,7 @@
       }
       &.overlay-panel-title {
         font-weight: bold;
-	width: 100%;
+	    width: 100%;
       }
     }
 
@@ -77,12 +81,11 @@
       height: 22px;
       line-height: 22px;
       width: 22px;
-      border: 2px solid #222;
-      color: #222;
+      border: 2px solid #fff;
+      color: #fff;
       font-size: 14px;
       cursor: pointer;
       margin-left: 5px;
-      opacity: 0.6;
     }
 
     .overlay-back-button {
@@ -268,11 +271,11 @@
         }
         &.active:before,
         &.active:after {
-          background: @blue;
+          background: #444;
           color: white;
         }
         &.active {
-          color: @blue;
+          color: #444;
         }
       }
     }
@@ -343,4 +346,20 @@
     font-size: 16px;
     font-weight: bold;
   }
+}
+
+.server-time {
+  font-size: 11px;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
+.overlay-black {
+  position: absolute;
+  height: 50px;
+  background: #444;
+  top: 0;
+  width: 100%;
+  z-index: 1001;
 }

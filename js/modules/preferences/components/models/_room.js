@@ -80,7 +80,7 @@ define([
                 _.div({ className: 'form-data room clearfix' },
                     _.div({ key: 'form-name-input', className: 'form-group' },
                         _.label({ htmlFor: 'room-name', className: 'input-label'}, __('room_name', 'capitalize') + ':'),
-                        _.input({
+                        Morearty.DOM.input({
                             onChange: Morearty.Callback.set(item, 'title'),
                             id: 'room-name',
                             className: 'input-value',
@@ -113,7 +113,7 @@ define([
                                 );
                             }).toArray()
                         ),
-                        _.input({
+                        Morearty.DOM.input({
                             className: classes_input_autocomplete,
                             placeholder: __('device_name', 'capitalize'),
                             onChange: Morearty.Callback.set(preferencesBinding, 'temp_string'),

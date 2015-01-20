@@ -75,8 +75,10 @@ define([
                                 preferences: preferencesBinding,
                                 data: this.getBinding('data')
                             }
-                        }) : null
-                    )
+                        }) : null,
+                        _.span({className: 'server-time'}, __('server_time', 'capitalize') + ': ' + binding.get('system.serverTime'))
+                    ),
+                    _.div({className: 'overlay-black'})
                 )
             );
         }

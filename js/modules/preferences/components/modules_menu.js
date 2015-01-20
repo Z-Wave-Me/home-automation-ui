@@ -98,17 +98,10 @@ define([
 
             return _.div({ className: 'modules-component' },
                 _.div({className: 'header-component'},
+
                     _.span({className: 'step-title'}, step.description),
                     _base_search({
                         search_attr: preferences_binding.sub('search_string_on_modules_list')
-                    })
-                ),
-                _.div({className: 'main-component'},
-                    step.component({
-                        binding: {
-                            default: preferences_binding,
-                            data: this.getBinding('data')
-                        }
                     })
                 ),
                 _.div({className: 'footer-component'},
@@ -119,6 +112,14 @@ define([
                             _.li({className: step_numeric === 3 ? 'active' : null}, __('configuration', 'capitalize'))
                         )
                     )
+                ),
+                _.div({className: 'main-component'},
+                    step.component({
+                        binding: {
+                            default: preferences_binding,
+                            data: this.getBinding('data')
+                        }
+                    })
                 )
             );
         }

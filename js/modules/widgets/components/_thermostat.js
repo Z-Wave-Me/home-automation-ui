@@ -46,8 +46,8 @@ define([
             var that = this,
                 default_binding = this.getMoreartyContext().getBinding().sub('default');
 
-            that.getDefaultBinding().sub('metrics').addListener('level', function (level, prev_level) {
-                that.updateTemperature(level, prev_level);
+            that.getDefaultBinding().addListener('metrics.level', function (cd) {
+                that.updateTemperature(that.getDefaultBinding().get('metrics.level'), cd.getPreviousValue());
             });
 
             default_binding.set('show_popup_' + that.getDefaultBinding().get('id'), false);
@@ -123,32 +123,14 @@ define([
                 that.updateTemperature(current_level);
             });
         },
-        updateTemperature: function (level, prev_level) {
+        updateTemperature: function (level) {
             var that = this,
-                step = this.state.step,
-                _timeout;
+                step = that.state.step;
 
             level = parseInt(level, 10);
 
-            if (this.isMounted()) {
-                if (prev_level) {
-                    if (prev_level === level) {
-                        _timeout = function () {
-                            setTimeout(function () {
-                                prev_level = prev_level > level ? prev_level -= 1 : prev_level += 1;
-                                that._updateCircle(prev_level, (prev_level - that.state.min_level) / step / 100);
-                                if (prev_level === level) {
-                                    return;
-                                }
-                                _timeout();
-                            }, 20);
-                        };
-                        _timeout();
-                    }
-                } else {
-                    that._updateCircle(level, (level - that.state.min_level) / step / 100);
-
-                }
+            if (that.isMounted()) {
+                that._updateCircle(level, (level - that.state.min_level) / step / 100);
             }
         },
         _updateCircle: function (level, percent) {
@@ -157,7 +139,7 @@ define([
 
             this.state.foreground.attr('d', arc.endAngle(twoPi * percent));
             this.state.front.attr('d', arc.endAngle(twoPi * percent));
-            this.state.numberText.text(level + '°C');
+            this.state.numberText.text(level + '℃');
         },
         showSettings: function () {
             this.getMoreartyContext()
@@ -170,8 +152,8 @@ define([
             var that = this,
                 _ = React.DOM,
                 binding = this.getDefaultBinding(),
-                title = binding.sub('metrics').get('title'),
-                level = binding.sub('metrics').get('level'),
+                title = binding.get('metrics.title'),
+                level = binding.sub('metrics.level'),
                 show_binding = this.getMoreartyContext()
                     .getBinding()
                     .sub('default')

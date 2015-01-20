@@ -68,5 +68,8 @@
   "automation": "automation",
   "room_name": "room name",
   "profile_name": "profile name",
-  "widget_name": "widget name"
+  "widget_name": "widget name",
+  "open": "open",
+  "close": "close",
+  "server_time": "server time"
 }

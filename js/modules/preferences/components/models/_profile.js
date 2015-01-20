@@ -59,7 +59,7 @@ define([
                 _.div({ className: 'form-data profile clearfix' },
                     _.div({ key: 'form-name-input', className: 'form-group' },
                         _.label({ htmlFor: 'profile-name', className: 'input-label'}, __('profile_name', 'capitalize')),
-                        _.input({
+                        Morearty.DOM.input({
                             onChange: Morearty.Callback.set(item_binding, 'name'),
                             id: 'profile-name',
                             className: 'input-value',
@@ -71,7 +71,7 @@ define([
                     ),
                     _.div({ key: 'form-description-input', className: 'form-group' },
                         _.label({ htmlFor: 'profile-description', className: 'input-label'}, __('description', 'capitalize')),
-                        _.textarea({
+                        Morearty.DOM.textarea({
                             onChange: Morearty.Callback.set(item_binding, 'description'),
                             id: 'profile-description',
                             className: 'input-value textarea-type',
@@ -98,7 +98,7 @@ define([
                                 );
                             }).toArray()
                         ),
-                        _.input({
+                        Morearty.DOM.input({
                             className: classes_input_autocomplete,
                             placeholder: __('device_name', 'capitalize'),
                             onChange: Morearty.Callback.set(preferencesBinding, 'temp_string'),
@@ -116,7 +116,7 @@ define([
                     ) : null,
                     !add_mode ? _.div({ key: 'form-default-profile-input', className: 'form-group' },
                         _.label({className: 'switch-container'},
-                            _.input({
+                            Morearty.DOM.input({
                                     className: 'ios-switch green',
                                     type: 'checkbox',
                                     checked: String(default_profile_id) === String(id),

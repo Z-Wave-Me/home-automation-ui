@@ -82,13 +82,13 @@ define(['../data/manipulation'], function (manipulation) {
                     that.fetch({
                         serviceId: obj.id,
                         params: Object.keys(params).length > 0 ? params : null,
-                        success: function (response) {
+                        success: function (response, xhr) {
                             if (callback && typeof callback === 'function') {
                                 callback(response);
                             }
 
                             if (obj.hasOwnProperty('postSyncHandler')) {
-                                obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id));
+                                obj.postSyncHandler.call(that, ctx, response, dataBinding.sub(obj.id), xhr);
                             }
 
                             if (response.data) {

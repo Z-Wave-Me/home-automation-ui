@@ -3,18 +3,20 @@ define([
     'd3',
     // mixins
     'mixins/sync/sync-layer',
+    'mixins/data/manipulation',
     'mixins/ui/popup'
 ], function (
     // libs
     d3,
     // mixins
     SyncLayerMixin,
+    JSMixin,
     PopupMixin
 ) {
     'use strict';
 
     return React.createClass({
-        mixins: [Morearty.Mixin, SyncLayerMixin, PopupMixin],
+        mixins: [Morearty.Mixin, SyncLayerMixin, PopupMixin, JSMixin],
         getInitialState: function () {
             var metrics_binbind = this.getDefaultBinding().sub('metrics'),
                 min_level = parseInt(metrics_binbind.get('min')),
@@ -145,6 +147,7 @@ define([
         },
         updateLevel: function (type) {
             var that = this;
+
             if (type === 'increase') {
                 this.setState({current_level: this.state.current_level + 1 <= this.state.max_level ? this.state.current_level + 1 : this.state.max_level});
             } else if (type === 'decrease') {
@@ -154,29 +157,60 @@ define([
             } else if (type === 'min') {
                 this.setState({current_level: this.state.min_level});
             }
-            this.forceUpdate(function () {
-                this._updateCircle(this.state.current_level);
-                this.fetch({
-                    model: this.getDefaultBinding(),
-                    serviceId: 'devices',
-                    params: {
-                        level: this.state.current_level
-                    },
-                    success: function () {
-                        that.getDefaultBinding().sub('metrics').set('level', that.state.current_level);
-                    }
-                }, 'exact');
+            that.forceUpdate(function () {
+                that._updateCircle(that.state.current_level);
+                that.getDefaultBinding().set('metrics.level', that.state.current_level);
             });
+        },
+        hidePopup: function () {
+            this.getMoreartyContext()
+                .getBinding()
+                .sub('default')
+                .sub('show_popup_' + this.getDefaultBinding().get('id')).set(false);
+
+            if (this.isMounted()) {
+                this.forceUpdate();
+            }
+        },
+        done: function (e) {
+            var that = this;
+
+            e.preventDefault();
+
+            that.fetch({
+                model: that.getDefaultBinding(),
+                serviceId: 'devices',
+                params: {
+                    level: that.state.current_level
+                }
+            }, 'exact');
+
+            that.hidePopup();
+        },
+        onWheel: function (e) {
+            if (e.nativeEvent !== null) {
+                if (e.nativeEvent.wheelDelta > 0) {
+                    this.updateLevel('increase');
+                } else if (e.nativeEvent.wheelDelta < 0) {
+                    this.updateLevel('decrease');
+                }
+            }
         },
         render: function () {
             var _ = React.DOM,
                 binding = this.getDefaultBinding();
 
-            return _.div({onClick: this.stopPropagationAndPreventDefault, ref: 'popover', className: 'popover right popover-level-selector'},
+            return _.div({
+                    onClick: this.stopPropagationAndPreventDefault,
+                    ref: 'popover', className: 'popover right popover-level-selector'},
                 _.div({className: 'popover-content'},
                     _.div({className: 'header-title'}, binding.sub('metrics').get('title')),
                     _.div({className: 'center-container'},
-                        _.div({ref: 'progressContainer', className: 'pie-container'}),
+                        _.div({
+                            ref: 'progressContainer',
+                            onWheel: this.throttle(this.onWheel, 100),
+                            className: 'pie-container'
+                        }),
                         _.div({className: 'control-container'},
                             _.div({className: 'line-button'},
                                 _.span({
@@ -209,7 +243,8 @@ define([
                             _.span({className: 'line blue'}),
                             _.span({className: 'text'}, 'set')
                         )
-                    )
+                    ),
+                    _.button({className: 'done-button', onClick: this.done}, 'DONE')
                 )
             );
         }

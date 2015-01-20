@@ -53,7 +53,7 @@ define([
                     _.div({className: 'pull-left'},
                         _.div({ key: 'form-instance-show-turned-off-container', className: 'form-group' },
                             _.label({className: 'switch-container'},
-                                _.input({
+                                Morearty.DOM.input({
                                         className: 'ios-switch',
                                         type: 'checkbox',
                                         checked: preferences_binding.get('show_turned_off'),
