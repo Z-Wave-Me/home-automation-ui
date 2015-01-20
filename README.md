@@ -22,7 +22,7 @@ Issues, bugs and feature requests are welcome: https://github.com/Z-Wave-Me/home
 
 # Changelog #
 * 2.0.1
-    - Update Morearty to 0.7.5
+    - Update Morearty to 0.7.x
     - Update Immutable to 3.5.x
     - Fixes on Preferences/Modules/Instances views
     - Minor design fix
